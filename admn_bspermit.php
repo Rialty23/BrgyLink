@@ -1,0 +1,294 @@
+<?php
+
+error_reporting(E_ALL ^ E_WARNING);
+ini_set('display_errors', 1);
+require('classes/resident.class.php');
+$userdetails = $bmis->get_userdata();
+$bmis->validate_admin();
+$bmis->create_bspermit_walkin();
+$bmis->delete_bspermit();
+$view = $bmis->view_bspermit();
+$id_resident = $_GET['id_resident'];
+$resident = $residentbmis->get_single_bspermit($id_resident);
+
+?>
+
+<?php
+include('dashboard_sidebar_start.php');
+?>
+<?php include('flexbox.php'); ?>
+<style>
+    .input-icons i {
+        position: absolute;
+    }
+
+    .input-icons {
+        width: 30%;
+        margin-bottom: 10px;
+        margin-left: 34%;
+    }
+
+    .icon {
+        padding: 10px;
+        min-width: 40px;
+    }
+
+    .form-control {
+        text-align: center;
+    }
+</style>
+
+<!-- Begin Page Content -->
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+
+    <div class="row">
+        <div class="col text-center">
+            <h1> Business Clearance Requests</h1>
+        </div>
+    </div>
+
+    <hr>
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <form method="POST">
+                <div class="input-icons">
+                    <i class="fa fa-search icon"></i>
+                    <input type="search" class="form-control" name="keyword" value="" style="border-radius: 30px;" required="" />
+                </div>
+                <button class="btn btn-success" name="search_bspermit" style="width: 70px; font-size: 15px; border-radius:5px; margin-left:42%; background-color: #2563EB; color: white; ">Search</button>
+                <a href="admn_bspermit.php" class="btn btn-info" style="width: 70px; font-size: 15px; border-radius:5px;">Reload</a>
+            </form>
+            <br>
+        </div>
+    </div>
+
+    <br>
+    <button class="btn btn-info" style="width: 95px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus icon" style="padding-left: 0; padding-top: 0; padding-bottom: 0;"></i>Add</button>
+
+    <a href="admn_bspermit.php?deleted" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
+
+
+    <a href="#" id="exportExcelBtn"
+        class="btn btn-success"
+        style="color: white; width: 200px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-file-excel"></i> Export to Excel
+    </a>
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Business Permit Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lname">Last Name:</label>
+                                    <input name="lname" style="text-align:left;" type="text" class="form-control" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="fname">First Name:</label>
+                                    <input name="fname" style="text-align:left;" type="text" class="form-control" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="mi" class="mtop">Middle Name </label>
+                                    <input name="mi" style="text-align:left;" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="bsname">Business Name:</label>
+                                    <input name="bsname" style="text-align:left;" type="text" class="form-control" placeholder="Enter Business Name" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <h6>Business Address:</h6>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label> House No: </label>
+                                    <input type="text" style="text-align:left;" class="form-control" name="houseno" placeholder="Enter House No." required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label> Street: </label>
+                                    <input type="text" style="text-align:left;" class="form-control" name="street" placeholder="Enter Street" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+
+                            <!--<label> Barangay: </label>-->
+                            <input type="hidden" class="form-control" name="brgy" value="East Modern Site" required readonly>
+
+                            <!--<label> Municipality: </label>-->
+                            <input type="hidden" class="form-control" name="municipal" value="Bagiuo City" required readonly>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="status">Business Industry:</label>
+                                    <select class="form-control" style="text-align:left;" name="bsindustry" id="status" placeholder="Enter Status" required>
+                                        <option value="">Choose your Business Industry</option>
+                                        <option value="Aerospace">Aerospace</option>
+                                        <option value="Agriculture">Agriculture</option>
+                                        <option value="Computer">Computer</option>
+                                        <option value="Construction">Construction</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Energy">Energy</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Food">Food</option>
+                                        <option value="HealthCare">HealthCare</option>
+                                        <option value="Hospitality">Hospitality</option>
+                                        <option value="Manufacturing">Manufacturing</option>
+                                        <option value="Mining">Mining</option>
+                                        <option value="Music">Music</option>
+                                        <option value="News Media">News Media</option>
+                                        <option value="Pharmaceutical">Pharmaceutical</option>
+                                        <option value="Telecommunication">Telecommunication</option>
+                                        <option value="Transport">Transport</option>
+                                        <option value="WorldWide Web">WorldWide Web</option>
+
+                                    </select>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="aoe" class="mtop">Area of Establishment (SqM): </label>
+                                    <input type="number" style="text-align:left;" name="aoe" class="form-control" placeholder="Enter your AOE" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+
+                <!-- Modal Footer -->
+
+                <div class="modal-footer" style="justify-content: flex-start;">
+                    <div class="paa">
+                        <input name="id_resident" type="hidden" class="form-control" value="<?= $userdetails['id_resident'] ?>">
+                        <?php include('styled_button.php'); ?>
+                        <button id="styled_button_approve" name="create_bspermit_walkin"  type="submit" class="btn btn-success">Submit Request</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+            include('admn_bspermit_search.php');
+            ?>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+
+<!-- /.container-fluid -->
+<script>
+    document.getElementById('exportExcelBtn').addEventListener('click', function() {
+        // Select the table
+        let table = document.querySelector('.table');
+
+        // Convert table to a CSV format
+        let csv = [];
+        for (let row of table.rows) {
+            let rowData = [];
+            for (let cell of row.cells) {
+                // Escape double quotes
+                let cellText = cell.innerText.replace(/"/g, '""');
+                rowData.push(`"${cellText}"`);
+            }
+            csv.push(rowData.join(','));
+        }
+
+        // Create a Blob with CSV data
+        let csvFile = new Blob([csv.join('\n')], {
+            type: 'text/csv'
+        });
+
+        // Create a temporary download link
+        let downloadLink = document.createElement('a');
+        downloadLink.download = 'resident_business_clearance_records.csv';
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = 'none';
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" integrity="sha512-/HL24m2nmyI2+ccX+dSHphAHqLw60Oj5sK8jf59VWtFWZi9vx7jzoxbZmcBeeTeCUc7z1mTs3LfyXGuBU32t+w==" crossorigin="anonymous"></script>
+<!-- responsive tags for screen compatibility -->
+<meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+<!-- custom css -->
+<link href="customcss/regiformstyle.css" rel="stylesheet" type="text/css">
+<!-- bootstrap css -->
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+<!-- fontawesome icons -->
+<script src="https://kit.fontawesome.com/67a9b7069e.js" crossorigin="anonymous"></script>
+<script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<footer>
+    <?php
+    include('dashboard_sidebar_end.php');
+    ?>
+</footer>
