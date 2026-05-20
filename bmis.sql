@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2026 at 04:13 PM
+-- Generation Time: May 17, 2026 at 04:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,7 +47,7 @@ INSERT INTO `ai_analytics_cache` (`id`, `cache_key`, `ai_response`, `request_cou
 (3, 'resident_ai_analysis_v3', 'Summary:\n- Total residents in database: {total_residents}.\n- The community is workforce-driven (15–49: {age_15_49_percent}%).\nTrends:\n- 50–59: {age_50_59_count} ({age_50_59_percent}%), 60+: {age_60_plus_count} ({age_60_plus_percent}%).\nObservations:\n- {gender_dominant} population is higher by {gender_difference_percent}%.\nRecommendations:\n- Expand livelihood + employment support programs.\n- Prepare senior-focused services if 60+ grows further.', 0, 5, '2026-05-03 22:41:01', '2026-05-03 22:41:01'),
 (4, 'resident_ai_analysis_v4', 'Summary:\n- Resident masterlist count: {total_residents}.\n- Dominant segment: {dominant_age_group}.\nTrends:\n- Age distribution: 0–14={age_0_14_percent}%, 15–49={age_15_49_percent}%, 50–59={age_50_59_percent}%, 60+={age_60_plus_percent}%.\nObservations:\n- Male={male_count}, Female={female_count}.\nRecommendations:\n- Balance programs across youth, workforce, and seniors.\n- Run monthly audits to keep analytics reliable.', 0, 5, '2026-05-03 22:41:01', '2026-05-03 22:41:01'),
 (5, 'resident_ai_analysis_v5', 'Summary:\n- Current totals: {total_residents}.\n- Gender: {male_percent}% Male / {female_percent}% Female.\nTrends:\n- Dominant age group ({dominant_age_group}) will likely drive most certificate/assistance requests.\nObservations:\n- Even small shifts in age/sex encoding affect the computed percentages.\nRecommendations:\n- Add dropdowns/validation for sex values (Male/Female).\n- Use this breakdown for budgeting and targeted services.', 0, 5, '2026-05-03 22:41:01', '2026-05-03 22:41:01'),
-(6, 'resident_ai_analysis', 'Summary:\n- Current resident registry: 121.\n- Gender breakdown: 59 Male (48.76%) vs 62 Female (51.24%).\nTrends:\n- Working-age (15–49) remains the key segment: 64 (52.89%).\nObservations:\n- A strong workforce segment usually correlates with higher livelihood-related requests.\nRecommendations:\n- Improve livelihood and job referral programs.\n- Ensure sex values are standardized (Male/Female).', 2, 3, '2026-05-08 15:31:50', '2026-05-08 15:31:50'),
+(6, 'resident_ai_analysis', 'Summary:\n- Total residents recorded: 122.\n- Dominant gender: Female by 3.28%.\n- Dominant age group: 15-49.\nTrends:\n- Working age (15–49): 65 (53.28%).\n- Seniors (60+): 30 (24.59%).\nObservations:\n- Male: 59 (48.36%), Female: 63 (51.64%).\nRecommendations:\n- Prioritize programs based on 15-49.\n- Keep age/sex encoding consistent for accurate analytics.', 3, 3, '2026-05-15 14:32:40', '2026-05-15 14:32:40'),
 (7, 'resident_ai_analysis_v6', 'Summary:\n- Total residents: {total_residents}.\n- Dominant gender: {gender_dominant} (+{gender_difference_percent}%).\nTrends:\n- Youth (0–14): {age_0_14_count} ({age_0_14_percent}%).\n- Seniors (60+): {age_60_plus_count} ({age_60_plus_percent}%).\nObservations:\n- The largest bracket is {dominant_age_group}, which can affect demand for barangay services.\nRecommendations:\n- Strengthen youth support (education/nutrition) and senior health assistance.\n- Keep records consistent for accurate reporting.', 0, 10, '2026-05-03 22:41:51', '2026-05-03 22:41:51'),
 (8, 'resident_ai_analysis_v7', 'Summary:\n- Current resident registry: {total_residents}.\n- Gender breakdown: {male_count} Male ({male_percent}%) vs {female_count} Female ({female_percent}%).\nTrends:\n- Working-age (15–49) remains the key segment: {age_15_49_count} ({age_15_49_percent}%).\nObservations:\n- A strong workforce segment usually correlates with higher livelihood-related requests.\nRecommendations:\n- Improve livelihood and job referral programs.\n- Ensure sex values are standardized (Male/Female).', 0, 10, '2026-05-03 22:41:51', '2026-05-03 22:41:51'),
 (9, 'resident_ai_analysis_v8', 'Summary:\n- Total population records: {total_residents}.\n- Dominant age group: {dominant_age_group}.\nTrends:\n- Pre-senior (50–59): {age_50_59_count} ({age_50_59_percent}%).\n- Seniors (60+): {age_60_plus_count} ({age_60_plus_percent}%).\nObservations:\n- Increasing older-age share may increase medical and assistance documentation requests.\nRecommendations:\n- Plan targeted services for 50+ residents (health screening, benefits support).\n- Keep periodic audits to reduce inaccurate ages.', 0, 10, '2026-05-03 22:41:51', '2026-05-03 22:41:51'),
@@ -385,7 +385,8 @@ INSERT INTO `tbl_blotter` (`id_blotter`, `control_no`, `id_resident`, `qr_code`,
 (97, 'TRBLOTTER-0047', 47, 'uploads/qr_codes/TRBLOTTER-0047.png', NULL, 'REYES', 'JUANA', 'MIGUEL', 25, '111', 'LEDESMA STREET', 'EAST MODERNSITE', 'BAGUIO CITY', NULL, '09678923747', 'Vandalism reported by complainant.', '2026-04-10 16:22:33', 'DELETED', 'FLORES', 'ANA', 'F', 21, '09492272163', '2945 Roxas Blvd', 'VERBAL ABUSE', '2021-07-08', '03:11:47', 'MAIN ROAD', 'PASSERBY'),
 (98, 'TRBLOTTER-0034', 34, 'uploads/qr_codes/TRBLOTTER-0034.png', '85096', 'FLORES', 'ANA', 'ANTONIO', 57, '65', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', NULL, '09398675834', 'Vandalism reported by complainant.', '2026-04-19 16:22:33', 'DELETED', 'MENDOZA', 'JANE', 'C', 48, '09661172167', '7960 Roxas Blvd', 'NOISE COMPLAINT', '2016-06-27', '03:29:10', 'NEAR CHAPEL', 'RELATIVE'),
 (99, 'TRBLOTTER-0058', 58, 'uploads/qr_codes/TRBLOTTER-0058.png', '41033', 'NAVARRO', 'KATE', 'LUIS', 28, '70', 'LEDESMA STREET', 'EAST MODERNSITE', 'BAGUIO CITY', NULL, '09962054646', 'Property boundary dispute between neighbors.', '2026-04-19 16:22:33', 'DELETED', 'FLORES', 'JUAN', 'C', 27, '09100174410', '94 National Highway', 'HARASSMENT', '2023-07-14', '07:03:25', 'TERMINAL', 'NEIGHBOR'),
-(100, 'TRBLOTTER-0089', 89, 'uploads/qr_codes/TRBLOTTER-0089.png', '18531', 'RAMOS', 'MARIA', 'CLARA', 72, '241', 'INTERIOR LEDESMA STREET', 'EAST MODERNSITE', 'BAGUIO CITY', NULL, '09469515790', 'Property boundary dispute between neighbors.', '2026-04-09 16:22:33', 'DELETED', 'MENDOZA', 'JOSE', 'F', 64, '09396631088', '6442 Rizal Ave', 'PHYSICAL INJURY', '2026-02-23', '10:20:18', 'NEAR BARANGAY HALL', 'NEIGHBOR');
+(100, 'TRBLOTTER-0089', 89, 'uploads/qr_codes/TRBLOTTER-0089.png', '18531', 'RAMOS', 'MARIA', 'CLARA', 72, '241', 'INTERIOR LEDESMA STREET', 'EAST MODERNSITE', 'BAGUIO CITY', NULL, '09469515790', 'Property boundary dispute between neighbors.', '2026-04-09 16:22:33', 'DELETED', 'MENDOZA', 'JOSE', 'F', 64, '09396631088', '6442 Rizal Ave', 'PHYSICAL INJURY', '2026-02-23', '10:20:18', 'NEAR BARANGAY HALL', 'NEIGHBOR'),
+(128, 'TRBLOTTER-0090', 125, 'uploads/qr_codes/TRBLOTTER-0090.png', NULL, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', NULL, '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '09701726401', 'SHE THREAT ME AND BLACKMAILING ME DUE WHAT HAPPEN TO ME AND HER BF', '2026-05-15 12:52:39', 'RECORDED', 'DACUMOS', 'CHRISTINE', '', 23, '09260957423', 'SAN LUIS VILLAGE', 'THREAT', '2026-03-05', '23:00:00', 'SAN LUIS VILLAGE', 'JOBERT BATOYOG');
 
 -- --------------------------------------------------------
 
@@ -550,7 +551,8 @@ INSERT INTO `tbl_bspermit` (`id_bspermit`, `rejected_reason`, `control_no`, `qr_
 (97, '', 'TRBSPERMIT-0097', 'uploads/qr_codes/TRBSPERMIT-0097.png', '', 97, 'GARCIA', 'JENNA', 'CLARA', '09000000097', 'RESIDENT0097@EXAMPLE.COM', 'BCODE-000097', 63, 'BS GARCIA JUAN', '196', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Electronics', 36, 'DELETED'),
 (98, '', 'TRBSPERMIT-0098', 'uploads/qr_codes/TRBSPERMIT-0098.png', '', 98, 'BAUTISTA', 'FELIX', 'MARIE', '09000000098', 'RESIDENT0098@EXAMPLE.COM', 'BCODE-000098', 45, 'BS BAUTISTA PAOLO', '114', 'T. BUGALLON', 'EAST MODERNSITE', 'BAGUIO CITY', 'Services', 37, 'DELETED'),
 (99, '', 'TRBSPERMIT-0099', 'uploads/qr_codes/TRBSPERMIT-0099.png', '', 99, 'NAVARRO', 'JOY', 'ANDRES', '09000000099', 'RESIDENT0099@EXAMPLE.COM', 'BCODE-000099', 27, 'BS NAVARRO MARK', '231', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Construction', 38, 'DELETED'),
-(100, '', 'TRBSPERMIT-0100', 'uploads/qr_codes/TRBSPERMIT-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '09000000100', 'RESIDENT0100@EXAMPLE.COM', 'BCODE-000100', 76, 'BS GARCIA MARIA', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Retail', 39, 'DELETED');
+(100, '', 'TRBSPERMIT-0100', 'uploads/qr_codes/TRBSPERMIT-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '09000000100', 'RESIDENT0100@EXAMPLE.COM', 'BCODE-000100', 76, 'BS GARCIA MARIA', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Retail', 39, 'DELETED'),
+(129, '', 'TRBSPERMIT-0101', 'uploads/qr_codes/TRBSPERMIT-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '09701726401', 'genesisizzoparson@gmail.com', '47113', 0, 'RIALTY', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', 'Computer', 197, 'CLAIMED');
 
 -- --------------------------------------------------------
 
@@ -695,7 +697,9 @@ INSERT INTO `tbl_clearance` (`id_clearance`, `rejected_reason`, `control_no`, `q
 (97, '', 'TRBRGYCLEARANCE-0097', 'uploads/qr_codes/TRBRGYCLEARANCE-0097.png', NULL, 97, 'GARCIA', 'JENNA', 'CLARA', 'Water/Electric service Connection', '196', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'LIVE-IN', 63, 'FEMALE', '1963-02-22', 'QUEZON CITY', 'SECURITY GUARD', '', 'P-8102', '2017-04-05', 'ABC TRADING', 'CARLO BAUTISTA', 'PEDRO DELA CRUZ', '09432797089', '', '2026-05-05 16:03:35', 'DELETED'),
 (98, '', 'TRBRGYCLEARANCE-0098', 'uploads/qr_codes/TRBRGYCLEARANCE-0098.png', NULL, 98, 'BAUTISTA', 'FELIX', 'MARIE', 'School Requirement', '114', 'T. BUGALLON', 'EAST MODERNSITE', 'BAGUIO CITY', 'SINGLE', 45, 'MALE', '1980-11-11', 'ILAGAN CITY', 'FARMER', '', 'P-7145', '2023-07-25', 'GOLDEN HARVEST STORE', 'JOSE REYES', 'ANDRES CRUZ', '09788422072', 'NEW', '2026-05-05 16:03:35', 'DELETED'),
 (99, '', 'TRBRGYCLEARANCE-0099', 'uploads/qr_codes/TRBRGYCLEARANCE-0099.png', NULL, 99, 'NAVARRO', 'JOY', 'ANDRES', 'Other important transactions.', '231', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'WIDOWED', 27, 'FEMALE', '1998-08-01', 'BAGUIO CITY', 'CONSTRUCTION WORKER', 'Employed', 'P-7569', '2020-05-25', 'SAMPAGUITA ENTERPRISES', 'LIZA RAMOS', 'LUIS NAVARRO', '09204164553', '', '2026-05-05 16:03:35', 'DELETED'),
-(100, '', 'TRBRGYCLEARANCE-0100', 'uploads/qr_codes/TRBRGYCLEARANCE-0100.png', NULL, 100, 'GARCIA', 'MARIA', 'MIGUEL', 'Other important transactions.', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'LIVE-IN', 76, 'FEMALE', '1950-04-22', 'CABANATUAN CITY', 'UNEMPLOYED', 'Employed', 'P-6963', '2024-04-12', 'ISLA LOGISTICS', 'JANE FLORES', 'ELIZABETH VILLAR', '09618699898', 'NEW', '2026-05-05 16:03:35', 'DELETED');
+(100, '', 'TRBRGYCLEARANCE-0100', 'uploads/qr_codes/TRBRGYCLEARANCE-0100.png', NULL, 100, 'GARCIA', 'MARIA', 'MIGUEL', 'Other important transactions.', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'LIVE-IN', 76, 'FEMALE', '1950-04-22', 'CABANATUAN CITY', 'UNEMPLOYED', 'Employed', 'P-6963', '2024-04-12', 'ISLA LOGISTICS', 'JANE FLORES', 'ELIZABETH VILLAR', '09618699898', 'NEW', '2026-05-05 16:03:35', 'DELETED'),
+(128, '', 'TRBRGYCLEARANCE-0101', 'uploads/qr_codes/TRBRGYCLEARANCE-0101.png', NULL, 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'School/S.S.S Requirements', '142', 'DR NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'In a relationship', 25, 'Female', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'STUDENT', 'Unemployed', '125', '2001-01-10', 'N/A', 'ANTHONY QUIPSE', 'SHARON MARCIAL', '442-3545', 'NEW', '2026-05-15 08:36:08', 'PENDING'),
+(129, '', 'TRBRGYCLEARANCE-0102', 'uploads/qr_codes/TRBRGYCLEARANCE-0102.png', NULL, 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'Local Employment', '142', 'DR NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'In a relationship', 25, 'Female', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'VIRTUAL ASSISTANT', 'Employed', '321', '2001-01-10', 'NMS', 'XIANTINA TORREFIEL', 'VANESSA SCHUYLER', '442-1532', 'NEW', '2026-05-15 08:43:57', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -849,7 +853,8 @@ INSERT INTO `tbl_indigency` (`id_indigency`, `rejected_reason`, `control_no`, `q
 (97, '', 'TRINDIGENCY-0097', 'uploads/qr_codes/TRINDIGENCY-0097.png', '', 97, 'GARCIA', 'JENNA', 'CLARA', '1963-02-22', 63, 'FILIPINO', '196', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', '2018-02-28', 'Job/Employment', '2026-05-08', 'DELETED'),
 (98, '', 'TRINDIGENCY-0098', 'uploads/qr_codes/TRINDIGENCY-0098.png', '', 98, 'BAUTISTA', 'FELIX', 'MARIE', '1980-11-11', 45, 'FILIPINO', '114', 'T. BUGALLON', 'EAST MODERNSITE', 'BAGUIO CITY', '2022-03-14', 'Business Establishment', '2026-05-09', 'DELETED'),
 (99, '', 'TRINDIGENCY-0099', 'uploads/qr_codes/TRINDIGENCY-0099.png', '', 99, 'NAVARRO', 'JOY', 'ANDRES', '1998-08-01', 27, 'FILIPINO', '231', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', '2017-12-01', 'Business Establishment', '2026-05-05', 'DELETED'),
-(100, '', 'TRINDIGENCY-0100', 'uploads/qr_codes/TRINDIGENCY-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '1950-04-22', 76, 'FILIPINO', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', '2020-01-16', 'Business Establishment', '2026-05-07', 'DELETED');
+(100, '', 'TRINDIGENCY-0100', 'uploads/qr_codes/TRINDIGENCY-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '1950-04-22', 76, 'FILIPINO', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', '2020-01-16', 'Business Establishment', '2026-05-07', 'DELETED'),
+(129, '', 'TRINDIGENCY-0101', 'uploads/qr_codes/TRINDIGENCY-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '2000-10-22', 25, 'Filipino', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', '0000-00-00', 'Scholarship', '2026-05-15', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1029,8 @@ INSERT INTO `tbl_rescert` (`id_rescert`, `rejected_reason`, `control_no`, `qr_co
 (97, '', 'TRRESIDENCY-0097', 'uploads/qr_codes/TRRESIDENCY-0097.png', '', 97, 'GARCIA', 'JENNA', 'CLARA', '63', 'FILIPINO', 'CONSTRUCTION WORKER', '09000000097', 'RESIDENT0097@EXAMPLE.COM', '196', 'DR. NAVARRO ALLEY', '1963-02-22', 'QUEZON CITY', 'LIVE-IN', 'EAST MODERNSITE', 'BAGUIO CITY', 'Less than 6 months', '2026-05-08', 'Postal ID Application', 'Homewowners\' Association Endorsement', '', 'DELETED'),
 (98, '', 'TRRESIDENCY-0098', 'uploads/qr_codes/TRRESIDENCY-0098.png', '', 98, 'BAUTISTA', 'FELIX', 'MARIE', '45', 'FILIPINO', 'CONSTRUCTION WORKER', '09000000098', 'RESIDENT0098@EXAMPLE.COM', '114', 'T. BUGALLON', '1980-11-11', 'ILAGAN CITY', 'SINGLE', 'EAST MODERNSITE', 'BAGUIO CITY', '6 months to 1 year', '2026-05-10', 'Job/Employment', 'Valid ID,Utility Bill', '', 'DELETED'),
 (99, '', 'TRRESIDENCY-0099', 'uploads/qr_codes/TRRESIDENCY-0099.png', '', 99, 'NAVARRO', 'JOY', 'ANDRES', '27', 'FILIPINO', 'FARMER', '09000000099', 'RESIDENT0099@EXAMPLE.COM', '231', 'DR. NAVARRO ALLEY', '1998-08-01', 'BAGUIO CITY', 'WIDOWED', 'EAST MODERNSITE', 'BAGUIO CITY', '1-5 years', '2026-05-13', 'Business Permit', 'Valid ID,Utility Bill', '', 'DELETED'),
-(100, '', 'TRRESIDENCY-0100', 'uploads/qr_codes/TRRESIDENCY-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '76', 'FILIPINO', 'VENDOR', '09000000100', 'RESIDENT0100@EXAMPLE.COM', '63', 'DR. NAVARRO ALLEY', '1950-04-22', 'CABANATUAN CITY', 'LIVE-IN', 'EAST MODERNSITE', 'BAGUIO CITY', 'Less than 6 months', '2026-05-09', 'Other important transactions.', 'Valid ID', '', 'DELETED');
+(100, '', 'TRRESIDENCY-0100', 'uploads/qr_codes/TRRESIDENCY-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '76', 'FILIPINO', 'VENDOR', '09000000100', 'RESIDENT0100@EXAMPLE.COM', '63', 'DR. NAVARRO ALLEY', '1950-04-22', 'CABANATUAN CITY', 'LIVE-IN', 'EAST MODERNSITE', 'BAGUIO CITY', 'Less than 6 months', '2026-05-09', 'Other important transactions.', 'Valid ID', '', 'DELETED'),
+(134, '', 'TRRESIDENCY-0101', 'uploads/qr_codes/TRRESIDENCY-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '', 'FILIPINO', 'STUDENT', '09701726401', 'genesisizzoparson@gmail.com', '142', 'DR NAVARRO ALLEY', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'In a relationship', 'EAST MODERN SITE', 'BAGUIO CITY', 'More than 5 years', '2026-05-15', 'School Requirement', 'Valid ID', 'uploads/1778820458_NATIONAL ID.jpg', 'READY FOR PICKUP');
 
 -- --------------------------------------------------------
 
@@ -1216,7 +1222,8 @@ INSERT INTO `tbl_resident` (`id_resident`, `rejected_reason`, `is_walk_in`, `qr_
 (118, 'MISMATCH OF INFORMATION', 0, '', '', '', 'CN-0118', 'REJECTED', NULL, 'RESIDENT0118@EXAMPLE.COM', 'f8461b554d59b3014e8ff5165dc62fac', 'MENDOZA', 'CARLO', 'CLARA', 21, 'FEMALE', 'SINGLE', NULL, NULL, 'EAST MODERNSITE', 'BAGUIO CITY', NULL, NULL, '2005-04-10', 'BAGUIO CITY', 'FILIPINO', NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RESIDENT', NULL, NULL, NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DELETED'),
 (119, 'UNCLEAR UPLOADED DOCUMENTS', 0, '', '', '', 'CN-0119', 'REJECTED', NULL, 'RESIDENT0119@EXAMPLE.COM', 'f8461b554d59b3014e8ff5165dc62fac', 'VILLAR', 'JUAN', 'LUIS', 69, 'MALE', 'WIDOWED', NULL, NULL, 'EAST MODERNSITE', 'BAGUIO CITY', NULL, NULL, '1956-12-30', 'QUEZON CITY', 'FILIPINO', NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RESIDENT', NULL, NULL, NULL, 'YES', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DELETED'),
 (120, 'INCOMPLETE PERSONAL INFORMATION', 0, '', '', '', 'CN-0120', 'REJECTED', NULL, 'RESIDENT0120@EXAMPLE.COM', 'f8461b554d59b3014e8ff5165dc62fac', 'SANTOS', 'ANA', 'FERNANDO', 51, 'FEMALE', 'LIVE-IN', NULL, NULL, 'EAST MODERNSITE', 'BAGUIO CITY', NULL, NULL, '1974-09-19', 'ILAGAN CITY', 'FILIPINO', NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RESIDENT', NULL, NULL, NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DELETED'),
-(125, '', 0, 'uploads/qr_codes/CN-0121.png', 'PhilSys ID (National ID)', 'PhilHealth ID', 'CN-0121', 'approved', NULL, 'genesisizzoparson@gmail.com', '9fd6c0b51277d106e7ae73d037f4572b', 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 25, 'Female', 'Single', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '09701726401', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'Filipino', NULL, 'No', 'Yes', '', '', 'Yes', NULL, '', NULL, '', NULL, 'resident', NULL, '', 'Yes', '', NULL, NULL, '10,000', 'STUDENT', 'Yes', 'No', '', 'No', NULL, 'No', 'ID1_69fd89599bc76.jpg', 'ID2_69fd89599c27d.jpg', 'PENDING');
+(125, '', 0, 'uploads/qr_codes/CN-0121.png', 'PhilSys ID (National ID)', 'PhilHealth ID', 'CN-0121', 'approved', NULL, 'genesisizzoparson@gmail.com', '9fd6c0b51277d106e7ae73d037f4572b', 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 25, 'Female', 'Single', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '09701726401', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'Filipino', NULL, 'No', 'Yes', '', '', 'Yes', NULL, '', NULL, '', NULL, 'resident', NULL, '', 'Yes', '', NULL, NULL, '10,000', 'STUDENT', 'Yes', 'No', '', 'No', NULL, 'No', 'ID1_69fd89599bc76.jpg', 'ID2_69fd89599c27d.jpg', 'PENDING'),
+(126, '', 1, 'uploads/qr_codes/CN-0122.png', 'PhilSys ID (National ID)', 'Passport', 'CN-0122', 'approved', NULL, 'abc@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', 'ABDSA', 'ASDSADSA', 'DAS', 25, 'Female', 'Single', '213', 'ABC', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '566', '2000-10-25', 'BAGUIO CITY', 'Filipino', NULL, 'No', '', '', '', '', NULL, '', NULL, '', NULL, 'resident', NULL, '', '', '', NULL, NULL, '10,000', 'STUDENT', 'Yes', 'No', '', 'No', NULL, 'No', 'ID1_6a06b0fc66e3f.png', 'ID2_6a06b0fc6743a.png', 'APPROVED');
 
 -- --------------------------------------------------------
 
@@ -1589,6 +1596,24 @@ CREATE TABLE `tmp_add_family57b13` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tmp_add_family85ed4`
+--
+
+CREATE TABLE `tmp_add_family85ed4` (
+  `id` int(11) NOT NULL,
+  `family_lastname` varchar(128) DEFAULT '',
+  `family_firstname` varchar(128) DEFAULT '',
+  `family_middleinitial` varchar(128) DEFAULT '',
+  `relationshipid` varchar(128) DEFAULT '0',
+  `family_age` varchar(128) DEFAULT '',
+  `familycivilid` varchar(128) DEFAULT '0',
+  `occupation` varchar(128) DEFAULT '',
+  `income` varchar(128) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tmp_add_family88c11`
 --
 
@@ -1895,6 +1920,24 @@ CREATE TABLE `tmp_add_family74055` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tmp_add_family88830`
+--
+
+CREATE TABLE `tmp_add_family88830` (
+  `id` int(11) NOT NULL,
+  `family_lastname` varchar(128) DEFAULT '',
+  `family_firstname` varchar(128) DEFAULT '',
+  `family_middleinitial` varchar(128) DEFAULT '',
+  `relationshipid` varchar(128) DEFAULT '0',
+  `family_age` varchar(128) DEFAULT '',
+  `familycivilid` varchar(128) DEFAULT '0',
+  `occupation` varchar(128) DEFAULT '',
+  `income` varchar(128) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tmp_add_familya7db0`
 --
 
@@ -2061,6 +2104,24 @@ CREATE TABLE `tmp_add_familyb8451` (
 --
 
 CREATE TABLE `tmp_add_familybe74d` (
+  `id` int(11) NOT NULL,
+  `family_lastname` varchar(128) DEFAULT '',
+  `family_firstname` varchar(128) DEFAULT '',
+  `family_middleinitial` varchar(128) DEFAULT '',
+  `relationshipid` varchar(128) DEFAULT '0',
+  `family_age` varchar(128) DEFAULT '',
+  `familycivilid` varchar(128) DEFAULT '0',
+  `occupation` varchar(128) DEFAULT '',
+  `income` varchar(128) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tmp_add_familyce4da`
+--
+
+CREATE TABLE `tmp_add_familyce4da` (
   `id` int(11) NOT NULL,
   `family_lastname` varchar(128) DEFAULT '',
   `family_firstname` varchar(128) DEFAULT '',
@@ -2459,6 +2520,12 @@ ALTER TABLE `tmp_add_family57b13`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tmp_add_family85ed4`
+--
+ALTER TABLE `tmp_add_family85ed4`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tmp_add_family88c11`
 --
 ALTER TABLE `tmp_add_family88c11`
@@ -2561,6 +2628,12 @@ ALTER TABLE `tmp_add_family74055`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tmp_add_family88830`
+--
+ALTER TABLE `tmp_add_family88830`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tmp_add_familya7db0`
 --
 ALTER TABLE `tmp_add_familya7db0`
@@ -2618,6 +2691,12 @@ ALTER TABLE `tmp_add_familyb8451`
 -- Indexes for table `tmp_add_familybe74d`
 --
 ALTER TABLE `tmp_add_familybe74d`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tmp_add_familyce4da`
+--
+ALTER TABLE `tmp_add_familyce4da`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2730,19 +2809,19 @@ ALTER TABLE `tbl_announcement`
 -- AUTO_INCREMENT for table `tbl_blotter`
 --
 ALTER TABLE `tbl_blotter`
-  MODIFY `id_blotter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id_blotter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `tbl_bspermit`
 --
 ALTER TABLE `tbl_bspermit`
-  MODIFY `id_bspermit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id_bspermit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `tbl_clearance`
 --
 ALTER TABLE `tbl_clearance`
-  MODIFY `id_clearance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id_clearance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `tbl_family_member`
@@ -2754,7 +2833,7 @@ ALTER TABLE `tbl_family_member`
 -- AUTO_INCREMENT for table `tbl_indigency`
 --
 ALTER TABLE `tbl_indigency`
-  MODIFY `id_indigency` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id_indigency` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `tbl_officials`
@@ -2766,13 +2845,13 @@ ALTER TABLE `tbl_officials`
 -- AUTO_INCREMENT for table `tbl_rescert`
 --
 ALTER TABLE `tbl_rescert`
-  MODIFY `id_rescert` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id_rescert` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `tbl_resident`
 --
 ALTER TABLE `tbl_resident`
-  MODIFY `id_resident` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id_resident` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `tbl_services`
@@ -2889,6 +2968,12 @@ ALTER TABLE `tmp_add_family57b13`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tmp_add_family85ed4`
+--
+ALTER TABLE `tmp_add_family85ed4`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tmp_add_family88c11`
 --
 ALTER TABLE `tmp_add_family88c11`
@@ -2991,6 +3076,12 @@ ALTER TABLE `tmp_add_family74055`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tmp_add_family88830`
+--
+ALTER TABLE `tmp_add_family88830`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tmp_add_familya7db0`
 --
 ALTER TABLE `tmp_add_familya7db0`
@@ -3048,6 +3139,12 @@ ALTER TABLE `tmp_add_familyb8451`
 -- AUTO_INCREMENT for table `tmp_add_familybe74d`
 --
 ALTER TABLE `tmp_add_familybe74d`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tmp_add_familyce4da`
+--
+ALTER TABLE `tmp_add_familyce4da`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
