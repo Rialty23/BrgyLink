@@ -158,6 +158,12 @@
                     <span>Population Trends</span></a>
             </li>
 
+            <li id="transaction_logs" class="nav-item">
+                <a class="nav-link" href="admn_transaction_logs.php">
+                    <i class="fas fa-receipt"></i>
+                    <span>Transaction Logs</span></a>
+            </li>
+
 
             <div class="sidebar-heading">
                 Settings
