@@ -15,11 +15,7 @@ $sql = "
         SELECT
             control_no AS transaction_no,
             TRIM(CONCAT(lname, ', ', fname, IF(mi IS NULL OR mi = '', '', CONCAT(' ', mi)))) AS full_name,
-<<<<<<< HEAD
             timestamp_date AS date_issued
-=======
-            date AS date_issued
->>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
         FROM tbl_rescert
         WHERE status <> 'DELETED'
 
@@ -28,11 +24,7 @@ $sql = "
         SELECT
             control_no AS transaction_no,
             TRIM(CONCAT(lname, ', ', fname, IF(mi IS NULL OR mi = '', '', CONCAT(' ', mi)))) AS full_name,
-<<<<<<< HEAD
             timestamp_date AS date_issued
-=======
-            NULL AS date_issued
->>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
         FROM tbl_bspermit
         WHERE status <> 'DELETED'
 
@@ -41,11 +33,7 @@ $sql = "
         SELECT
             control_no AS transaction_no,
             TRIM(CONCAT(lname, ', ', fname, IF(mi IS NULL OR mi = '', '', CONCAT(' ', mi)))) AS full_name,
-<<<<<<< HEAD
             timestamp_date AS date_issued
-=======
-            date_issued AS date_issued
->>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
         FROM tbl_clearance
         WHERE status2 <> 'DELETED'
 
@@ -54,11 +42,7 @@ $sql = "
         SELECT
             control_no AS transaction_no,
             TRIM(CONCAT(lname, ', ', fname, IF(mi IS NULL OR mi = '', '', CONCAT(' ', mi)))) AS full_name,
-<<<<<<< HEAD
             timestamp_date AS date_issued
-=======
-            date AS date_issued
->>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
         FROM tbl_indigency
         WHERE status <> 'DELETED'
 
@@ -67,11 +51,7 @@ $sql = "
         SELECT
             control_no AS transaction_no,
             TRIM(CONCAT(lname, ', ', fname, IF(mi IS NULL OR mi = '', '', CONCAT(' ', mi)))) AS full_name,
-<<<<<<< HEAD
             timestamp_date AS date_issued
-=======
-            timeapplied AS date_issued
->>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
         FROM tbl_blotter
         WHERE status <> 'DELETED'
     ) AS transaction_logs
@@ -83,11 +63,7 @@ if ($keyword !== '') {
     $params[':kw'] = '%' . $keyword . '%';
 }
 
-<<<<<<< HEAD
 $sql .= " ORDER BY date_issued DESC";
-=======
-$sql .= " ORDER BY date_issued DESC, transaction_no DESC";
->>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 $stmt = $connection->prepare($sql);
 $stmt->execute($params);
