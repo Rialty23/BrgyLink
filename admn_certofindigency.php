@@ -160,11 +160,11 @@ include('dashboard_sidebar_start.php');
 
                             <!--<label> Barangay: </label>-->
                             <input type="hidden" class="form-control" name="brgy"
-                                value="East Modern Site" required readonly>
+                                value="EAST MODERNSITE" required readonly>
 
                             <!--<label> Municipality: </label>-->
                             <input type="hidden" class="form-control" name="municipal"
-                                value="Bagiuo City" required readonly>
+                                value="BAGUIO CITY" required readonly>
 
                         </div>
 
