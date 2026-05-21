@@ -849,8 +849,8 @@ $bmis->create_bspermit();
                                             <option value="Mining">Mining</option>
                                             <option value="WorldWide Web">WorldWide Web</option>
                                             <option value="Electronics">Electronics</option>
-                                            <option value="Pharmaceutical">Pharmaceutical</option>
-                                            <option value="Transportation">Transportation</option>
+                                            <option value="Transport">Pharmaceutical</option>
+                                            <option value="Transport">Aerospace</option>
                                         </select>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>

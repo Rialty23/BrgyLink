@@ -195,10 +195,10 @@ include('dashboard_sidebar_start.php');
                             </div>
 
                             <!--<label> Barangay: </label>-->
-                            <input type="hidden" class="form-control" name="brgy" value="EAST MODERN SITE" required readonly>
+                            <input type="hidden" class="form-control" name="brgy" value="East Modern Site" required readonly>
 
                             <!--<label> Municipality: </label>-->
-                            <input type="hidden" class="form-control" name="municipal" value="BAGUIO CITY" required readonly>
+                            <input type="hidden" class="form-control" name="municipal" value="Bagiuo City" required readonly>
                         </div>
 
                         <div class="row">
@@ -206,26 +206,27 @@ include('dashboard_sidebar_start.php');
                                 <div class="form-group">
                                     <label for="status">Business Industry:</label>
                                     <select class="form-control" style="text-align:left;" name="bsindustry" id="status" placeholder="Enter Status" required>
-                                            <option value="">Choose your Business Industry</option>
-                                            <option value="Computer">Computer</option>
-                                            <option value="Telecommunication">Telecommunication</option>
-                                            <option value="Agriculture">Agriculture</option>
-                                            <option value="Construction">Construction</option>
-                                            <option value="Education">Education</option>
-                                            <option value="Pharmaceutical">Pharmaceutical</option>
-                                            <option value="Food">Food</option>
-                                            <option value="HealthCare">HealthCare</option>
-                                            <option value="Hospitality">Hospitality</option>
-                                            <option value="Entertainment">Entertainment</option>
-                                            <option value="News Media">News Media</option>
-                                            <option value="Energy">Energy</option>
-                                            <option value="Manufacturing">Manufacturing</option>
-                                            <option value="Music">Music</option>
-                                            <option value="Mining">Mining</option>
-                                            <option value="WorldWide Web">WorldWide Web</option>
-                                            <option value="Electronics">Electronics</option>
-                                            <option value="Pharmaceutical">Pharmaceutical</option>
-                                            <option value="Transportation">Transportation</option>
+                                        <option value="">Choose your Business Industry</option>
+                                        <option value="Aerospace">Aerospace</option>
+                                        <option value="Agriculture">Agriculture</option>
+                                        <option value="Computer">Computer</option>
+                                        <option value="Construction">Construction</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Energy">Energy</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Food">Food</option>
+                                        <option value="HealthCare">HealthCare</option>
+                                        <option value="Hospitality">Hospitality</option>
+                                        <option value="Manufacturing">Manufacturing</option>
+                                        <option value="Mining">Mining</option>
+                                        <option value="Music">Music</option>
+                                        <option value="News Media">News Media</option>
+                                        <option value="Pharmaceutical">Pharmaceutical</option>
+                                        <option value="Telecommunication">Telecommunication</option>
+                                        <option value="Transport">Transport</option>
+                                        <option value="WorldWide Web">WorldWide Web</option>
+
                                     </select>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>

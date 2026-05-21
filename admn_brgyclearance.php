@@ -169,10 +169,10 @@ include('dashboard_sidebar_start.php');
                                 </div>
                             </div>
                             <!--<label> Barangay: </label>-->
-                            <input type="hidden" class="form-control" name="brgy" value="EAST MODERN SITE"
+                            <input type="hidden" class="form-control" name="brgy" value="East Modern Site"
                                 placeholder="Enter Barangay" required readonly>
                             <!--<label> Municipality: </label>-->
-                            <input type="hidden" class="form-control" name="municipal" value="BAGUIO CITY"
+                            <input type="hidden" class="form-control" name="municipal" value="Bagiuo City"
                                 placeholder="Enter Municipality" required readonly>
                         </div>
 
