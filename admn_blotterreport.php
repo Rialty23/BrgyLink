@@ -301,7 +301,7 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
                   <p><strong>Middle Initial:</strong> <span id="detail_mi"></span></p>
                   <p><strong>Age:</strong> <span id="detail_age"></span></p>
                   <p><strong>Address:</strong> <span id="detail_address"></span></p>
-                  <p><strong>Barangay:</strong> <span id="detail_brgy"></span></p>
+                  <p><strong>Barangay:</strong> <span id="detail_gi"></span></p>
                   <p><strong>Municipal:</strong> <span id="detail_municipal"></span></p>
                   <p><strong>Contact:</strong> <span id="detail_contact_detail"></span></p>
                </div>

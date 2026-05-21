@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: May 21, 2026 at 12:54 PM
+=======
+-- Generation Time: May 17, 2026 at 04:31 PM
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -552,8 +556,12 @@ INSERT INTO `tbl_bspermit` (`id_bspermit`, `rejected_reason`, `control_no`, `qr_
 (98, '', 'TRBSPERMIT-0098', 'uploads/qr_codes/TRBSPERMIT-0098.png', '', 98, 'BAUTISTA', 'FELIX', 'MARIE', '09000000098', 'RESIDENT0098@EXAMPLE.COM', 'BCODE-000098', 45, 'BS BAUTISTA PAOLO', '114', 'T. BUGALLON', 'EAST MODERNSITE', 'BAGUIO CITY', 'Services', 37, 'DELETED'),
 (99, '', 'TRBSPERMIT-0099', 'uploads/qr_codes/TRBSPERMIT-0099.png', '', 99, 'NAVARRO', 'JOY', 'ANDRES', '09000000099', 'RESIDENT0099@EXAMPLE.COM', 'BCODE-000099', 27, 'BS NAVARRO MARK', '231', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Construction', 38, 'DELETED'),
 (100, '', 'TRBSPERMIT-0100', 'uploads/qr_codes/TRBSPERMIT-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '09000000100', 'RESIDENT0100@EXAMPLE.COM', 'BCODE-000100', 76, 'BS GARCIA MARIA', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Retail', 39, 'DELETED'),
+<<<<<<< HEAD
 (129, '', 'TRBSPERMIT-0101', 'uploads/qr_codes/TRBSPERMIT-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '09701726401', 'genesisizzoparson@gmail.com', '47113', 0, 'RIALTY', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', 'Computer', 197, 'CLAIMED'),
 (132, '', '', '', '94690856373', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', NULL, NULL, NULL, 25, 'TERRABURST', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', 'Mining', 1000, 'PENDING');
+=======
+(129, '', 'TRBSPERMIT-0101', 'uploads/qr_codes/TRBSPERMIT-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '09701726401', 'genesisizzoparson@gmail.com', '47113', 0, 'RIALTY', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', 'Computer', 197, 'CLAIMED');
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 -- --------------------------------------------------------
 
@@ -700,10 +708,14 @@ INSERT INTO `tbl_clearance` (`id_clearance`, `rejected_reason`, `control_no`, `q
 (99, '', 'TRBRGYCLEARANCE-0099', 'uploads/qr_codes/TRBRGYCLEARANCE-0099.png', NULL, 99, 'NAVARRO', 'JOY', 'ANDRES', 'Other important transactions.', '231', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'WIDOWED', 27, 'FEMALE', '1998-08-01', 'BAGUIO CITY', 'CONSTRUCTION WORKER', 'Employed', 'P-7569', '2020-05-25', 'SAMPAGUITA ENTERPRISES', 'LIZA RAMOS', 'LUIS NAVARRO', '09204164553', '', '2026-05-05 16:03:35', 'DELETED'),
 (100, '', 'TRBRGYCLEARANCE-0100', 'uploads/qr_codes/TRBRGYCLEARANCE-0100.png', NULL, 100, 'GARCIA', 'MARIA', 'MIGUEL', 'Other important transactions.', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'LIVE-IN', 76, 'FEMALE', '1950-04-22', 'CABANATUAN CITY', 'UNEMPLOYED', 'Employed', 'P-6963', '2024-04-12', 'ISLA LOGISTICS', 'JANE FLORES', 'ELIZABETH VILLAR', '09618699898', 'NEW', '2026-05-05 16:03:35', 'DELETED'),
 (128, '', 'TRBRGYCLEARANCE-0101', 'uploads/qr_codes/TRBRGYCLEARANCE-0101.png', NULL, 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'School/S.S.S Requirements', '142', 'DR NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'In a relationship', 25, 'Female', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'STUDENT', 'Unemployed', '125', '2001-01-10', 'N/A', 'ANTHONY QUIPSE', 'SHARON MARCIAL', '442-3545', 'NEW', '2026-05-15 08:36:08', 'PENDING'),
+<<<<<<< HEAD
 (129, '', 'TRBRGYCLEARANCE-0102', 'uploads/qr_codes/TRBRGYCLEARANCE-0102.png', NULL, 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'Local Employment', '142', 'DR NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'In a relationship', 25, 'Female', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'VIRTUAL ASSISTANT', 'Employed', '321', '2001-01-10', 'NMS', 'XIANTINA TORREFIEL', 'VANESSA SCHUYLER', '442-1532', 'NEW', '2026-05-15 08:43:57', 'PENDING'),
 (130, '', '', '', '43064754881', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'Loan', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', 'In a relationship', 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-20 17:29:42', 'PENDING'),
 (132, '', '', '', '17180415753', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'NBI/Police Clearance', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', 'Single', 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-20 17:54:44', 'PENDING'),
 (135, '', '', '', '32484935772', 100, 'GARCIA', 'MARIA', 'MIGUEL', 'Bank Requirements', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'Engaged', 76, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-20 18:28:20', 'PENDING');
+=======
+(129, '', 'TRBRGYCLEARANCE-0102', 'uploads/qr_codes/TRBRGYCLEARANCE-0102.png', NULL, 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 'Local Employment', '142', 'DR NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', 'In a relationship', 25, 'Female', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'VIRTUAL ASSISTANT', 'Employed', '321', '2001-01-10', 'NMS', 'XIANTINA TORREFIEL', 'VANESSA SCHUYLER', '442-1532', 'NEW', '2026-05-15 08:43:57', 'PENDING');
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 -- --------------------------------------------------------
 
@@ -858,8 +870,12 @@ INSERT INTO `tbl_indigency` (`id_indigency`, `rejected_reason`, `control_no`, `q
 (98, '', 'TRINDIGENCY-0098', 'uploads/qr_codes/TRINDIGENCY-0098.png', '', 98, 'BAUTISTA', 'FELIX', 'MARIE', '1980-11-11', 45, 'FILIPINO', '114', 'T. BUGALLON', 'EAST MODERNSITE', 'BAGUIO CITY', '2022-03-14', 'Business Establishment', '2026-05-09', 'DELETED'),
 (99, '', 'TRINDIGENCY-0099', 'uploads/qr_codes/TRINDIGENCY-0099.png', '', 99, 'NAVARRO', 'JOY', 'ANDRES', '1998-08-01', 27, 'FILIPINO', '231', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', '2017-12-01', 'Business Establishment', '2026-05-05', 'DELETED'),
 (100, '', 'TRINDIGENCY-0100', 'uploads/qr_codes/TRINDIGENCY-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '1950-04-22', 76, 'FILIPINO', '63', 'DR. NAVARRO ALLEY', 'EAST MODERNSITE', 'BAGUIO CITY', '2020-01-16', 'Business Establishment', '2026-05-07', 'DELETED'),
+<<<<<<< HEAD
 (129, '', 'TRINDIGENCY-0101', 'uploads/qr_codes/TRINDIGENCY-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '2000-10-22', 25, 'Filipino', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', '0000-00-00', 'Scholarship', '2026-05-15', 'PENDING'),
 (130, '', '', '', '12195878593', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', NULL, NULL, 'Filipino', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, 'Job/Employment', '2026-05-20', 'PENDING');
+=======
+(129, '', 'TRINDIGENCY-0101', 'uploads/qr_codes/TRINDIGENCY-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '2000-10-22', 25, 'Filipino', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', '0000-00-00', 'Scholarship', '2026-05-15', 'PENDING');
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 -- --------------------------------------------------------
 
@@ -1035,8 +1051,12 @@ INSERT INTO `tbl_rescert` (`id_rescert`, `rejected_reason`, `control_no`, `qr_co
 (98, '', 'TRRESIDENCY-0098', 'uploads/qr_codes/TRRESIDENCY-0098.png', '', 98, 'BAUTISTA', 'FELIX', 'MARIE', '45', 'FILIPINO', 'CONSTRUCTION WORKER', '09000000098', 'RESIDENT0098@EXAMPLE.COM', '114', 'T. BUGALLON', '1980-11-11', 'ILAGAN CITY', 'SINGLE', 'EAST MODERNSITE', 'BAGUIO CITY', '6 months to 1 year', '2026-05-10', 'Job/Employment', 'Valid ID,Utility Bill', '', 'DELETED'),
 (99, '', 'TRRESIDENCY-0099', 'uploads/qr_codes/TRRESIDENCY-0099.png', '', 99, 'NAVARRO', 'JOY', 'ANDRES', '27', 'FILIPINO', 'FARMER', '09000000099', 'RESIDENT0099@EXAMPLE.COM', '231', 'DR. NAVARRO ALLEY', '1998-08-01', 'BAGUIO CITY', 'WIDOWED', 'EAST MODERNSITE', 'BAGUIO CITY', '1-5 years', '2026-05-13', 'Business Permit', 'Valid ID,Utility Bill', '', 'DELETED'),
 (100, '', 'TRRESIDENCY-0100', 'uploads/qr_codes/TRRESIDENCY-0100.png', '', 100, 'GARCIA', 'MARIA', 'MIGUEL', '76', 'FILIPINO', 'VENDOR', '09000000100', 'RESIDENT0100@EXAMPLE.COM', '63', 'DR. NAVARRO ALLEY', '1950-04-22', 'CABANATUAN CITY', 'LIVE-IN', 'EAST MODERNSITE', 'BAGUIO CITY', 'Less than 6 months', '2026-05-09', 'Other important transactions.', 'Valid ID', '', 'DELETED'),
+<<<<<<< HEAD
 (134, '', 'TRRESIDENCY-0101', 'uploads/qr_codes/TRRESIDENCY-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '', 'FILIPINO', 'STUDENT', '09701726401', 'genesisizzoparson@gmail.com', '142', 'DR NAVARRO ALLEY', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'In a relationship', 'EAST MODERN SITE', 'BAGUIO CITY', 'More than 5 years', '2026-05-15', 'School Requirement', 'Valid ID', 'uploads/1778820458_NATIONAL ID.jpg', 'READY FOR PICKUP'),
 (135, '', '', '', '89842864946', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '25', 'Filipino', '', '', '', '142', 'DR NAVARRO ALLEY', NULL, '', '', 'EAST MODERN SITE', 'BAGUIO CITY', '', '2026-05-20', 'Financial Transaction', NULL, NULL, 'PENDING');
+=======
+(134, '', 'TRRESIDENCY-0101', 'uploads/qr_codes/TRRESIDENCY-0101.png', '', 125, 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', '', 'FILIPINO', 'STUDENT', '09701726401', 'genesisizzoparson@gmail.com', '142', 'DR NAVARRO ALLEY', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'In a relationship', 'EAST MODERN SITE', 'BAGUIO CITY', 'More than 5 years', '2026-05-15', 'School Requirement', 'Valid ID', 'uploads/1778820458_NATIONAL ID.jpg', 'READY FOR PICKUP');
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 -- --------------------------------------------------------
 
@@ -1229,7 +1249,11 @@ INSERT INTO `tbl_resident` (`id_resident`, `rejected_reason`, `is_walk_in`, `qr_
 (119, 'UNCLEAR UPLOADED DOCUMENTS', 0, '', '', '', 'CN-0119', 'REJECTED', NULL, 'RESIDENT0119@EXAMPLE.COM', 'f8461b554d59b3014e8ff5165dc62fac', 'VILLAR', 'JUAN', 'LUIS', 69, 'MALE', 'WIDOWED', NULL, NULL, 'EAST MODERNSITE', 'BAGUIO CITY', NULL, NULL, '1956-12-30', 'QUEZON CITY', 'FILIPINO', NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RESIDENT', NULL, NULL, NULL, 'YES', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DELETED'),
 (120, 'INCOMPLETE PERSONAL INFORMATION', 0, '', '', '', 'CN-0120', 'REJECTED', NULL, 'RESIDENT0120@EXAMPLE.COM', 'f8461b554d59b3014e8ff5165dc62fac', 'SANTOS', 'ANA', 'FERNANDO', 51, 'FEMALE', 'LIVE-IN', NULL, NULL, 'EAST MODERNSITE', 'BAGUIO CITY', NULL, NULL, '1974-09-19', 'ILAGAN CITY', 'FILIPINO', NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RESIDENT', NULL, NULL, NULL, 'NO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DELETED'),
 (125, '', 0, 'uploads/qr_codes/CN-0121.png', 'PhilSys ID (National ID)', 'PhilHealth ID', 'CN-0121', 'approved', NULL, 'genesisizzoparson@gmail.com', '9fd6c0b51277d106e7ae73d037f4572b', 'QUIPSE', 'MARIA CLAVERIA', 'LUMANOG', 25, 'Female', 'Single', '142', 'DR NAVARRO ALLEY', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '09701726401', '2000-10-22', 'SOLANO, NUEVA VIZCAYA', 'Filipino', NULL, 'No', 'Yes', '', '', 'Yes', NULL, '', NULL, '', NULL, 'resident', NULL, '', 'Yes', '', NULL, NULL, '10,000', 'STUDENT', 'Yes', 'No', '', 'No', NULL, 'No', 'ID1_69fd89599bc76.jpg', 'ID2_69fd89599c27d.jpg', 'PENDING'),
+<<<<<<< HEAD
 (126, '', 1, 'uploads/qr_codes/CN-0122.png', 'PhilSys ID (National ID)', 'Passport', 'CN-0122', 'approved', NULL, 'abc@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', 'ABDSA', 'ASDSADSA', 'DAS', 25, 'Female', 'Single', '213', 'ABC', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '566', '2000-10-25', 'BAGUIO CITY', 'Filipino', NULL, 'No', '', '', '', '', NULL, '', NULL, '', NULL, 'resident', NULL, '', '', '', NULL, NULL, '10,000', 'STUDENT', 'Yes', 'No', '', 'No', NULL, 'No', 'ID1_6a06b0fc66e3f.png', 'ID2_6a06b0fc6743a.png', 'DELETED');
+=======
+(126, '', 1, 'uploads/qr_codes/CN-0122.png', 'PhilSys ID (National ID)', 'Passport', 'CN-0122', 'approved', NULL, 'abc@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', 'ABDSA', 'ASDSADSA', 'DAS', 25, 'Female', 'Single', '213', 'ABC', 'EAST MODERN SITE', 'BAGUIO CITY', NULL, '566', '2000-10-25', 'BAGUIO CITY', 'Filipino', NULL, 'No', '', '', '', '', NULL, '', NULL, '', NULL, 'resident', NULL, '', '', '', NULL, NULL, '10,000', 'STUDENT', 'Yes', 'No', '', 'No', NULL, 'No', 'ID1_6a06b0fc66e3f.png', 'ID2_6a06b0fc6743a.png', 'APPROVED');
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 -- --------------------------------------------------------
 
@@ -2821,13 +2845,21 @@ ALTER TABLE `tbl_blotter`
 -- AUTO_INCREMENT for table `tbl_bspermit`
 --
 ALTER TABLE `tbl_bspermit`
+<<<<<<< HEAD
   MODIFY `id_bspermit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+=======
+  MODIFY `id_bspermit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 --
 -- AUTO_INCREMENT for table `tbl_clearance`
 --
 ALTER TABLE `tbl_clearance`
+<<<<<<< HEAD
   MODIFY `id_clearance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+=======
+  MODIFY `id_clearance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 --
 -- AUTO_INCREMENT for table `tbl_family_member`
@@ -2839,7 +2871,11 @@ ALTER TABLE `tbl_family_member`
 -- AUTO_INCREMENT for table `tbl_indigency`
 --
 ALTER TABLE `tbl_indigency`
+<<<<<<< HEAD
   MODIFY `id_indigency` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+=======
+  MODIFY `id_indigency` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 --
 -- AUTO_INCREMENT for table `tbl_officials`
@@ -2851,7 +2887,11 @@ ALTER TABLE `tbl_officials`
 -- AUTO_INCREMENT for table `tbl_rescert`
 --
 ALTER TABLE `tbl_rescert`
+<<<<<<< HEAD
   MODIFY `id_rescert` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+=======
+  MODIFY `id_rescert` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+>>>>>>> 7b4f702d2df987b4325173a8cc7ad50a01210789
 
 --
 -- AUTO_INCREMENT for table `tbl_resident`
