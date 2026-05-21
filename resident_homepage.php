@@ -73,6 +73,13 @@ include_once './dbcon.php';
             padding-top: 1rem;
             /* optional */
         }
+
+        @media (max-width: 640px) {
+            .swiper-button-next,
+            .swiper-button-prev {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -80,25 +87,41 @@ include_once './dbcon.php';
 
     <!-- Navbar -->
     <nav class="bg-blue-700 text-white sticky top-0 shadow-md">
-        <div class="container mx-auto flex items-center justify-between py-3 px-4">
-            <div class="flex items-center space-x-3">
+        <div class="container mx-auto flex flex-wrap items-center justify-between gap-3 py-3 px-4">
+            <div class="flex items-center gap-3">
                 <a href="#"><img src="assets/blink.png" alt="Logo" class="h-12 rounded-full"></a>
                 <a href="resident_homepage.php" class="font-bold text-lg">BarangayLink</a>
             </div>
-            <ul class="flex items-center space-x-6">
-                <li><a href="#down2" class="hover:text-gray-200">Announcement</a></li>
-                <li><a href="#down1" class="hover:text-gray-200">E-Services</a></li>
-                <li class="relative">
-                    <button class="flex items-center space-x-2 hover:text-gray-200" id="accountDropdown">
-                        <span>MY ACCOUNT</span><i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden" id="dropdownMenu">
-                        <a href="resident_profile.php?id_resident=<?= $userdetails['id_resident']; ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-user"></i> Personal Profile</a>
-                        <a href="resident_changepass.php?id_resident=<?= $userdetails['id_resident']; ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-lock"></i> Change Password</a>
-                        <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
-                </li>
-            </ul>
+
+            <!-- Mobile menu toggle (layout-only) -->
+            <input id="navToggle" type="checkbox" class="hidden peer" />
+            <label for="navToggle" class="md:hidden inline-flex items-center justify-center p-2 rounded-md hover:bg-blue-600/70 focus:outline-none focus:ring-2 focus:ring-white/40">
+                <span class="sr-only">Toggle menu</span>
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <div class="hidden w-full md:block md:w-auto peer-checked:block">
+                <div class="mt-2 md:mt-0 rounded-lg bg-blue-800/40 md:bg-transparent p-2 md:p-0 border border-white/10 md:border-0">
+                    <ul class="flex flex-col md:flex-row md:items-center gap-1 md:gap-6">
+                        <li>
+                            <a href="#down2" class="hover:text-gray-200 hover:bg-blue-600/40 block px-3 py-2 rounded-md">Announcement</a>
+                        </li>
+                        <li>
+                            <a href="#down1" class="hover:text-gray-200 hover:bg-blue-600/40 block px-3 py-2 rounded-md">E-Services</a>
+                        </li>
+                        <li class="relative">
+                            <button class="w-full md:w-auto flex items-center justify-between md:justify-start gap-2 hover:text-gray-200 hover:bg-blue-600/40 px-3 py-2 rounded-md" id="accountDropdown">
+                                <span>MY ACCOUNT</span><i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="static md:absolute md:right-0 mt-2 w-full md:w-48 bg-white rounded-md shadow-lg hidden overflow-hidden" id="dropdownMenu">
+                                <a href="resident_profile.php?id_resident=<?= $userdetails['id_resident']; ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-user"></i> Personal Profile</a>
+                                <a href="resident_changepass.php?id_resident=<?= $userdetails['id_resident']; ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-lock"></i> Change Password</a>
+                                <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </nav>
 

@@ -31,8 +31,51 @@ if (!$resident) {
     die("Record not found.");
 }
 
+function _starts_with($haystack, $needle)
+{
+    return $needle === '' || substr($haystack, 0, strlen($needle)) === $needle;
+}
+
+function _resolve_file_and_public_url($path)
+{
+    $path = trim((string)$path);
+    if ($path === '') {
+        return [null, null];
+    }
+
+    $projectRoot = realpath(__DIR__);
+    $projectRoot = $projectRoot ? str_replace('\\', '/', $projectRoot) : null;
+
+    // Avoid regex here to prevent preg_match warnings in some environments.
+    // Windows absolute: "C:\\..." or "C:/...". Unix absolute: "/...".
+    $isWindowsAbsolute = (strlen($path) >= 3)
+        && ctype_alpha($path[0])
+        && $path[1] === ':'
+        && ($path[2] === '\\' || $path[2] === '/');
+    $isUnixAbsolute = isset($path[0]) && $path[0] === '/';
+    $isAbsolute = $isWindowsAbsolute || $isUnixAbsolute;
+    $candidateFile = $isAbsolute ? $path : (__DIR__ . '/' . ltrim($path, "\\/"));
+
+    $realFile = realpath($candidateFile);
+    if ($realFile === false) {
+        return [null, null];
+    }
+
+    $realFileNorm = str_replace('\\', '/', $realFile);
+
+    $publicUrl = $path;
+    if ($projectRoot && _starts_with($realFileNorm, $projectRoot . '/')) {
+        $publicUrl = substr($realFileNorm, strlen($projectRoot) + 1);
+    }
+
+    return [$realFileNorm, str_replace('\\', '/', $publicUrl)];
+}
+
 $receiptPng = 'uploads/receipts/' . $resident['control_no'] . '.png';
-$hasReceiptPng = file_exists($receiptPng);
+list($receiptPngFile, $receiptPngUrl) = _resolve_file_and_public_url($receiptPng);
+$hasReceiptPng = !empty($receiptPngFile) && file_exists($receiptPngFile);
+
+list($qrFile, $qrUrl) = _resolve_file_and_public_url($resident['qr_code'] ?? '');
 ?>
 
 <!DOCTYPE html>
@@ -169,8 +212,8 @@ $hasReceiptPng = file_exists($receiptPng);
             <div class="row" style="justify-content: center; margin-top: 20px;">
                 <!-- <div class="label" style="width: auto;">QR Code</div> -->
                 <div class="value" style="width: auto; text-align: center;">
-                    <?php if (!empty($resident['qr_code']) && file_exists($resident['qr_code'])): ?>
-                        <img src="<?= htmlspecialchars($resident['qr_code']) ?>" alt="QR Code" style="width:150px; height:150px;">
+                    <?php if (!empty($qrFile) && file_exists($qrFile) && !empty($qrUrl)): ?>
+                        <img src="<?= htmlspecialchars($qrUrl) ?>" alt="QR Code" style="width:150px; height:150px;">
                     <?php else: ?>
                         <span style="color:red;">QR code not available</span>
                     <?php endif; ?>
@@ -187,8 +230,8 @@ $hasReceiptPng = file_exists($receiptPng);
             <div class="row" style="justify-content: center; margin-top: 16px;">
                 <div class="value" style="width: auto; text-align: center;">
                     <?php if ($hasReceiptPng): ?>
-                        <a href="<?= htmlspecialchars($receiptPng) ?>" target="_blank" style="display:inline-block; margin-right: 8px; color: #fff; background:#07325f; padding:8px 12px; border-radius:6px; text-decoration:none;">Open Saved Receipt PNG</a>
-                        <a href="<?= htmlspecialchars($receiptPng) ?>" download style="display:inline-block; color: #fff; background:#2563eb; padding:8px 12px; border-radius:6px; text-decoration:none;">Download PNG</a>
+                        <a href="<?= htmlspecialchars($receiptPngUrl ?: $receiptPng) ?>" target="_blank" style="display:inline-block; margin-right: 8px; color: #fff; background:#07325f; padding:8px 12px; border-radius:6px; text-decoration:none;">Open Saved Receipt PNG</a>
+                        <a href="<?= htmlspecialchars($receiptPngUrl ?: $receiptPng) ?>" download style="display:inline-block; color: #fff; background:#2563eb; padding:8px 12px; border-radius:6px; text-decoration:none;">Download PNG</a>
                     <?php else: ?>
                         <span style="color:#a16207; font-weight:600;">Saved receipt PNG is not available yet.</span>
                     <?php endif; ?>

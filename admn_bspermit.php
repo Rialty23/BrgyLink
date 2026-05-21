@@ -8,8 +8,8 @@ $bmis->validate_admin();
 $bmis->create_bspermit_walkin();
 $bmis->delete_bspermit();
 $view = $bmis->view_bspermit();
-$id_resident = $_GET['id_resident'];
-$resident = $residentbmis->get_single_bspermit($id_resident);
+$id_resident = $_GET['id_resident'] ?? null;
+$resident = $id_resident ? $residentbmis->get_single_bspermit($id_resident) : false;
 
 ?>
 
@@ -84,17 +84,17 @@ include('dashboard_sidebar_start.php');
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Business Permit Form</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Business Permit Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
                 <!-- Modal Body -->
 
                 <div class="modal-body">
-                    <form method="post">
 
                         <div class="row">
 
@@ -124,6 +124,41 @@ include('dashboard_sidebar_start.php');
                                     <input name="mi" style="text-align:left;" type="text" class="form-control">
                                 </div>
                             </div>
+                            <div class="col"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="contact">Contact Number:</label>
+                                    <input name="contact" style="text-align:left;" type="text" maxlength="11" class="form-control" pattern="[0-9]{11}" placeholder="09123456789" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="email">Email Address:</label>
+                                    <input name="email" style="text-align:left;" type="email" class="form-control" placeholder="Enter Email Address" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="bcode">Business Code:</label>
+                                    <input name="bcode" style="text-align:left;" type="text" class="form-control" placeholder="Enter Business Code" required>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="bsname">Business Name:</label>
@@ -160,10 +195,10 @@ include('dashboard_sidebar_start.php');
                             </div>
 
                             <!--<label> Barangay: </label>-->
-                            <input type="hidden" class="form-control" name="brgy" value="East Modern Site" required readonly>
+                            <input type="hidden" class="form-control" name="brgy" value="EAST MODERN SITE" required readonly>
 
                             <!--<label> Municipality: </label>-->
-                            <input type="hidden" class="form-control" name="municipal" value="Bagiuo City" required readonly>
+                            <input type="hidden" class="form-control" name="municipal" value="BAGUIO CITY" required readonly>
                         </div>
 
                         <div class="row">
@@ -171,27 +206,26 @@ include('dashboard_sidebar_start.php');
                                 <div class="form-group">
                                     <label for="status">Business Industry:</label>
                                     <select class="form-control" style="text-align:left;" name="bsindustry" id="status" placeholder="Enter Status" required>
-                                        <option value="">Choose your Business Industry</option>
-                                        <option value="Aerospace">Aerospace</option>
-                                        <option value="Agriculture">Agriculture</option>
-                                        <option value="Computer">Computer</option>
-                                        <option value="Construction">Construction</option>
-                                        <option value="Education">Education</option>
-                                        <option value="Electronics">Electronics</option>
-                                        <option value="Energy">Energy</option>
-                                        <option value="Entertainment">Entertainment</option>
-                                        <option value="Food">Food</option>
-                                        <option value="HealthCare">HealthCare</option>
-                                        <option value="Hospitality">Hospitality</option>
-                                        <option value="Manufacturing">Manufacturing</option>
-                                        <option value="Mining">Mining</option>
-                                        <option value="Music">Music</option>
-                                        <option value="News Media">News Media</option>
-                                        <option value="Pharmaceutical">Pharmaceutical</option>
-                                        <option value="Telecommunication">Telecommunication</option>
-                                        <option value="Transport">Transport</option>
-                                        <option value="WorldWide Web">WorldWide Web</option>
-
+                                            <option value="">Choose your Business Industry</option>
+                                            <option value="Computer">Computer</option>
+                                            <option value="Telecommunication">Telecommunication</option>
+                                            <option value="Agriculture">Agriculture</option>
+                                            <option value="Construction">Construction</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Pharmaceutical">Pharmaceutical</option>
+                                            <option value="Food">Food</option>
+                                            <option value="HealthCare">HealthCare</option>
+                                            <option value="Hospitality">Hospitality</option>
+                                            <option value="Entertainment">Entertainment</option>
+                                            <option value="News Media">News Media</option>
+                                            <option value="Energy">Energy</option>
+                                            <option value="Manufacturing">Manufacturing</option>
+                                            <option value="Music">Music</option>
+                                            <option value="Mining">Mining</option>
+                                            <option value="WorldWide Web">WorldWide Web</option>
+                                            <option value="Electronics">Electronics</option>
+                                            <option value="Pharmaceutical">Pharmaceutical</option>
+                                            <option value="Transportation">Transportation</option>
                                     </select>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -213,12 +247,13 @@ include('dashboard_sidebar_start.php');
 
                 <div class="modal-footer" style="justify-content: flex-start;">
                     <div class="paa">
-                        <input name="id_resident" type="hidden" class="form-control" value="<?= $userdetails['id_resident'] ?>">
+                        <input name="id_resident" type="hidden" class="form-control" value="<?= htmlspecialchars($userdetails['id_resident'] ?? '', ENT_QUOTES) ?>">
                         <?php include('styled_button.php'); ?>
                         <button id="styled_button_approve" name="create_bspermit_walkin"  type="submit" class="btn btn-success">Submit Request</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

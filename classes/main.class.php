@@ -1722,31 +1722,31 @@ class BMISClass
 
         if (isset($_POST['create_certofres_walkin'])) {
             $id_rescert     = $_POST['id_rescert'] ?? null;
-            $id_resident    = $_POST['id_resident'] ?? null;
+            $id_resident    = ($_POST['id_resident'] ?? null) ?: null;
 
-            $lname          = $_POST['lname'];
-            $fname          = $_POST['fname'];
-            $mi             = $_POST['mi'];
+            $lname          = $_POST['lname'] ?? '';
+            $fname          = $_POST['fname'] ?? '';
+            $mi             = $_POST['mi'] ?? '';
 
-            $bdate          = $_POST['bdate'];
-            $bplace         = $_POST['bplace'];
+            $bdate          = (isset($_POST['bdate']) && $_POST['bdate'] !== '') ? $_POST['bdate'] : null;
+            $bplace         = $_POST['bplace'] ?? '';
 
             $civil_status   = $_POST['civil_status'] ?? ($_POST['status'] ?? '');
-            $nationality    = $_POST['nationality'];
-            $occupation     = $_POST['occupation'];
+            $nationality    = $_POST['nationality'] ?? '';
+            $occupation     = $_POST['occupation'] ?? '';
 
-            $contact        = $_POST['contact'];
-            $email          = $_POST['email'];
+            $contact        = $_POST['contact'] ?? '';
+            $email          = $_POST['email'] ?? '';
 
-            $houseno        = $_POST['houseno'];
-            $street         = $_POST['street'];
-            $brgy           = $_POST['brgy'];
-            $municipal      = $_POST['municipal'];
+            $houseno        = $_POST['houseno'] ?? '';
+            $street         = $_POST['street'] ?? '';
+            $brgy           = $_POST['brgy'] ?? '';
+            $municipal      = $_POST['municipal'] ?? '';
 
-            $resident_since = $_POST['resident_since'];
+            $resident_since = (isset($_POST['resident_since']) && $_POST['resident_since'] !== '') ? $_POST['resident_since'] : null;
 
-            $date           = $_POST['date'];
-            $purpose        = $_POST['purpose'];
+            $date           = (isset($_POST['date']) && $_POST['date'] !== '') ? $_POST['date'] : null;
+            $purpose        = $_POST['purpose'] ?? '';
 
 
             // ✅ Requirements (checkbox array)
@@ -2061,20 +2061,22 @@ class BMISClass
     {
 
         if (isset($_POST['create_certofindigency_walkin'])) {
-            $id_indigency = $_POST['id_indigency'];
-            $lname = $_POST['lname'];
-            $fname = $_POST['fname'];
-            $mi = $_POST['mi'];
-            $bdate = $_POST['bdate'];
-            $age = $_POST['age'];
-            $nationality = $_POST['nationality'];
-            $houseno = $_POST['houseno'];
-            $street = $_POST['street'];
-            $brgy = $_POST['brgy'];
-            $municipal = $_POST['municipal'];
-            $resident_since = $_POST['resident_since'];
-            $purpose = $_POST['purpose'];
-            $date = $_POST['date'];
+            $id_indigency = $_POST['id_indigency'] ?? null;
+            $id_resident = ($_POST['id_resident'] ?? null) ?: null;
+
+            $lname = $_POST['lname'] ?? '';
+            $fname = $_POST['fname'] ?? '';
+            $mi = $_POST['mi'] ?? '';
+            $bdate = (isset($_POST['bdate']) && $_POST['bdate'] !== '') ? $_POST['bdate'] : null;
+            $age = (isset($_POST['age']) && $_POST['age'] !== '') ? $_POST['age'] : null;
+            $nationality = $_POST['nationality'] ?? '';
+            $houseno = $_POST['houseno'] ?? '';
+            $street = $_POST['street'] ?? '';
+            $brgy = $_POST['brgy'] ?? '';
+            $municipal = $_POST['municipal'] ?? '';
+            $resident_since = (isset($_POST['resident_since']) && $_POST['resident_since'] !== '') ? $_POST['resident_since'] : null;
+            $purpose = $_POST['purpose'] ?? '';
+            $date = (isset($_POST['date']) && $_POST['date'] !== '') ? $_POST['date'] : null;
 
             $connection = $this->openConn();
             $stmtCN = $connection->prepare("
@@ -2087,13 +2089,13 @@ class BMISClass
             $lastCN = $stmtCN->fetch(PDO::FETCH_ASSOC);
 
             if ($lastCN && !empty($lastCN['control_no'])) {
-                $number = (int) str_replace('TR-', '', $lastCN['control_no']);
+                $number = (int) str_replace('TRINDIGENCY-', '', $lastCN['control_no']);
                 $number++;
             } else {
                 $number = 1;
             }
 
-            $control_no = 'TR-' . str_pad($number, 4, '0', STR_PAD_LEFT);
+            $control_no = 'TRINDIGENCY-' . str_pad($number, 4, '0', STR_PAD_LEFT);
 
             // -----------------------------
             // 4. GENERATE QR CODE (phpqrcode)
@@ -2111,10 +2113,31 @@ class BMISClass
                      . "Date Issued: " . date('F d, Y');
             QRcode::png($qr_data, $qrFile, QR_ECLEVEL_M, 4);
             $this->saveReceiptPngByControlNo($control_no, trim($fname . ' ' . $mi . ' ' . $lname), $qrFile);
-            $stmt = $connection->prepare("INSERT INTO tbl_indigency (`lname`, `fname`, `mi`, `bdate`, `age`, `nationality`, `houseno`, `street`,`brgy`, `municipal`,`resident_since`,`purpose`, `date`, `control_no`, `qr_code`)
-            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $connection->prepare("INSERT INTO tbl_indigency (
+                `id_indigency`, `id_resident`, `lname`, `fname`, `mi`,
+                `bdate`, `age`, `nationality`, `houseno`, `street`, `brgy`, `municipal`,
+                `resident_since`, `purpose`, `date`, `control_no`, `qr_code`
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            $stmt->execute([$lname, $fname, $mi, $bdate, $age, $nationality, $houseno, $street, $brgy, $municipal, $resident_since, $purpose, $date, $control_no, $qrFile]);
+            $stmt->execute([
+                $id_indigency,
+                $id_resident,
+                $lname,
+                $fname,
+                $mi,
+                $bdate,
+                $age,
+                $nationality,
+                $houseno,
+                $street,
+                $brgy,
+                $municipal,
+                $resident_since,
+                $purpose,
+                $date,
+                $control_no,
+                $qrFile
+            ]);
 
             $message2 = "Application Applied!";
             $lastId = $connection->lastInsertId();
@@ -2335,30 +2358,32 @@ class BMISClass
     {
         if (isset($_POST['create_brgyclearance_walkin'])) {
 
-            $id_clearance = $_POST['id_clearance'];
-            $lname = $_POST['lname'];
-            $fname = $_POST['fname'];
-            $mi = $_POST['mi'];
-            $purpose = $_POST['purpose'];
-            $houseno = $_POST['houseno'];
-            $street = $_POST['street'];
-            $brgy = $_POST['brgy'];
-            $municipal = $_POST['municipal'];
-            $status = $_POST['status'];
-            $age = $_POST['age'];
+            $id_clearance = $_POST['id_clearance'] ?? null;
+            $id_resident = ($_POST['id_resident'] ?? null) ?: null;
 
-            $sex = $_POST['sex'];
-            $bdate = $_POST['bdate'];
-            $bplace = $_POST['bplace'];
-            $occupation = $_POST['occupation'];
-            $precinct_no = $_POST['precinct_no'];
-            $resident_since = $_POST['resident_since'];
-            $employment_status = $_POST['employment_status'];
-            $company_name = $_POST['company_name'];
-            $ref_name1 = $_POST['ref_name1'];
-            $ref_name2 = $_POST['ref_name2'];
-            $ref_tel = $_POST['ref_tel'];
-            $clearance_type = $_POST['clearance_type'];
+            $lname = $_POST['lname'] ?? '';
+            $fname = $_POST['fname'] ?? '';
+            $mi = $_POST['mi'] ?? '';
+            $purpose = $_POST['purpose'] ?? '';
+            $houseno = $_POST['houseno'] ?? '';
+            $street = $_POST['street'] ?? '';
+            $brgy = $_POST['brgy'] ?? '';
+            $municipal = $_POST['municipal'] ?? '';
+            $status = $_POST['status'] ?? '';
+            $age = $_POST['age'] ?? '';
+
+            $sex = $_POST['sex'] ?? '';
+            $bdate = (isset($_POST['bdate']) && $_POST['bdate'] !== '') ? $_POST['bdate'] : null;
+            $bplace = $_POST['bplace'] ?? '';
+            $occupation = $_POST['occupation'] ?? '';
+            $precinct_no = $_POST['precinct_no'] ?? '';
+            $resident_since = (isset($_POST['resident_since']) && $_POST['resident_since'] !== '') ? $_POST['resident_since'] : null;
+            $employment_status = $_POST['employment_status'] ?? '';
+            $company_name = $_POST['company_name'] ?? '';
+            $ref_name1 = $_POST['ref_name1'] ?? '';
+            $ref_name2 = $_POST['ref_name2'] ?? '';
+            $ref_tel = $_POST['ref_tel'] ?? '';
+            $clearance_type = $_POST['clearance_type'] ?? 'NEW';
 
 
             $connection = $this->openConn();
@@ -2378,13 +2403,13 @@ class BMISClass
             $lastCN = $stmtCN->fetch(PDO::FETCH_ASSOC);
 
             if ($lastCN && !empty($lastCN['control_no'])) {
-                $number = (int) str_replace('TR-', '', $lastCN['control_no']);
+                $number = (int) str_replace('TRBRGYCLEARANCE-', '', $lastCN['control_no']);
                 $number++;
             } else {
                 $number = 1;
             }
 
-            $control_no = 'TR-' . str_pad($number, 4, '0', STR_PAD_LEFT);
+            $control_no = 'TRBRGYCLEARANCE-' . str_pad($number, 4, '0', STR_PAD_LEFT);
 
             /* -----------------------------
            GENERATE QR CODE
@@ -2416,6 +2441,7 @@ class BMISClass
             INSERT INTO tbl_clearance
             (
                 id_clearance,
+                id_resident,
                 lname,
                 fname,
                 mi,
@@ -2441,11 +2467,12 @@ class BMISClass
                 control_no,
                 qr_code
             )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ");
 
             $stmt->execute([
                 $id_clearance,
+                $id_resident,
                 $lname,
                 $fname,
                 $mi,
@@ -2741,19 +2768,19 @@ class BMISClass
     {
         if (isset($_POST['create_bspermit_walkin'])) {
             $id_bspermit = $_POST['id_bspermit'] ?? null;
-            $lname = $_POST['lname'];
-            $fname = $_POST['fname'];
-            $mi = $_POST['mi'];
-            $bsname = $_POST['bsname'];
-            $houseno = $_POST['houseno'];
-            $street = $_POST['street'];
-            $brgy = $_POST['brgy'];
-            $municipal = $_POST['municipal'];
-            $bsindustry = $_POST['bsindustry'];
-            $aoe = $_POST['aoe'];
-            $contact = $_POST['contact'];
-            $email = $_POST['email'];
-            $bcode = $_POST['bcode'];
+            $lname = $_POST['lname'] ?? '';
+            $fname = $_POST['fname'] ?? '';
+            $mi = $_POST['mi'] ?? '';
+            $bsname = $_POST['bsname'] ?? '';
+            $houseno = $_POST['houseno'] ?? '';
+            $street = $_POST['street'] ?? '';
+            $brgy = $_POST['brgy'] ?? '';
+            $municipal = $_POST['municipal'] ?? '';
+            $bsindustry = $_POST['bsindustry'] ?? '';
+            $aoe = $_POST['aoe'] ?? '';
+            $contact = $_POST['contact'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $bcode = $_POST['bcode'] ?? '';
 
             $connection = $this->openConn();
 
@@ -2784,6 +2811,8 @@ class BMISClass
             $qrDir = __DIR__ . '/../uploads/qr_codes/';
             if (!is_dir($qrDir)) mkdir($qrDir, 0777, true);
 
+            // Write to an absolute path, but store a public (web) path in DB.
+            $qrPublicPath = 'uploads/qr_codes/' . $control_no . '.png';
             $qrFile = $qrDir . $control_no . '.png';
             $qr_data = "Transaction No: " . $control_no . "\n"
                      . "Full Name: " . strtoupper($lname) . ", " . strtoupper($fname) . " " . strtoupper($mi) . "\n"
@@ -2793,7 +2822,7 @@ class BMISClass
                      . "Contact: " . $contact . "\n"
                      . "Date Issued: " . date('F d, Y');
             QRcode::png($qr_data, $qrFile, QR_ECLEVEL_M, 4);
-            $this->saveReceiptPngByControlNo($control_no, trim($fname . ' ' . $mi . ' ' . $lname), $qrFile);
+            $this->saveReceiptPngByControlNo($control_no, trim($fname . ' ' . $mi . ' ' . $lname), $qrPublicPath);
 
             // -----------------------------
             // Insert into database
@@ -2817,7 +2846,7 @@ class BMISClass
                 $municipal,
                 $bsindustry,
                 $aoe,
-                $qrFile,
+                $qrPublicPath,
                 $control_no,
                 $contact,
                 $email,

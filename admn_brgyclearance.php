@@ -7,8 +7,8 @@ $bmis->validate_admin();
 $bmis->create_brgyclearance_walkin();
 $bmis->delete_clearance();
 $view = $bmis->view_clearance();
-$id_resident = $_GET['id_resident'];
-$resident = $residentbmis->get_single_clearance($id_resident);
+$id_resident = $_GET['id_resident'] ?? null;
+$resident = $id_resident ? $residentbmis->get_single_clearance($id_resident) : false;
 
 ?>
 
@@ -82,17 +82,17 @@ include('dashboard_sidebar_start.php');
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Barangay Clearance Form</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Barangay Clearance Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
                 <!-- Modal Body -->
 
                 <div class="modal-body">
-                    <form method="post">
 
                         <div class="row">
 
@@ -169,10 +169,10 @@ include('dashboard_sidebar_start.php');
                                 </div>
                             </div>
                             <!--<label> Barangay: </label>-->
-                            <input type="hidden" class="form-control" name="brgy" value="East Modern Site"
+                            <input type="hidden" class="form-control" name="brgy" value="EAST MODERN SITE"
                                 placeholder="Enter Barangay" required readonly>
                             <!--<label> Municipality: </label>-->
-                            <input type="hidden" class="form-control" name="municipal" value="Bagiuo City"
+                            <input type="hidden" class="form-control" name="municipal" value="BAGUIO CITY"
                                 placeholder="Enter Municipality" required readonly>
                         </div>
 
@@ -229,13 +229,14 @@ include('dashboard_sidebar_start.php');
 
                 <div class="modal-footer" style="justify-content: flex-start;">
                     <div class="paa">
-                        <input name="id_resident" type="hidden" class="form-control" value="<?= $userdetails['id_resident'] ?>">
-                        <input name="addedby" type="hidden" class="form-control" value="<?= $userdetails['surname'] ?> <?= $userdetails['firstname'] ?> <?= $userdetails['mname'] ?>">
+                        <input name="id_resident" type="hidden" class="form-control" value="<?= htmlspecialchars($userdetails['id_resident'] ?? '', ENT_QUOTES) ?>">
+                        <input name="addedby" type="hidden" class="form-control" value="<?= htmlspecialchars(($userdetails['surname'] ?? '') . ' ' . ($userdetails['firstname'] ?? '') . ' ' . ($userdetails['mname'] ?? ''), ENT_QUOTES) ?>">
                         <?php include('styled_button.php'); ?>
                         <button id="styled_button_approve" name="create_brgyclearance_walkin"  type="submit" class="btn btn-success">Submit Request</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

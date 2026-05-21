@@ -327,6 +327,61 @@ $residentbmis->resident_changepass();
             background-color: #1d4ed8;
             /* Tailwind blue-700 color */
         }
+
+        /* Navbar styling to match resident_homepage.php (design-only) */
+        .navbar.custom-blue {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 1rem;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .navbar.custom-blue .navbar-brand {
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-left: 0 !important;
+        }
+
+        .navbar.custom-blue .btn3.bg-primary {
+            background-color: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff !important;
+            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            height: auto;
+            line-height: 1.2;
+            margin-left: 0 !important;
+        }
+
+        .navbar.custom-blue .btn3.bg-primary:hover,
+        .navbar.custom-blue .btn3.bg-primary:focus {
+            color: #e5e7eb !important;
+            background-color: rgba(37, 99, 235, 0.4) !important;
+        }
+
+        .navbar.custom-blue .dropdown .btn.btn-primary {
+            background-color: rgba(30, 64, 175, 0.45);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar.custom-blue .dropdown .btn.btn-primary:hover {
+            background-color: rgba(37, 99, 235, 0.55);
+        }
+
+        @media (max-width: 768px) {
+            .navbar.custom-blue {
+                justify-content: space-between;
+            }
+
+            .navbar.custom-blue .dropdown {
+                width: 100%;
+            }
+
+            .navbar.custom-blue .dropdown .btn.btn-primary {
+                width: 100%;
+                text-align: left;
+            }
+        }
     </style>
 
 <body>

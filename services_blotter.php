@@ -497,6 +497,156 @@ $bmis->create_blotter();
             /* Tailwind blue-700 color */
             color: white !important;
         }
+
+        /* Navbar styling to match resident_homepage.php (design-only) */
+        .navbar.custom-blue {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .navbar.custom-blue .navbar-brand {
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .navbar.custom-blue .navbar-nav .nav-link {
+            color: #fff !important;
+            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .navbar.custom-blue .navbar-nav .nav-link:hover,
+        .navbar.custom-blue .navbar-nav .nav-link:focus {
+            color: #e5e7eb !important;
+            background-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .navbar.custom-blue .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.35);
+            border-radius: 0.375rem;
+            padding: 0.35rem 0.55rem;
+        }
+
+        .navbar.custom-blue .navbar-toggler:hover {
+            background-color: rgba(37, 99, 235, 0.7);
+        }
+
+        .navbar.custom-blue .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+        }
+
+        .navbar.custom-blue .navbar-toggler i {
+            color: #fff;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar.custom-blue .navbar-collapse {
+                margin-top: 0.5rem;
+                padding: 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 0.5rem;
+                background-color: rgba(30, 64, 175, 0.4);
+            }
+
+            .navbar.custom-blue .navbar-nav {
+                gap: 0.25rem;
+            }
+        }
+
+        /* Mobile responsiveness overrides */
+        @media (max-width: 767px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .top-link {
+                width: 52px;
+                height: 52px;
+                margin: 0 1rem 1rem 0;
+            }
+
+            .btn1,
+            .btn2,
+            .btn3,
+            .btn4,
+            .btn5 {
+                margin-left: 0 !important;
+                width: 100%;
+                display: block;
+                padding: 10px 14px;
+                font-size: 14px;
+                text-align: center;
+            }
+
+            .row>
+            .col {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .applybutton {
+                font-size: 18px !important;
+                letter-spacing: 1px;
+            }
+
+            .paa {
+                left: 0 !important;
+                text-align: center;
+            }
+
+            .modal-footer {
+                margin-left: 0 !important;
+                justify-content: center !important;
+            }
+
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+
+            .picture {
+                width: 100% !important;
+                left: 0 !important;
+            }
+
+            .caption-container {
+                width: 100% !important;
+                left: 0 !important;
+                font-size: 18px;
+            }
+
+            .prev,
+            .next {
+                display: none;
+            }
+
+            .column {
+                width: 33.333%;
+            }
+
+            .text-overlay {
+                padding: 12px 16px;
+            }
+
+            .text-overlay h1 {
+                font-size: 1.6rem;
+                letter-spacing: 2px;
+            }
+
+            .flip-card {
+                width: 100%;
+                max-width: 320px;
+                height: 260px;
+                margin: 0 auto 1rem;
+            }
+
+            .flip-card-front h2,
+            .flip-card-front h3 {
+                font-size: 1.25rem;
+            }
+        }
     </style>
 </head>
 
@@ -512,14 +662,14 @@ $bmis->create_blotter();
     </a>
 
 
-    <nav class="navbar navbar-expand-lg  custom-blue sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-blue sticky-top">
         <div class="logo">
             <a href="#"><img src="assets/blink.png" alt="logo" style="height: 60px; border-radius: 50%;" /></a>
         </div>
         <a class="navbar-brand" href="resident_homepage.php"><b>BarangayLink</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
             aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav mx-auto">

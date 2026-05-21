@@ -8,8 +8,8 @@ $bmis->validate_admin();
 $create = $bmis->create_certofres_walkin();
 $bmis->delete_certofres();
 $view = $bmis->view_certofres();
-$id_resident = $_GET['id_resident'];
-$resident = $residentbmis->get_single_certofres($id_resident);
+$id_resident = $_GET['id_resident'] ?? null;
+$resident = $id_resident ? $residentbmis->get_single_certofres($id_resident) : false;
 
 ?>
 
@@ -87,17 +87,17 @@ include('dashboard_sidebar_start.php');
     <div class="modal fade" id="modalResidency" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Certificate of Residency Form</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Certificate of Residency Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
                 <!-- Modal Body -->
 
                 <div class="modal-body">
-                    <form method="post">
 
                         <div class="row">
                             <div class="col">
@@ -185,11 +185,11 @@ include('dashboard_sidebar_start.php');
                                 </div>
                             </div>
                             <!--<label> Barangay: </label>-->
-                            <input type="hidden" class="form-control" name="brgy" value="East Modern Site" required readonly>
+                            <input type="hidden" class="form-control" name="brgy" value="EAST MODERN SITE" required readonly>
 
                             <!--<label> Municipality: </label>-->
                             <input type="hidden" class="form-control" name="municipal"
-                                placeholder="Enter Municipality" value="Baguio City" required readonly>
+                                placeholder="Enter Municipality" value="BAGUIO CITY" required readonly>
                         </div>
 
                         <div class="row">
@@ -225,13 +225,14 @@ include('dashboard_sidebar_start.php');
 
                 <div class="modal-footer" style="justify-content: flex-start;">
                     <div class="paa">
-                        <input name="id_resident" type="hidden" class="form-control" value="<?= $userdetails['id_resident'] ?>">
+                        <input name="id_resident" type="hidden" class="form-control" value="<?= htmlspecialchars($userdetails['id_resident'] ?? '', ENT_QUOTES) ?>">
                         <?php include('styled_button.php'); ?>
                         <button id="styled_button_approve" name="create_certofres_walkin" type="submit" class="btn btn-success">Submit Request</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

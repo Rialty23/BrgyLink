@@ -114,6 +114,50 @@ if (!$resident) {
 
 <body onload="window.print()">
 
+<?php
+function _starts_with($haystack, $needle)
+{
+    return $needle === '' || substr($haystack, 0, strlen($needle)) === $needle;
+}
+
+function _resolve_file_and_public_url($path)
+{
+    $path = trim((string)$path);
+    if ($path === '') {
+        return [null, null];
+    }
+
+    $projectRoot = realpath(__DIR__);
+    $projectRoot = $projectRoot ? str_replace('\\', '/', $projectRoot) : null;
+
+    // Avoid regex here to prevent preg_match warnings in some environments.
+    // Windows absolute: "C:\\..." or "C:/...". Unix absolute: "/...".
+    $isWindowsAbsolute = (strlen($path) >= 3)
+        && ctype_alpha($path[0])
+        && $path[1] === ':'
+        && ($path[2] === '\\' || $path[2] === '/');
+    $isUnixAbsolute = isset($path[0]) && $path[0] === '/';
+    $isAbsolute = $isWindowsAbsolute || $isUnixAbsolute;
+    $candidateFile = $isAbsolute ? $path : (__DIR__ . '/' . ltrim($path, "\\/"));
+
+    $realFile = realpath($candidateFile);
+    if ($realFile === false) {
+        return [null, null];
+    }
+
+    $realFileNorm = str_replace('\\', '/', $realFile);
+
+    $publicUrl = $path;
+    if ($projectRoot && _starts_with($realFileNorm, $projectRoot . '/')) {
+        $publicUrl = substr($realFileNorm, strlen($projectRoot) + 1);
+    }
+
+    return [$realFileNorm, str_replace('\\', '/', $publicUrl)];
+}
+
+list($qrFile, $qrUrl) = _resolve_file_and_public_url($resident['qr_code'] ?? '');
+?>
+
     <div class="receipt">
 
         <div class="receipt-header">
@@ -163,8 +207,8 @@ if (!$resident) {
             <div class="row" style="justify-content: center; margin-top: 20px;">
                 <!-- <div class="label" style="width: auto;">QR Code</div> -->
                 <div class="value" style="width: auto; text-align: center;">
-                    <?php if (!empty($resident['qr_code']) && file_exists($resident['qr_code'])): ?>
-                        <img src="<?= htmlspecialchars($resident['qr_code']) ?>" alt="QR Code" style="width:150px; height:150px;">
+                    <?php if (!empty($qrFile) && file_exists($qrFile) && !empty($qrUrl)): ?>
+                        <img src="<?= htmlspecialchars($qrUrl) ?>" alt="QR Code" style="width:150px; height:150px;">
                     <?php else: ?>
                         <span style="color:red;">QR code not available</span>
                     <?php endif; ?>

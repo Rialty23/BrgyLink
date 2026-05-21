@@ -71,7 +71,7 @@ $cdate = $dt->format('Y/m/d');
 
   <!-- NAVBAR -->
   <header class="bg-white shadow-md fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-24">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-20 sm:h-24">
       <div class="flex items-center gap-3">
         <img src="assets/blink.png" class="h-16 w-16 rounded-full" alt="logo">
         <span class="text-2xl font-bold text-blue-900">BarangayLink</span>
@@ -85,10 +85,32 @@ $cdate = $dt->format('Y/m/d');
         
         <li><a href="index_login.php" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 transition">LOGIN</a></li>
       </ul>
+
+      <!-- Mobile menu button -->
+      <button id="mobileMenuBtn" type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded text-blue-900 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200" aria-controls="mobileMenu" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu panel -->
+    <div id="mobileMenu" class="md:hidden hidden border-t bg-white">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <nav class="flex flex-col gap-2 font-semibold text-blue-900">
+          <a href="#home" class="px-3 py-2 rounded hover:bg-blue-50">HOME</a>
+          <a href="#activity" class="px-3 py-2 rounded hover:bg-blue-50">ACTIVITIES</a>
+          <a href="#service" class="px-3 py-2 rounded hover:bg-blue-50">SERVICES</a>
+          <a href="#about" class="px-3 py-2 rounded hover:bg-blue-50">ABOUT</a>
+          <a href="#client" class="px-3 py-2 rounded hover:bg-blue-50">LOCATION</a>
+          <a href="index_login.php" class="mt-1 inline-flex items-center justify-center bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 transition">LOGIN</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <main class="pt-32">
+  <main class="pt-24 sm:pt-28 md:pt-32">
 
     <!-- HEADER INFO / HERO -->
     <!-- <section id="home" class="bg-cover bg-center relative" style="background-image: linear-gradient(rgba(17,43,90,0.5), rgba(17,43,90,0.5)), url('assets/bannr.png'); height: 75vh; margin-top: -1px;"> -->
@@ -113,9 +135,9 @@ $cdate = $dt->format('Y/m/d');
     </section>
 
     <!-- ANNOUNCEMENTS & ACTIVITIES CAROUSEL -->
-    <section id="activity" class="py-15 bg-gray-50">
+    <section id="activity" class="py-12 sm:py-16 bg-gray-50">
       <div id="down2" class="container mx-auto py-10 mt-16">
-        <h2 class="text-3xl font-bold mb-6 text-center">Announcements & Activities</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center">Announcements & Activities</h2>
 
         <div class="swiper mySwiper">
           <div class="swiper-wrapper">
@@ -197,7 +219,7 @@ $cdate = $dt->format('Y/m/d');
         </div>
       </div>
       <!-- MODAL -->
-      <div id="carouselModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+      <div id="carouselModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 p-3 sm:p-6">
 
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl p-6 relative animate-scaleIn max-h-[90vh] overflow-y-auto">
 
@@ -322,6 +344,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .animate-scaleIn {
           animation: scaleIn 0.2s ease;
         }
+
+        @media (max-width: 640px) {
+          .swiper-button-next,
+          .swiper-button-prev {
+            display: none;
+          }
+        }
       </style>
       <script>
         // Set equal heights for slides
@@ -386,10 +415,10 @@ document.addEventListener("DOMContentLoaded", function () {
     </section>
 
         <!-- SERVICES -->
-    <section id="service" class="py-16 bg-gray-50">
+    <section id="service" class="py-12 sm:py-16 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center text-blue-900 mb-8 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>Our Services</h2>
-        <p class="text-center text-gray-700 mb-12 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>Barangay services cover safety, health, social welfare, development, dispute resolution, and disaster response.</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-blue-900 mb-6 sm:mb-8 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>Our Services</h2>
+        <p class="text-center text-gray-700 mb-8 sm:mb-12 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>Barangay services cover safety, health, social welfare, development, dispute resolution, and disaster response.</p>
         <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <?php
           $services = [
@@ -418,7 +447,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     <!-- ABOUT -->
-    <section id="about" class="py-16 bg-gray-50">
+    <section id="about" class="py-12 sm:py-16 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
         <div class="opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>
           <h2 class="text-3xl font-bold text-blue-900 mb-4">BACKGROUND of BARANGAY</h2>
@@ -445,11 +474,11 @@ document.addEventListener("DOMContentLoaded", function () {
     </section>
 
     <!-- BARANGAY OFFICIALS -->
-    <section id="officials" class="py-16 bg-white">
+    <section id="officials" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-center text-blue-900 mb-8 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>BARANGAY OFFICIALS</h2>
         <div class="overflow-x-auto">
-          <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md">
+          <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-base">
             <thead class="bg-blue-900 text-white">
               <tr>
                 <th class="py-3 px-6">Full Name</th>
@@ -479,7 +508,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     <!-- LOCATION & CONTACT -->
-    <section id="client" class="py-16 bg-white">
+    <section id="client" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-blue-900 mb-8 text-center opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>LOCATION & CONTACT</h2>
 
@@ -527,7 +556,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     <!-- FOOTER -->
-    <footer class="bg-blue-900 text-white py-12">
+    <footer class="bg-blue-900 text-white py-10 sm:py-12">
       <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
         <div>
           <h4 class="font-bold text-xl mb-2">INFORMATION SYSTEM</h4>
@@ -567,6 +596,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     <script>
+      // Mobile menu toggle (UI only)
+      (function() {
+        const btn = document.getElementById('mobileMenuBtn');
+        const panel = document.getElementById('mobileMenu');
+        if (!btn || !panel) return;
+
+        function closeMenu() {
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+
+        btn.addEventListener('click', function() {
+          const isHidden = panel.classList.contains('hidden');
+          if (isHidden) {
+            panel.classList.remove('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+          } else {
+            closeMenu();
+          }
+        });
+
+        // Close after clicking a link
+        panel.querySelectorAll('a[href^="#"]').forEach(a => {
+          a.addEventListener('click', closeMenu);
+        });
+
+        // Close when resizing to desktop
+        window.addEventListener('resize', function() {
+          if (window.innerWidth >= 768) closeMenu();
+        });
+      })();
+
       // Navbar active highlight
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('header ul li a');
