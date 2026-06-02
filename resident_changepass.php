@@ -169,6 +169,7 @@ $residentbmis->resident_changepass();
             display: flex;
             width: 100%;
             margin-bottom: 10px;
+            position: relative;
         }
 
         .icon {
@@ -182,6 +183,7 @@ $residentbmis->resident_changepass();
         .input-field {
             width: 100%;
             padding: 10px;
+            padding-right: 45px;
             outline: none;
         }
 
@@ -206,10 +208,12 @@ $residentbmis->resident_changepass();
         }
 
         .field-icon {
-            margin-left: 88%;
-            margin-top: 3%;
             position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 2;
+            cursor: pointer;
         }
 
         a {
@@ -368,18 +372,122 @@ $residentbmis->resident_changepass();
             background-color: rgba(37, 99, 235, 0.55);
         }
 
+        .resident-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+
+        .resident-nav-toggle {
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: transparent;
+            margin-left: auto;
+        }
+
+        .resident-nav-toggle i {
+            color: #ffffff;
+            font-size: 20px;
+            line-height: 1;
+        }
+
         @media (max-width: 768px) {
             .navbar.custom-blue {
-                justify-content: space-between;
+                justify-content: flex-start;
+                padding: 0.75rem;
+            }
+
+            .resident-nav-toggle {
+                display: block;
+            }
+
+            .resident-nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                margin-top: 0.35rem;
+                margin-left: 0;
+            }
+
+            .resident-nav-links.is-open {
+                display: flex;
+            }
+
+            .navbar.custom-blue .logo {
+                margin-bottom: 0.5rem;
+            }
+
+            .navbar.custom-blue .navbar-brand {
+                width: 100%;
+                margin-bottom: 0.25rem;
+            }
+
+            .navbar.custom-blue a.btn3.bg-primary {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-top: 0.35rem;
+                text-align: left;
             }
 
             .navbar.custom-blue .dropdown {
                 width: 100%;
+                margin-top: 0.35rem;
             }
 
             .navbar.custom-blue .dropdown .btn.btn-primary {
                 width: 100%;
                 text-align: left;
+            }
+
+            .btn2 {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .top-link {
+                width: 54px;
+                height: 54px;
+                margin: 0 1rem 1rem 0;
+            }
+
+            .card-header {
+                font-size: 24px !important;
+                line-height: 1.3;
+            }
+
+            .container {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .chip {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                line-height: 1.4;
+                padding: 10px 16px;
+                border-radius: 18px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .chip img {
+                margin: 0;
+                flex: 0 0 50px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .navbar.custom-blue a.btn3.bg-primary {
+                margin-left: 0 !important;
+            }
+
+            .resident-nav-links {
+                display: flex !important;
             }
         }
     </style>
@@ -402,19 +510,26 @@ $residentbmis->resident_changepass();
             <a href="#"><img src="assets/blink.png" alt="logo" style="height: 60px; border-radius: 50%;" /></a>
         </div>
         <a class="navbar-brand" href="resident_homepage.php" class="btn3 bg-primary" style="margin-left:10px;"><b>BarangayLink</b></a>
-        <a href="resident_homepage.php" class="btn3 bg-primary" style="margin-left:120px; color: white;"><b>HOME</b></a>
-        <a href="#down1" title="Change Password" class="btn3 bg-primary" style="color: white; margin-left: 10px;"><b>CHANGE PASSWORD</b></a>
-        <a href="#down" title="Contact" class="btn3 bg-primary" style="color: white; margin-left: 25px;"><b>CONTACT</b></a>
+        <button type="button" class="navbar-toggle resident-nav-toggle" id="residentNavToggle" aria-controls="residentNavLinks" aria-expanded="false" title="Toggle navigation">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+            <span class="screen-reader-text">Toggle navigation</span>
+        </button>
 
-        <div class="dropdown ml-auto">
-            <button title="Your Account" class="btn btn-primary dropdown-toggle" style="margin-right: 2px;" type="button" data-toggle="dropdown"><?= $userdetails['surname']; ?>, <?= $userdetails['firstname']; ?>
-                <span class="caret" style="margin-left: 2px;"></span>
-            </button>
-            <ul class="dropdown-menu" style="width: 175px;">
-                <a class="btn" href="resident_profile.php?id_resident=<?= $userdetails['id_resident']; ?>"> <i class="fas fa-user"> &nbsp; </i>Personal Profile </a>
-                <a class="btn" href="resident_changepass.php?id_resident=<?= $userdetails['id_resident']; ?>"> <i class="fas fa-lock">&nbsp;</i> Change Password </a>
-                <a class="btn" href="logout.php"> <i class="fas fa-sign-out-alt">&nbsp;</i> Logout </a>
-            </ul>
+        <div class="resident-nav-links" id="residentNavLinks">
+            <a href="resident_homepage.php" class="btn3 bg-primary" style="margin-left:120px; color: white;"><b>HOME</b></a>
+            <a href="#down1" title="Change Password" class="btn3 bg-primary" style="color: white; margin-left: 10px;"><b>CHANGE PASSWORD</b></a>
+            <a href="#down" title="Contact" class="btn3 bg-primary" style="color: white; margin-left: 25px;"><b>CONTACT</b></a>
+
+            <div class="dropdown ml-auto">
+                <button title="Your Account" class="btn btn-primary dropdown-toggle" style="margin-right: 2px;" type="button" data-toggle="dropdown"><?= $userdetails['surname']; ?>, <?= $userdetails['firstname']; ?>
+                    <span class="caret" style="margin-left: 2px;"></span>
+                </button>
+                <ul class="dropdown-menu" style="width: 175px;">
+                    <a class="btn" href="resident_profile.php?id_resident=<?= $userdetails['id_resident']; ?>"> <i class="fas fa-user"> &nbsp; </i>Personal Profile </a>
+                    <a class="btn" href="resident_changepass.php?id_resident=<?= $userdetails['id_resident']; ?>"> <i class="fas fa-lock">&nbsp;</i> Change Password </a>
+                    <a class="btn" href="logout.php"> <i class="fas fa-sign-out-alt">&nbsp;</i> Logout </a>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -429,8 +544,8 @@ $residentbmis->resident_changepass();
                 <br>
 
                 <div class="row margin mtop">
-                    <div class="col-3"> </div>
-                    <div class="col-6">
+                    <div class="col-xs-12 col-md-3"> </div>
+                    <div class="col-xs-12 col-md-6">
                         <div class="card mbottom">
                             <div class="card-header bg-white     text-black text-center" style="font-size:30px"> Change Password </div>
                             <br>
@@ -478,7 +593,7 @@ $residentbmis->resident_changepass();
                         </div>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-xs-12 col-md-3">
                     </div>
                 </div>
             </div>
@@ -633,6 +748,32 @@ $residentbmis->resident_changepass();
                 } // End if
             });
         });
+    </script>
+
+    <script>
+        (function() {
+            var navToggle = document.getElementById('residentNavToggle');
+            var navLinks = document.getElementById('residentNavLinks');
+
+            if (!navToggle || !navLinks) {
+                return;
+            }
+
+            navToggle.addEventListener('click', function() {
+                var isOpen = navLinks.classList.toggle('is-open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            navLinks.addEventListener('click', function(e) {
+                var target = e.target.closest('a');
+                if (!target || window.innerWidth > 768) {
+                    return;
+                }
+
+                navLinks.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        })();
     </script>
 
     <script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>

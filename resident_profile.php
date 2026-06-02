@@ -307,18 +307,127 @@
     background-color: rgba(37, 99, 235, 0.55);
 }
 
+.resident-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+.resident-nav-toggle {
+    display: none;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    margin-left: auto;
+}
+
+.resident-nav-toggle i {
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.profile-actions .btn {
+    min-width: 143px;
+}
+
 @media (max-width: 768px) {
     .navbar.custom-blue {
-        justify-content: space-between;
+        justify-content: flex-start;
+        padding: 0.75rem;
+    }
+
+    .resident-nav-toggle {
+        display: block;
+    }
+
+    .resident-nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 0.35rem;
+        margin-left: 0;
+    }
+
+    .resident-nav-links.is-open {
+        display: flex;
+    }
+
+    .navbar.custom-blue .logo {
+        margin-bottom: 0.5rem;
+    }
+
+    .navbar.custom-blue .navbar-brand {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+
+    .navbar.custom-blue a.btn3.bg-primary {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 0.35rem;
+        text-align: left;
     }
 
     .navbar.custom-blue .dropdown {
         width: 100%;
+        margin-top: 0.35rem;
     }
 
     .navbar.custom-blue .dropdown .btn.btn-primary {
         width: 100%;
         text-align: left;
+    }
+
+    .profile-actions {
+        justify-content: stretch;
+    }
+
+    .profile-actions .btn {
+        width: 100%;
+        margin-left: 0 !important;
+    }
+
+    .top-link {
+        width: 54px;
+        height: 54px;
+        margin: 0 1rem 1rem 0;
+    }
+
+    .chip {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        line-height: 1.4;
+        border-radius: 18px;
+    }
+
+    .chip img {
+        margin: 0;
+    }
+
+    .container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+@media (min-width: 769px) {
+    .navbar.custom-blue a.btn3.bg-primary {
+        margin-left: 0 !important;
+    }
+
+    .resident-nav-links {
+        display: flex !important;
     }
 }
     </style>
@@ -338,19 +447,26 @@
             <a href="#"><img src="assets/blink.png" alt="logo" style="height: 60px; border-radius: 50%;"/></a>
           </div>
             <a class="navbar-brand" href="resident_homepage.php" style="margin-left:10px;"><b>BarangayLink</b></a>
-            <a href="resident_homepage.php" title="Home" class="btn3 bg-primary" style="color: white; margin-left:130px;"><b>HOME</b></a>
-            <a href="#down2" class="btn3 bg-primary" style="color: white; margin-left: 10px;"><b>VIEW INFO</b></a>
-            <a href="#down1"  class="btn3 bg-primary" style="color: white; margin-left: 25px;"><b>UPDATE INFO</b></a>
-           
-            <div class="dropdown ml-auto">
-                <button title="Your Account" class="btn btn-primary dropdown-toggle" style="margin-right: 2px;" type="button" data-toggle="dropdown"><?= $userdetails['surname'];?>, <?= $userdetails['firstname'];?>
-                    <span class="caret" style="margin-left: 2px;"></span>
-                </button>
-                <ul class="dropdown-menu" style="width: 175px;" >
-                    <a class="btn" href="resident_profile.php?id_resident=<?= $userdetails['id_resident'];?>"> <i class="fas fa-user"> &nbsp; </i>Personal Profile  </a>
-                    <a class="btn" href="resident_changepass.php?id_resident=<?= $userdetails['id_resident'];?>"> <i class="fas fa-lock" >&nbsp;</i> Change Password  </a>
-                    <a class="btn" href="logout.php"> <i class="fas fa-sign-out-alt">&nbsp;</i> Logout  </a>
-                </ul>
+            <button type="button" class="navbar-toggle resident-nav-toggle" id="residentNavToggle" aria-controls="residentNavLinks" aria-expanded="false" title="Toggle navigation">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+                <span class="screen-reader-text">Toggle navigation</span>
+            </button>
+
+            <div class="resident-nav-links" id="residentNavLinks">
+                <a href="resident_homepage.php" title="Home" class="btn3 bg-primary" style="color: white; margin-left:130px;"><b>HOME</b></a>
+                <a href="#down2" class="btn3 bg-primary" style="color: white; margin-left: 10px;"><b>VIEW INFO</b></a>
+                <a href="#down1"  class="btn3 bg-primary" style="color: white; margin-left: 25px;"><b>UPDATE INFO</b></a>
+
+                <div class="dropdown ml-auto">
+                    <button title="Your Account" class="btn btn-primary dropdown-toggle" style="margin-right: 2px;" type="button" data-toggle="dropdown"><?= $userdetails['surname'];?>, <?= $userdetails['firstname'];?>
+                        <span class="caret" style="margin-left: 2px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="width: 175px;" >
+                        <a class="btn" href="resident_profile.php?id_resident=<?= $userdetails['id_resident'];?>"> <i class="fas fa-user"> &nbsp; </i>Personal Profile  </a>
+                        <a class="btn" href="resident_changepass.php?id_resident=<?= $userdetails['id_resident'];?>"> <i class="fas fa-lock" >&nbsp;</i> Change Password  </a>
+                        <a class="btn" href="logout.php"> <i class="fas fa-sign-out-alt">&nbsp;</i> Logout  </a>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -372,19 +488,19 @@
                             <hr>
 
                             <div class="row">
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-4">
                                     <div class="form-group">
                                         <label>Last Name:</label>
                                         <input class="form-control" value="<?= $resident['lname'];?>" disabled>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-4">
                                     <div class="form-group">
                                         <label>First Name:</label>
                                         <input class="form-control" value="<?= $resident['fname'];?>" disabled>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-4">
                                     <div class="form-group">
                                         <label>Middle Name:</label>
                                         <input class="form-control" value="<?= $resident['mi'];?>" disabled>
@@ -393,19 +509,19 @@
                             </div>
 
                             <div class="row">
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-4">
                                     <div class="form-group">
                                         <label>Email:</label>
                                         <input class="form-control" value="<?= $resident['email'];?>" disabled>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-4">
                                     <div class="form-group">
                                         <label>Sex:</label>
                                         <input class="form-control" value="<?= $resident['sex'];?>" disabled>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-4">
                                     <div class="form-group">
                                         <label>Nationality:</label>
                                         <input  class="form-control" value="<?= $resident['nationality'];?>" disabled>
@@ -414,13 +530,13 @@
                             </div>
 
                             <div class="row">
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Birth Date:</label>
                                         <input class="form-control" value="<?= $resident['bdate'];?>" disabled>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-xs-12 col-sm-6">
                                     <div class="form-group" id="down1">
                                         <label>Birth Place:</label>
                                         <input class="form-control" value="<?= $resident['bplace'];?>" disabled>
@@ -438,19 +554,19 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
                                     <label>Age:</label>
                                     <input class="form-control" type="number" name="age" value="<?= $resident['age'];?>">
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
                                     <label>Status:</label>
                                     <input class="form-control" type="text" name="status" value="<?= $resident['status'];?>">
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
                                     <label>Contact:</label>
                                     <input class="form-control" type="tel" name="contact" maxlength="11" pattern="[0-9]{11}" value="<?= $resident['contact'];?>">
@@ -459,19 +575,19 @@
                         </div>
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
                                     <label>House No:</label>
                                     <input class="form-control" type="text" name="houseno" value="<?= $resident['houseno'];?>">
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
                                     <label>Street:</label>
                                     <input class="form-control" type="text" name="street" value="<?= $resident['street'];?>">
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="form-group">
                                     <label>Barangay:</label>
                                     <input class="form-control" type="text" name="brgy" value="<?= $resident['brgy'];?>">
@@ -482,15 +598,15 @@
                         <hr>
 
                         <div class="row" style="margin-bottom: 5px;"> 
-                            <div class="col-xl-12">
-                                <div class="form-inline">
+                            <div class="col-xs-12">
+                                <div class="profile-actions">
                                     <input class="form-control" name="lname" type="hidden" value="<?= $resident['lname'];?>"/>
                                     <input class="form-control" name="mi" type="hidden" value="<?= $resident['mi'];?>" />
-                                    <button type="submit button" class="btn btn-info" style="margin-left: 37%; width:143px;"  name="search_household">View Household</button>
+                                    <button type="submit button" class="btn btn-info" name="search_household">View Household</button>
                                     <?php include('styled_button.php'); ?>
-                                    <button id="styled_button_approve" class="btn btn-success" style="margin-left: .2%; width:143px;" type="submit" name="profile_update"> Update </button>
+                                    <button id="styled_button_approve" class="btn btn-success" type="submit" name="profile_update"> Update </button>
                                     <a href="resident_profile.php?id_resident=<?= $userdetails['id_resident'];?>"></a>   
-                                    <div>
+                                    <div style="width: 100%;">
                                         <br><br>
                                         <?php include'testingsearch.php'?>  
                                     </div>
@@ -627,6 +743,32 @@
                 } // End if
             });
             });
+        </script>
+
+        <script>
+            (function() {
+                var navToggle = document.getElementById('residentNavToggle');
+                var navLinks = document.getElementById('residentNavLinks');
+
+                if (!navToggle || !navLinks) {
+                    return;
+                }
+
+                navToggle.addEventListener('click', function() {
+                    var isOpen = navLinks.classList.toggle('is-open');
+                    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                });
+
+                navLinks.addEventListener('click', function(e) {
+                    var target = e.target.closest('a');
+                    if (!target || window.innerWidth > 768) {
+                        return;
+                    }
+
+                    navLinks.classList.remove('is-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            })();
         </script>
 
         <script src="bootstrap/js/bootstrap.bundle.js" type="text/javascript"> </script>

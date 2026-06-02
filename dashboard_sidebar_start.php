@@ -151,7 +151,7 @@
                     <span>Blotter Report</span></a>
             </li>
 
-            <!-- Complain Blotter Report -->
+            
             <li class="nav-item">
                 <a class="nav-link" href="population.php">
                     <i class="fas fa-users"></i>
@@ -189,7 +189,7 @@
                     <span> Position</span></a>
             </li>-->
 
-            <!-- Certificate of Residency -->
+
 
 
         </ul>
