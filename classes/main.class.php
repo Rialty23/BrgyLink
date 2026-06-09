@@ -3191,7 +3191,7 @@ class BMISClass
         if (isset($_POST['create_blotter_walkin'])) {
 
             // Validate required fields
-            $required_fields = ['lname', 'fname', 'houseno', 'street', 'contact', 'narrative', 'rlname', 'rfname', 'rmi', 'rage', 'rcontact', 'raddress', 'type', 'date', 'time', 'location', 'witness'];
+            $required_fields = ['lname', 'fname', 'houseno', 'street', 'contact', 'narrative', 'rlname', 'rfname', 'rage', 'rcontact', 'raddress', 'type', 'date', 'time', 'location'];
             foreach ($required_fields as $field) {
                 if (empty($_POST[$field])) {
                     echo "<script>alert('Please fill in all required fields.'); window.history.back();</script>";
@@ -3367,6 +3367,7 @@ class BMISClass
                 echo "<script>
             alert('Successfully Added!\\nTransaction No: $control_no');
               window.open('receipt_generic.php?limiter=blotter&id=$lastId', '_blank');
+              window.location.href = 'admn_blotterreport.php';
         </script>";
             } catch (PDOException $e) {
                 error_log("Blotter creation error: " . $e->getMessage());

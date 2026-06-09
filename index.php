@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <!-- BARANGAY OFFICIALS -->
     <section id="officials" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center text-blue-900 mb-8 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>BARANGAY OFFICIALS</h2>
+        <h2 class="text-3xl font-bold text-center text-blue-900 mb-8 opacity-0 translate-y-10 transition-all duration-700 ease-out" data-animate>BARANGAY OFFICIALS AND STAFF</h2>
         <div class="overflow-x-auto">
           <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md text-sm sm:text-base">
             <thead class="bg-blue-900 text-white">

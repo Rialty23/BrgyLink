@@ -7,6 +7,7 @@ require('classes/resident.class.php');
 // Initialize
 $userdetails = $bmis->get_userdata();
 $bmis->validate_admin();
+$bmis->create_blotter_walkin();
 
 // Get data
 $view = $residentbmis->view_blotter();
@@ -131,7 +132,7 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
    <!-- ANALYTICS CARDS -->
    <div class="row mb-4">
 
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
          <div class="card p-3 shadow bg-warning text-dark">
             <h6>Predicted Cases (Next Month)</h6>
             <h2><?= $prediction ?></h2>
@@ -143,15 +144,15 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
             <h6>Trend</h6>
             <h4><?= $trend ?></h4>
          </div>
-      </div>
+      </div> -->
+
 
       <div class="col-md-3">
          <div class="card p-3 shadow">
             <h6>Most Common Case</h6>
             <h5><?= $topCase ?></h5>
          </div>
-      </div>
-
+      </div> 
       <div class="col-md-3">
          <div class="card p-3 shadow">
             <h6>Total Records</h6>
@@ -178,6 +179,17 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
 
    <a href="admn_blotterreport.php?deleted" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
 
+   <button
+      type="button"
+      id="addWalkinBtn"
+      class="btn btn-info"
+      style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;"
+      data-toggle="modal"
+      data-target="#addWalkinModal"
+      name="add_walkin">
+      <i class="fas fa-plus"></i> Add 
+   </button>
+
 
    <a href="#" id="exportExcelBtn"
       class="btn btn-success"
@@ -185,7 +197,7 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
       <i class="fas fa-file-excel"></i> Export to Excel
    </a>
 
-   <a href="admn_blotterreport.php" class="btn btn-secondary" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Reset</a>
+   <!-- <a href="admn_blotterreport.php" class="btn btn-secondary" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Reset</a> -->
 
    <!-- TABLE -->
    <div class="table-responsive">
@@ -283,6 +295,198 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
 
 </div>
 
+<!-- Add Walk-in Blotter Modal -->
+<div class="modal fade" id="addWalkinModal" tabindex="-1" role="dialog" aria-labelledby="addWalkinModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addWalkinModalLabel">Complain Form</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <form method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+               <label>Complainant's Details:</label>
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_lname">Last name:</label>
+                        <input id="walkin_lname" name="lname" type="text" class="form-control uppercase-input" required>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_fname">First name:</label>
+                        <input id="walkin_fname" name="fname" type="text" class="form-control uppercase-input" required>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_mi">Middle name:</label>
+                        <input id="walkin_mi" name="mi" type="text" class="form-control uppercase-input">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="walkin_contact">Contact Number:</label>
+                        <input id="walkin_contact" name="contact" type="text" maxlength="11" class="form-control" pattern="09[0-9]{9}" placeholder="09123456789" required>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="walkin_blot_photo">Upload Evidence (Optional):</label>
+                        <input id="walkin_blot_photo" type="file" class="form-control-file" name="blot_photo" accept="image/*,.pdf,.doc,.docx">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="walkin_houseno">House No:</label>
+                        <input id="walkin_houseno" type="text" class="form-control uppercase-input" name="houseno" placeholder="Enter House No." required>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="walkin_street">Street:</label>
+                        <input id="walkin_street" type="text" class="form-control uppercase-input" name="street" placeholder="Enter Street" required>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="walkin_brgy">Barangay:</label>
+                        <input id="walkin_brgy" type="text" class="form-control uppercase-input" name="brgy" value="East Modern Site" required>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="walkin_municipal">Municipality:</label>
+                        <input id="walkin_municipal" type="text" class="form-control uppercase-input" name="municipal" value="Bagiuo City" required>
+                     </div>
+                  </div>
+               </div>
+
+               <hr>
+
+               <label>Respondent's Details:</label>
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_rlname">Last Name:</label>
+                        <input id="walkin_rlname" name="rlname" type="text" class="form-control uppercase-input" placeholder="Enter Last Name of Respondent" required>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_rfname">First Name:</label>
+                        <input id="walkin_rfname" name="rfname" type="text" class="form-control uppercase-input" placeholder="Enter First Name of Respondent" required>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_rmi">Middle Name:</label>
+                        <input id="walkin_rmi" name="rmi" type="text" class="form-control uppercase-input" placeholder="Enter Middle Name of Respondent">
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="walkin_rage">Age:</label>
+                        <input id="walkin_rage" name="rage" type="number" class="form-control" placeholder="Enter Age" required>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="walkin_rcontact">Contact Number:</label>
+                        <input id="walkin_rcontact" name="rcontact" type="text" maxlength="11" class="form-control" pattern="[0-9]{11}" placeholder="09123456789" required>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col">
+                     <div class="form-group">
+                        <label for="walkin_raddress">Address:</label>
+                        <input id="walkin_raddress" name="raddress" type="text" class="form-control uppercase-input" placeholder="Enter Address of Respondent" required>
+                     </div>
+                  </div>
+               </div>
+
+               <hr>
+
+               <label>Incident Details:</label>
+               <div class="row">
+                  <div class="col">
+                     <div class="form-group">
+                        <label for="walkin_type">Complaint:</label>
+                        <input id="walkin_type" name="type" type="text" class="form-control uppercase-input" required>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_date">Date of Incident:</label>
+                        <input id="walkin_date" name="date" type="date" class="form-control" required>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_time">Time of Incident:</label>
+                        <input id="walkin_time" name="time" type="time" class="form-control" required>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="walkin_location">Location of Incident:</label>
+                        <input id="walkin_location" name="location" type="text" class="form-control uppercase-input" placeholder="Enter Location of Incident" required>
+                     </div>
+                  </div>
+               </div>
+
+               <hr>
+
+               <h6>Guidelines for Narrative Report:</h6>
+               <ul style="font-size: 15px;">
+                  <li>Use simple, everyday words rather than complex terminology.</li>
+                  <li>Be specific on your report.</li>
+                  <li>Don't use bad words.</li>
+                  <li>Clear and easy to read report.</li>
+                  <li>Don't use emoji or any kind of symbols.</li>
+               </ul>
+
+               <div class="row">
+                  <div class="col">
+                     <div class="form-group">
+                        <label for="walkin_narrative">Narrative Report:</label>
+                        <textarea class="form-control" rows="5" id="walkin_narrative" name="narrative" placeholder="Enter Message here" required></textarea>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col">
+                     <div class="form-group">
+                        <label for="walkin_witness">Witnesses (if any):</label>
+                        <textarea class="form-control" rows="3" id="walkin_witness" name="witness" placeholder="Enter Witnesses here"></textarea>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="submit" name="create_blotter_walkin" class="btn btn-success">Save changes</button>
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
 <!-- View Details Modal -->
 <div class="modal fade" id="blotterDetailsModal" tabindex="-1" role="dialog" aria-labelledby="blotterDetailsModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -337,6 +541,15 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
    </div>
 </div>
 <script>
+   document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.uppercase-input').forEach(function(field) {
+         field.value = field.value.toUpperCase();
+         field.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+         });
+      });
+   });
+
    document.querySelectorAll('.view-details-btn').forEach(function(button) {
       button.addEventListener('click', function() {
          document.getElementById('detail_control_no').textContent = this.dataset.controlNo || '';
