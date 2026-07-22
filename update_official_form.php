@@ -118,7 +118,7 @@ include('dashboard_sidebar_start.php');
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="col">
-                                <label class="mtop">Term Started: </label>
+                                <label class="mtop">Term End: </label>
                                 <input type="date" class="form-control" name="termend" value="<?= $staff['termend']; ?>" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
