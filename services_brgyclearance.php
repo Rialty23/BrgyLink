@@ -910,8 +910,21 @@ $bmis->create_brgyclearance();
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Resident Since:</label>
-                                        <input type="date" class="form-control" name="resident_since" value="<?= $userdetails['resident_since'] ?>" required>
+                                        <label>Length of Residency:</label>
+                                        <input type="hidden" name="resident_since" value="<?= htmlspecialchars($userdetails['resident_since'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                        <select class="form-control" name="resident_since_2" required>
+                                            <option value="">Choose length of residency</option>
+                                            <option value="Less than 6 months">Less than 6 months</option>
+                                            <option value="6 months">6 months</option>
+                                            <option value="1 year">1 year</option>
+                                            <option value="2 years">2 years</option>
+                                            <option value="3 years">3 years</option>
+                                            <option value="4 years">4 years</option>
+                                            <option value="5 years">5 years</option>
+                                            <option value="More than 5 years">More than 5 years</option>
+                                            <option value="More than 10 years">More than 10 years</option>
+                                            <option value="Since Birth">Since Birth</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -1033,8 +1046,7 @@ $bmis->create_brgyclearance();
                             <input type="hidden" name="addedby" value="<?= $userdetails['surname'] ?> <?= $userdetails['firstname'] ?> <?= $userdetails['mname'] ?>">
 
                             <?php include('styled_button.php'); ?>
-
-                            <button name="create_brgyclearance" type="submit" class="btn btn-success">Submit Request</button>
+                            <button id="styled_button_approve" name="create_brgyclearance" type="submit" class="btn btn-success">Submit Request</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
 

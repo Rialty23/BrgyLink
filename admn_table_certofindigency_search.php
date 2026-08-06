@@ -14,9 +14,11 @@ if (isset($_POST['search_certofindigency'])) {
                 <th style="width: 10%;"> Middle Name </th>
                 <th style="width: 10%;"> Nationality </th>
                 <th style="width: 10%;"> Address </th>
+                <th> Length of Residency </th>
                 <th style="width: 10%;"> Purpose </th>
                 <th style="width: 10%;"> Date </th>
                 <th style="width: 10%;"> Status </th>
+                <th> Is Deleted </th>
                 <th style="width: 10%;"> Rejected Reason </th>
                 <th style="width: 20%;"> Actions</th>
                 <th style="width: 20%;"> Update Status </th>
@@ -39,9 +41,11 @@ if (isset($_POST['search_certofindigency'])) {
                     <td> <?= $view['mi']; ?> </td>
                     <td> <?= $view['nationality']; ?> </td>
                     <td> <?= $view['houseno']; ?>, <?= $view['street']; ?>, <?= $view['brgy']; ?>, <?= $view['municipal']; ?></td>
+                    <td><?= !empty($view['resident_since_2']) ? htmlspecialchars($view['resident_since_2'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?></td>
                     <td> <?= $view['purpose']; ?> </td>
                     <td> <?= $view['date']; ?> </td>
                     <?php include('include_statuses.php'); ?>
+                          <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                           <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                           <td>
                         <form action="" method="post">
@@ -49,8 +53,8 @@ if (isset($_POST['search_certofindigency'])) {
 
 
                             <a class="btn btn-success"
-                                style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
-                                href="indigency_form.php?id_indigency=<?= $view['id_indigency']; ?>"
+                                style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                href="template/certificate_indigency.php?id_indigency=<?= $view['id_indigency']; ?>"
                                 onclick="openPopup(this.href); return false;">
                                 Generate
                             </a>
@@ -107,9 +111,11 @@ if (isset($_POST['search_certofindigency'])) {
                     <th style="width: 10%;"> Middle Name </th>
                     <th style="width: 10%;"> Nationality </th>
                     <th style="width: 10%;"> Address </th>
+                    <th> Length of Residency </th>
                     <th style="width: 10%;"> Purpose </th>
                     <th style="width: 10%;"> Date </th>
                     <th style="width: 10%;"> Status </th>
+                    <th> Is Deleted </th>
                     <th style="width: 10%;"> Rejected Reason </th>
                     <th style="width: 20%;"> Actions</th>
                     <th style="width: 20%;"> Update Status </th>
@@ -127,9 +133,11 @@ if (isset($_POST['search_certofindigency'])) {
                             <td> <?= $view['mi']; ?> </td>
                             <td> <?= $view['nationality']; ?> </td>
                             <td> <?= $view['houseno']; ?>, <?= $view['street']; ?>, <?= $view['brgy']; ?>, <?= $view['municipal']; ?></td>
+                            <td><?= !empty($view['resident_since_2']) ? htmlspecialchars($view['resident_since_2'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?></td>
                             <td> <?= $view['purpose']; ?> </td>
                             <td> <?= $view['date']; ?> </td>
                             <?php include('include_statuses.php'); ?>
+                                     <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                                      <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                                      <td>
                                 <form action="" method="post">
@@ -137,8 +145,8 @@ if (isset($_POST['search_certofindigency'])) {
 
 
                                     <a class="btn btn-secondary"
-                                        style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
-                                        href="indigency_form.php?id_indigency=<?= $view['id_indigency']; ?>"
+                                        style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                        href="template/certificate_indigency.php?id_indigency=<?= $view['id_indigency']; ?>"
                                         onclick="openPopup(this.href); return false;">
                                         Generate
                                     </a>

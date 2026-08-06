@@ -16,9 +16,11 @@ if (isset($_POST['search_clearance'])) {
                 <th> Middle Name </th>
                 <th> Purpose </th>
                 <th> Address </th>
+                <th> Length of Residency </th>
                 <th> Status </th>
                 <th> Age </th>
                 <th style="width: 8.5%;"> Status</th>
+                <th> Is Deleted </th>
                 <th> Rejected Reason </th>
                 <th style="width: 20%;"> Actions</th>
                 <th style="width: 20%;"> Update Status </th>
@@ -39,9 +41,11 @@ if (isset($_POST['search_clearance'])) {
                     <td> <?= $view['mi']; ?> </td>
                     <td> <?= $view['purpose']; ?> </td>
                     <td> <?= $view['houseno']; ?>, <?= $view['street']; ?>, <?= $view['brgy']; ?>, <?= $view['municipal']; ?></td>
+                    <td><?= !empty($view['resident_since_2']) ? htmlspecialchars($view['resident_since_2'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?></td>
                     <td> <?= $view['status']; ?> </td>
                     <td> <?= $view['age']; ?> </td>
                     <?php include('include_statuses2.php'); ?>
+                          <td><?= strtoupper(trim($view['status2'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                           <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                           <td>
                         <form action="" method="post">
@@ -49,8 +53,8 @@ if (isset($_POST['search_clearance'])) {
 
 
                             <a class="btn btn-success"
-                                style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
-                                href="brgyclearance_form.php?id_clearance=<?= $view['id_clearance']; ?>"
+                                style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                href="template/barangay_clearance.php?id_clearance=<?= $view['id_clearance']; ?>"
                                 onclick="openPopup(this.href); return false;">
                                 Generate
                             </a>
@@ -110,9 +114,11 @@ if (isset($_POST['search_clearance'])) {
                     <th style="width: 10%;"> Middle Name </th>
                     <th style="width: 20%;"> Purpose </th>
                     <th style="width: 20%;"> Address </th>
+                    <th> Length of Residency </th>
                     <th> Marital Status </th>
                     <th style="width: 8.5%;"> Age </th>
                     <th style="width: 8.5%;"> Status</th>
+                    <th> Is Deleted </th>
                     <th> Rejected Reason </th>
                     <th style="width: 20%;"> Actions</th>
                     <th style="width: 20%;"> Update Status </th>
@@ -130,9 +136,11 @@ if (isset($_POST['search_clearance'])) {
                             <td> <?= $view['mi']; ?> </td>
                             <td> <?= $view['purpose']; ?> </td>
                             <td> <?= $view['houseno']; ?>, <?= $view['street']; ?>, <?= $view['brgy']; ?>, <?= $view['municipal']; ?></td>
+                            <td><?= !empty($view['resident_since_2']) ? htmlspecialchars($view['resident_since_2'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?></td>
                             <td> <?= $view['status']; ?> </td>
                             <td> <?= $view['age']; ?> </td>
                             <?php include('include_statuses2.php'); ?>
+                                     <td><?= strtoupper(trim($view['status2'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                                      <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                                      <td>
                                 <form action="" method="post">
@@ -140,8 +148,8 @@ if (isset($_POST['search_clearance'])) {
 
 
                                     <a class="btn btn-secondary"
-                                        style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
-                                        href="brgyclearance_form.php?id_clearance=<?= $view['id_clearance']; ?>"
+                                        style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                        href="template/barangay_clearance.php?id_clearance=<?= $view['id_clearance']; ?>"
                                         onclick="openPopup(this.href); return false;">
                                         Generate
                                     </a>

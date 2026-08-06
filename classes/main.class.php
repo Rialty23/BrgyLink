@@ -1600,6 +1600,7 @@ class BMISClass
             $municipal      = $_POST['municipal'];
 
             $resident_since = $_POST['resident_since'];
+            $resident_since_2 = $_POST['resident_since_2'];
 
             $date           = $_POST['date'];
             $purpose        = $_POST['purpose'];
@@ -1663,6 +1664,7 @@ class BMISClass
                      . "Email: " . $email . "\n"
                      . "Address: " . strtoupper($houseno) . " " . strtoupper($street) . ", " . strtoupper($brgy) . ", " . strtoupper($municipal) . "\n"
                      . "Stay Duration: " . $resident_since . "\n"
+                     . "Length of Residency: " . $resident_since_2 . "\n"
                      . "Purpose: " . $purpose . "\n"
                      . "Requirement Submitted: " . $requirements . "\n"
                      . "Date Needed: " . $date . "\n"
@@ -1694,16 +1696,17 @@ class BMISClass
                 brgy,
                 municipal,
                 resident_since,
+                resident_since_2,
                 date,
                 purpose,
                 requirements,
                 attachment,
                 control_no,
                 qr_code
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ");
 
-            $stmt->execute([$id_rescert, $id_resident, $lname, $fname, $mi, $bdate, $bplace, $civil_status, $nationality, $occupation, $contact, $email, $houseno, $street, $brgy, $municipal, $resident_since, $date, $purpose, $requirements, $attachment, $control_no, $qrFile]);
+            $stmt->execute([$id_rescert, $id_resident, $lname, $fname, $mi, $bdate, $bplace, $civil_status, $nationality, $occupation, $contact, $email, $houseno, $street, $brgy, $municipal, $resident_since, $resident_since_2, $date, $purpose, $requirements, $attachment, $control_no, $qrFile]);
 
             $message2 = "Application Applied!";
 
@@ -1999,6 +2002,7 @@ class BMISClass
             $brgy = $_POST['brgy'];
             $municipal = $_POST['municipal'];
             $resident_since = $_POST['resident_since'];
+            $resident_since_2 = $_POST['resident_since_2'];
             $purpose = $_POST['purpose'];
             $date = $_POST['date'];
 
@@ -2033,6 +2037,7 @@ class BMISClass
             $qr_data = "Transaction No: " . $control_no . "\n"
                      . "Full Name: " . strtoupper($lname) . ", " . strtoupper($fname) . " " . strtoupper($mi) . "\n"
                      . "Resident Since: " . $resident_since .  "\n"
+                     . "Length of Residency: " . $resident_since_2 . "\n"
                      . "Purpose: " . $purpose .  "\n"
                      . "Date Needed: " . $date .  "\n"
                      . "Date Issued: " . date('F d, Y');
@@ -2040,10 +2045,10 @@ class BMISClass
             $this->saveReceiptPngByControlNo($control_no, trim($fname . ' ' . $mi . ' ' . $lname), $qrFile);
 
 
-            $stmt = $connection->prepare("INSERT INTO tbl_indigency (`id_indigency`, `id_resident`, `lname`, `fname`, `mi`, `bdate`, `age`, `nationality`, `houseno`, `street`,`brgy`, `municipal`,`resident_since`,`purpose`, `date`, `control_no`, `qr_code`)
-            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)");
+            $stmt = $connection->prepare("INSERT INTO tbl_indigency (`id_indigency`, `id_resident`, `lname`, `fname`, `mi`, `bdate`, `age`, `nationality`, `houseno`, `street`,`brgy`, `municipal`,`resident_since`, `resident_since_2`, `purpose`, `date`, `control_no`, `qr_code`)
+            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?)");
 
-            $stmt->execute([$id_indigency, $id_resident, $lname, $fname, $mi, $bdate, $age, $nationality, $houseno, $street, $brgy, $municipal, $resident_since, $purpose, $date, $control_no, $qrFile]);
+            $stmt->execute([$id_indigency, $id_resident, $lname, $fname, $mi, $bdate, $age, $nationality, $houseno, $street, $brgy, $municipal, $resident_since, $resident_since_2, $purpose, $date, $control_no, $qrFile]);
 
             $message2 = "Application Applied!";
             $lastId = $connection->lastInsertId();
@@ -2257,6 +2262,23 @@ class BMISClass
             $occupation = $_POST['occupation'];
             $precinct_no = $_POST['precinct_no'];
             $resident_since = $_POST['resident_since'];
+            $resident_since_2 = $_POST['resident_since_2'];
+            // Barangay clearance requires at least six months of residency.
+            // Determine this on the server so the rule cannot be bypassed by
+            // changing the form in the browser.
+            $residency_months = null;
+            if (strcasecmp(trim($resident_since_2), 'Less than 6 months') === 0) {
+                $residency_months = 0;
+            } elseif (preg_match('/^(\d+)\s+month(?:s)?$/i', trim($resident_since_2), $matches)) {
+                $residency_months = (int) $matches[1];
+            } elseif (preg_match('/^(\d+)\s+year(?:s)?$/i', trim($resident_since_2), $matches)) {
+                $residency_months = (int) $matches[1] * 12;
+            }
+            $auto_rejected = $residency_months !== null && $residency_months < 6;
+            $request_status = $auto_rejected ? 'REJECTED' : 'PENDING';
+            $rejected_reason = $auto_rejected
+                ? 'Length of residency is less than the required 6 months.'
+                : '';
             $employment_status = $_POST['employment_status'];
             $company_name = $_POST['company_name'];
             $ref_name1 = $_POST['ref_name1'];
@@ -2296,6 +2318,7 @@ class BMISClass
                      . "Full Name: " . strtoupper($lname) . ", " . strtoupper($fname) . " " . strtoupper($mi) . "\n"
                      . "Address: " . strtoupper($houseno) . " " . strtoupper($street) . ", " . strtoupper($brgy) . ", " . strtoupper($municipal) . "\n"
                      . "Resident Since: " . $resident_since . "\n"
+                     . "Length of Residency: " . $resident_since_2 . "\n"
                      . "Sex: " . $sex . "\n"
                      . "Birthdate: " . $bdate . "\n"
                      . "Civil Status: " . $status . "\n"
@@ -2311,8 +2334,8 @@ class BMISClass
 
 
             $stmt = $connection->prepare("INSERT INTO tbl_clearance (`id_clearance`, `id_resident`, `lname`, `fname`, `mi`,
-             `purpose`, `houseno`, `street`,`brgy`, `municipal`, `status`, `age`, `sex`, `bdate`, `bplace`, `occupation`, `precinct_no`, `resident_since`, `employment_status`, `company_name`, `ref_name1`, `ref_name2`, `ref_tel`, `clearance_type`, `control_no`, `qr_code`)
-            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+             `purpose`, `houseno`, `street`,`brgy`, `municipal`, `status`, `age`, `sex`, `bdate`, `bplace`, `occupation`, `precinct_no`, `resident_since`, `resident_since_2`, `employment_status`, `company_name`, `ref_name1`, `ref_name2`, `ref_tel`, `clearance_type`, `control_no`, `qr_code`, `status2`, `rejected_reason`)
+            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             $stmt->execute([
                 $id_clearance,
@@ -2333,6 +2356,7 @@ class BMISClass
                 $occupation,
                 $precinct_no,
                 $resident_since,
+                $resident_since_2,
                 $employment_status,
                 $company_name,
                 $ref_name1,
@@ -2340,15 +2364,21 @@ class BMISClass
                 $ref_tel,
                 $clearance_type,
                 $control_no,
-                $qrFile
+                $qrFile,
+                $request_status,
+                $rejected_reason
             ]);
 
             $message2 = "Application Applied!";
             $lastId = $connection->lastInsertId();
+            $alert_message = $auto_rejected
+                ? "Request automatically rejected: residency must be at least 6 months.\nTransaction No: $control_no"
+                : "Successfully Added!\nTransaction No: $control_no";
+            $alert_json = json_encode($alert_message);
 
             echo "
    <script>
-       alert('Successfully Added!\\nTransaction No: $control_no');
+       alert($alert_json);
        window.open('receipt_generic.php?limiter=clearance&id=$lastId', '_blank');
    </script>";
             header("refresh: 0");
@@ -2378,6 +2408,7 @@ class BMISClass
             $occupation = $_POST['occupation'] ?? '';
             $precinct_no = $_POST['precinct_no'] ?? '';
             $resident_since = (isset($_POST['resident_since']) && $_POST['resident_since'] !== '') ? $_POST['resident_since'] : null;
+            $resident_since_2 = $_POST['resident_since_2'] ?? '';
             $employment_status = $_POST['employment_status'] ?? '';
             $company_name = $_POST['company_name'] ?? '';
             $ref_name1 = $_POST['ref_name1'] ?? '';
@@ -2424,6 +2455,7 @@ class BMISClass
                      . "Full Name: " . strtoupper($lname) . ", " . strtoupper($fname) . " " . strtoupper($mi) . "\n"
                      . "Address: " . strtoupper($houseno) . " " . strtoupper($street) . ", " . strtoupper($brgy) . ", " . strtoupper($municipal) . "\n"
                      . "Resident Since: " . $resident_since . "\n"
+                     . "Length of Residency: " . $resident_since_2 . "\n"
                      . "Sex: " . $sex . "\n"
                      . "Birthdate: " . $bdate . "\n"
                      . "Civil Status: " . $status . "\n"
@@ -2458,6 +2490,7 @@ class BMISClass
                 occupation,
                 precinct_no,
                 resident_since,
+                resident_since_2,
                 employment_status,
                 company_name,
                 ref_name1,
@@ -2467,7 +2500,7 @@ class BMISClass
                 control_no,
                 qr_code
             )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ");
 
             $stmt->execute([
@@ -2489,6 +2522,7 @@ class BMISClass
                 $occupation,
                 $precinct_no,
                 $resident_since,
+                $resident_since_2,
                 $employment_status,
                 $company_name,
                 $ref_name1,

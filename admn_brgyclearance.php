@@ -6,7 +6,7 @@ $userdetails = $bmis->get_userdata();
 $bmis->validate_admin();
 $bmis->create_brgyclearance_walkin();
 $bmis->delete_clearance();
-$view = $bmis->view_clearance();
+$view = $bmis->view_clearance(!isset($_GET['deleted']));
 $id_resident = $_GET['id_resident'] ?? null;
 $resident = $id_resident ? $residentbmis->get_single_clearance($id_resident) : false;
 
@@ -166,6 +166,21 @@ include('dashboard_sidebar_start.php');
                                         placeholder="Enter Purok" required>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Length of Residency:</label>
+                                    <select class="form-control" name="resident_since_2" required>
+                                        <option value="">Choose length of residency</option>
+                                        <?php for ($month = 1; $month <= 11; $month++): ?>
+                                            <option value="<?= $month ?> <?= $month === 1 ? 'month' : 'months' ?>"><?= $month ?> <?= $month === 1 ? 'month' : 'months' ?></option>
+                                        <?php endfor; ?>
+                                        <?php for ($year = 1; $year <= 100; $year++): ?>
+                                            <option value="<?= $year ?> <?= $year === 1 ? 'year' : 'years' ?>"><?= $year ?> <?= $year === 1 ? 'year' : 'years' ?></option>
+                                        <?php endfor; ?>
+                                        <option value="Up to present">Up to present</option>
+                                    </select>
                                 </div>
                             </div>
                             <!--<label> Barangay: </label>-->

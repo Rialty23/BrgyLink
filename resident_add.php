@@ -268,16 +268,18 @@ $conn->exec($createTableSQL);
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label>Source of Income</label><span style="color: red;">*</span>
-                                    <input
-                                        type="text"
-                                        id="soi"
-                                        name="soi"
-                                        class="form-control"
-                                        list="incomeSuggestions"
-                                        placeholder="Type a number (e.g. 1 → 10,000)"
-                                        autocomplete="off">
-
-                                    <datalist id="incomeSuggestions"></datalist>
+                                    <select id="soi" name="soi" class="form-control" required>
+                                        <option value="">Choose monthly income</option>
+                                        <option value="No Income">No Income</option>
+                                        <option value="Below 10,000">Below ₱10,000</option>
+                                        <option value="10,000 - 19,999">₱10,000 - ₱19,999</option>
+                                        <option value="20,000 - 29,999">₱20,000 - ₱29,999</option>
+                                        <option value="30,000 - 39,999">₱30,000 - ₱39,999</option>
+                                        <option value="40,000 - 49,999">₱40,000 - ₱49,999</option>
+                                        <option value="50,000 - 74,999">₱50,000 - ₱74,999</option>
+                                        <option value="75,000 - 99,999">₱75,000 - ₱99,999</option>
+                                        <option value="100,000 and above">₱100,000 and above</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Occupation</label><span style="color:red;">*</span>
@@ -546,37 +548,6 @@ $conn->exec($createTableSQL);
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-    const soiInput = document.getElementById('soi');
-    const datalist = document.getElementById('incomeSuggestions');
-
-    soiInput.addEventListener('input', function(e) {
-        // 1. Remove all non-digits to get the raw number
-        let rawValue = this.value.replace(/\D/g, '');
-        
-        // 2. Format the input field with commas
-        if (rawValue) {
-            this.value = parseInt(rawValue).toLocaleString();
-        } else {
-            this.value = '';
-        }
-
-        // 3. Handle Datalist Suggestions
-        datalist.innerHTML = '';
-        if (!rawValue) return;
-
-        // Logic for suggestions (e.g., if user types '1', suggest 10,000, 11,000, etc.)
-        const base = parseInt(rawValue) * 10000;
-        const increments = [0, 1000, 2000, 3000];
-        
-        increments.forEach(add => {
-            const option = document.createElement('option');
-            option.value = (base + add).toLocaleString();
-            datalist.appendChild(option);
-        });
-    });
-</script>
 
 <script>
 const email = document.getElementById("email");

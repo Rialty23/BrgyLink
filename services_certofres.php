@@ -857,13 +857,20 @@ $bmis->create_certofres();
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Stay duration:</label>
-                                        <select class="form-control" name="resident_since" required>
-                                            <option value="">Choose your Resident Since</option>
-                                            <option value="Less than 1 year">Less than 6 months</option>
-                                            <option value="6 months to 1 year">6 months to 1 year</option>
-                                            <option value="1-5 years">1-5 years</option>
+                                        <label>Length of Residency:</label>
+                                        <input type="hidden" name="resident_since" value="<?= htmlspecialchars($userdetails['resident_since'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                        <select class="form-control" name="resident_since_2" required>
+                                            <option value="">Choose length of residency</option>
+                                            <option value="Less than 6 months">Less than 6 months</option>
+                                            <option value="6 months">6 months</option>
+                                            <option value="1 year">1 year</option>
+                                            <option value="2 years">2 years</option>
+                                            <option value="3 years">3 years</option>
+                                            <option value="4 years">4 years</option>
+                                            <option value="5 years">5 years</option>
                                             <option value="More than 5 years">More than 5 years</option>
+                                            <option value="More than 10 years">More than 10 years</option>
+                                            <option value="Since Birth">Since Birth</option>
                                         </select>
                                     </div>
                                 </div>
@@ -933,7 +940,7 @@ $bmis->create_certofres();
 
                             <?php include('styled_button.php'); ?>
 
-                            <button name="create_certofres" type="submit" class="btn btn-success">Submit Request</button>
+                            <button id="styled_button_approve" name="create_certofres" type="submit" class="btn btn-success">Submit Request</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
 

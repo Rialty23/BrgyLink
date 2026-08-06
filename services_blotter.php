@@ -924,7 +924,7 @@ $bmis->create_blotter();
                                     <div class="form-group">
                                         <label> House No: </label>
                                         <input type="text" class="form-control uppercase-input" name="houseno"
-                                            placeholder="Enter House No." value="<?= $userdetails['houseno'] ?>" required>
+                                            placeholder="House No." value="<?= $userdetails['houseno'] ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -934,7 +934,7 @@ $bmis->create_blotter();
                                     <div class="form-group">
                                         <label> Street: </label>
                                         <input type="text" class="form-control uppercase-input" name="street"
-                                            placeholder="Enter Street" value="<?= $userdetails['street'] ?>" required>
+                                            placeholder="Street" value="<?= $userdetails['street'] ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -942,12 +942,12 @@ $bmis->create_blotter();
 
                                 <!--<label> Barangay: </label>-->
                                 <input type="hidden" class="form-control" name="brgy"
-                                    placeholder="Enter Barangay" value="<?= $userdetails['brgy'] ?>" required>
+                                    placeholder="Barangay" value="<?= $userdetails['brgy'] ?>" required>
 
 
                                 <!--<label> Municipality: </label>-->
                                 <input type="hidden" class="form-control" name="municipal"
-                                    placeholder="Enter Municipality" value="<?= $userdetails['municipal'] ?>" required>
+                                    placeholder="Municipality" value="<?= $userdetails['municipal'] ?>" required>
                             </div>
 
                             <hr>
@@ -957,7 +957,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="rlname">Last Name:</label>
-                                        <input name="rlname" type="text" class="form-control uppercase-input" placeholder="Enter Last Name of Respondent" required>
+                                        <input name="rlname" type="text" class="form-control uppercase-input" placeholder="Last Name of Respondent" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -965,7 +965,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="rfname">First Name:</label>
-                                        <input name="rfname" type="text" class="form-control uppercase-input" placeholder="Enter First Name of Respondent" required>
+                                        <input name="rfname" type="text" class="form-control uppercase-input" placeholder="First Name of Respondent" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -973,7 +973,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="rmi">Middle Name:</label>
-                                        <input name="rmi" type="text" class="form-control uppercase-input" placeholder="Enter Middle Name of Respondent">
+                                        <input name="rmi" type="text" class="form-control uppercase-input" placeholder="Middle Name of Respondent">
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -983,7 +983,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="rage">Age</label>
-                                        <input name="rage" type="number" class="form-control" placeholder="Enter Age" required>
+                                        <input name="rage" type="number" class="form-control" placeholder="Age" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -1001,7 +1001,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="raddress">Address:</label>
-                                        <input name="raddress" type="text" class="form-control uppercase-input" placeholder="Enter Address of Respondent" required>
+                                        <input name="raddress" type="text" class="form-control uppercase-input" placeholder="Address of Respondent" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -1041,7 +1041,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="location">Location of Incident:</label>
-                                        <input name="location" type="text" class="form-control uppercase-input" placeholder="Enter Location of Incident" required>
+                                        <input name="location" type="text" class="form-control uppercase-input" placeholder="Location of Incident" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -1077,7 +1077,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="report">Narrative Report:</label>
-                                        <textarea class="form-control" rows="5" id="report" name="narrative" placeholder="Enter Message here" required></textarea>
+                                        <textarea class="form-control" rows="5" id="report" name="narrative" placeholder="Message here" required></textarea>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -1090,7 +1090,7 @@ $bmis->create_blotter();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="witness">Witnesses (if any):</label>
-                                        <textarea class="form-control" rows="3" id="witness" name="witness" placeholder="Enter Witnesses here"></textarea>
+                                        <textarea class="form-control" rows="3" id="witness" name="witness" placeholder="Witnesses here"></textarea>
                                     </div>
                                 </div>
                             </div>

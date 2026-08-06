@@ -16,6 +16,7 @@ if (isset($_POST['search_bspermit'])) {
                 <th> Business Industry </th>
                 <th> Area of Establishment </th>
                 <th> Status</th>
+                <th> Is Deleted</th>
                 <th> Rejected Reason</th>
                 <th style="width: 22%;"> Actions</th>
                 <th style="width: 22%;"> Update Status</th>
@@ -42,14 +43,15 @@ if (isset($_POST['search_bspermit'])) {
                     <td> <?= $view['bsindustry']; ?> </td>
                     <td> <?= $view['aoe']; ?> </td>
                     <?php include('include_statuses.php'); ?>
+                    <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                     <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                     <td>
                         <form action="" method="post">
 
 
                             <a class="btn btn-success"
-                                style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
-                                href="businesspermit_form.php?id_bspermit=<?= $view['id_bspermit']; ?>"
+                                style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                href="template/business_clearance.php?id_bspermit=<?= $view['id_bspermit']; ?>"
                                 onclick="openPopup(this.href); return false;">
                                 Generate
                             </a>
@@ -111,6 +113,7 @@ if (isset($_POST['search_bspermit'])) {
                     <th> Business Industry </th>
                     <th> Area of Establishment </th>
                     <th> Status</th>
+                    <th> Is Deleted</th>
                     <th> Rejected Reason</th>
                     <th style="width: 22%;"> Actions</th>
                     <th style="width: 22%;"> Update Status</th>
@@ -130,14 +133,15 @@ if (isset($_POST['search_bspermit'])) {
                             <td> <?= $view['bsindustry']; ?> </td>
                             <td> <?= $view['aoe']; ?> </td>
                             <?php include('include_statuses.php'); ?>
+                            <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                             <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                             <td>
                                 <form action="" method="post">
 
 
                                     <a class="btn btn-secondary"
-                                        style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
-                                        href="businesspermit_form.php?id_bspermit=<?= $view['id_bspermit']; ?>"
+                                        style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                        href="template/business_clearance.php?id_bspermit=<?= $view['id_bspermit']; ?>"
                                         onclick="openPopup(this.href); return false;">
                                         Generate
                                     </a>

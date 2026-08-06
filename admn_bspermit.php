@@ -7,7 +7,7 @@ $userdetails = $bmis->get_userdata();
 $bmis->validate_admin();
 $bmis->create_bspermit_walkin();
 $bmis->delete_bspermit();
-$view = $bmis->view_bspermit();
+$view = $bmis->view_bspermit(!isset($_GET['deleted']));
 $id_resident = $_GET['id_resident'] ?? null;
 $resident = $id_resident ? $residentbmis->get_single_bspermit($id_resident) : false;
 

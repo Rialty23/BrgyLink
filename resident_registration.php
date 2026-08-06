@@ -26,11 +26,13 @@ $residentbmis->create_resident();
 
     <style>
         .field-icon {
-            margin-left: 74%;
-            margin-top: -8%;
             position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 2;
             cursor: pointer;
+            color: #64748b;
         }
 
         html,
@@ -45,10 +47,126 @@ $residentbmis->create_resident();
         }
 
         #footer {
-            background-color: 073260;
+            background-color: #073260;
             color: white;
             text-align: center;
             padding: 10px 0;
+        }
+
+        .registration-shell {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 16px 48px;
+        }
+
+        .registration-card {
+            border: 1px solid #dbe3ec;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+        }
+
+        .registration-card .card-body {
+            padding: 32px;
+        }
+
+        .registration-form .row {
+            row-gap: 18px;
+        }
+
+        .registration-form label,
+        .registration-form h6 {
+            color: #24364b;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .registration-form .form-control {
+            min-height: 44px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        .registration-form .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .registration-form input[readonly] {
+            background: #f1f5f9;
+        }
+        /* Prevent the email-match message from shifting layout */
+        .email-confirm-wrap {
+            position: relative;
+        }
+
+        #email_msg {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .form-section-title {
+            margin: 28px 0 18px;
+            padding: 10px 14px;
+            border-left: 4px solid #2563eb;
+            background: #f1f5f9;
+            color: #17365d;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .form-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .registration-form .form-check-inline {
+            margin-top: 5px;
+        }
+
+        .registration-form h6,
+        .registration-form .rb .form-group > label:first-child {
+            min-height: 42px;
+            line-height: 1.35;
+        }
+
+        .registration-form .rb {
+            min-width: 220px;
+        }
+
+        .registration-form .rb .form-group {
+            height: 100%;
+            margin-bottom: 0;
+        }
+
+        .registration-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 767px) {
+            .registration-card .card-body {
+                padding: 20px 16px;
+            }
+
+            .registration-actions {
+                flex-direction: column;
+            }
+
+            .registration-actions .btn {
+                width: 100% !important;
+            }
+
+            .registration-form h6,
+            .registration-form .rb .form-group > label:first-child {
+                min-height: auto;
+            }
         }
     </style>
 </head>
@@ -60,40 +178,58 @@ $residentbmis->create_resident();
         <a class="navbar-brand" style="color:white;">BarangayLink</a>
     </nav>
 
-    <div class="container-fluid" style="margin-top:4em;">
+    <div class="container-fluid registration-shell" style="margin-top:4em;">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center">Registration Form</h1><br>
+                <h1 class="text-center mb-2">Resident Registration Form</h1>
+                <p class="text-center text-muted mb-4">Please provide complete and accurate information in all required fields.</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card registration-card">
                     <div class="card-body">
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" class="registration-form">
+                            <div class="form-section-title">Account and Contact Information</div>
                             <!-- Name & Contact -->
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label>Last Name:</label><span style="color: red;">*</span>
-                                    <input type="text" style="text-transform: uppercase;" class="form-control" name="lname" placeholder="Enter Last Name" title="Please enter at least 2 letters, letters only." required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>First Name:</label><span style="color: red;">*</span>
-                                    <input type="text" style="text-transform: uppercase;" class="form-control" name="fname" placeholder="Enter First Name" title="Please enter at least 2 letters, letters only." required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Middle Name:</label><span style="color: red;">*</span>
-                                    <input type="text" style="text-transform: uppercase;" class="form-control" name="mi" placeholder="Enter Middle Name" title="Please enter at least 2 letters.">
-                                </div>
-                            </div>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <label>Last Name:</label><span style="color: red;">*</span>
+        <input type="text" class="form-control"
+               name="lname"
+               placeholder="DELA CRUZ"
+               oninput="this.value = this.value.toUpperCase()"
+               title="Please enter at least 2 letters, letters only."
+               required>
+    </div>
+
+    <div class="col-md-4">
+        <label>First Name:</label><span style="color: red;">*</span>
+        <input type="text" class="form-control"
+               name="fname"
+               placeholder="JUAN"
+               oninput="this.value = this.value.toUpperCase()"
+               title="Please enter at least 2 letters, letters only."
+               required>
+    </div>
+
+    <div class="col-md-4">
+        <label>Middle Name:</label><span style="color: red;">*</span>
+        <input type="text" class="form-control"
+               name="mi"
+               placeholder="DIMAGUIBA"
+               oninput="this.value = this.value.toUpperCase()"
+               title="Please enter at least 2 letters.">
+    </div>
+</div>
 
                             <div class="row mb-3">
                                 <!-- <div class="col-md-4">
                                     <label>Contact Number:</label><span style="color: red;">*</span>
-                                    <input type="tel" style="text-transform: uppercase;" class="form-control" name="contact" maxlength="11" placeholder="Enter Contact Number">
+                                    <input type="tel" style="text-transform: uppercase;" class="form-control" name="contact" maxlength="11" placeholder="Contact Number">
                                 </div> -->
-                                <div class="col-md-4">
+                                <div class="col-md-3">
     <label>Contact Number:</label><span style="color: red;">*</span>
 
     <input 
@@ -109,30 +245,33 @@ $residentbmis->create_resident();
     >
 </div>
                                 <!-- EMAIL -->
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label>Email:</label><span style="color: red;">*</span>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email" required>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                                 </div>
-
-                                <div class="col-md-4">
+                                <!-- CONFIRM EMAIL -->
+                                <div class="col-md-3">
+                                    <label>Re-enter Email:</label><span style="color: red;">*</span>
+                                    <div class="email-confirm-wrap">
+                                        <input type="email" class="form-control" name="confirm_email" id="confirm_email" placeholder="Re-enter Email" required>
+                                        <small id="email_msg"></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <label>Password:</label><span style="color: red;">*</span>
                                     <div class="position-relative">
-                                        <input type="password" class="form-control" id="password-field" name="password" placeholder="ENTER PASSWORD" minlength="8" maxlength="16" required>
+                                        <input type="password" class="form-control" id="password-field" name="password" placeholder="Password" minlength="8" maxlength="16" required>
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                 </div>
                                 
-                                <!-- CONFIRM EMAIL -->
-                                <div class="col-md-4">
-                                    <label>Re-enter Email:</label><span style="color: red;">*</span>
-                                    <input type="email" class="form-control" name="confirm_email" id="confirm_email" placeholder="Re-enter Email" required>
-                                    <small id="email_msg"></small>
-                                </div>
+                              
 
 
                             </div>
 
                             <!-- Address -->
+                            <div class="form-section-title">Residential Address</div>
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label>House Number:</label><span style="color: red;">*</span>
@@ -153,6 +292,7 @@ $residentbmis->create_resident();
                             </div>
 
                             <!-- PSA / National ID / Family Head / Animals / Trees / Farmer / Vegetables -->
+                            <div class="form-section-title">Household and Document Information</div>
                             <div class="row mb-3">
                                 <!-- PSA -->
                                 <div class="col-md-3">
@@ -260,6 +400,7 @@ $residentbmis->create_resident();
                             </div>
 
                             <!-- Birthdate, Age, Birthplace, Nationality, Civil Status, Sex -->
+                            <div class="form-section-title">Personal Information</div>
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label>Birth Date:</label><span style="color: red;">*</span>
@@ -305,19 +446,22 @@ $residentbmis->create_resident();
                             </div>
 
                             <!-- Source of Income and Occupation -->
+                            <div class="form-section-title">Employment and Income</div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label>Source of Income</label><span style="color: red;">*</span>
-                                    <input
-                                        type="text"
-                                        id="soi"
-                                        name="soi"
-                                        class="form-control"
-                                        list="incomeSuggestions"
-                                        placeholder="Type a number (e.g. 1 → 10,000)"
-                                        autocomplete="off">
-
-                                    <datalist id="incomeSuggestions"></datalist>
+                                    <label>Monthly Income</label><span style="color: red;">*</span>
+                                    <select id="soi" name="soi" class="form-control" required>
+                                        <option value="">Choose monthly income</option>
+                                        <option value="No Income">No Income</option>
+                                        <option value="Below 10,000">Below ₱10,000</option>
+                                        <option value="10,000 - 19,999">₱10,000 - ₱19,999</option>
+                                        <option value="20,000 - 29,999">₱20,000 - ₱29,999</option>
+                                        <option value="30,000 - 39,999">₱30,000 - ₱39,999</option>
+                                        <option value="40,000 - 49,999">₱40,000 - ₱49,999</option>
+                                        <option value="50,000 - 74,999">₱50,000 - ₱74,999</option>
+                                        <option value="75,000 - 99,999">₱75,000 - ₱99,999</option>
+                                        <option value="100,000 and above">₱100,000 and above</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-6">
@@ -337,6 +481,7 @@ $residentbmis->create_resident();
 
 
 
+                            <div class="form-section-title">Resident Classification</div>
                             <div class="row">
 
                                 <div class="col rb">
@@ -477,6 +622,7 @@ $residentbmis->create_resident();
 
 
 
+                            <div class="form-section-title">Identity Verification</div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Valid ID Type #1:</label><span style="color: red;">*</span>
@@ -601,10 +747,10 @@ $residentbmis->create_resident();
                             </div>
 
                             <input type="hidden" name="role" value="resident">
-                            <center>
+                            <div class="registration-actions">
                                 <button type="submit" name="add_resident" class="btn btn-success" style="width:130px;">Submit</button>
                                 <a href="index_login.php" class="btn btn-danger" style="width:130px;">Back to Login</a>
-                            </center>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -646,37 +792,6 @@ $residentbmis->create_resident();
         //     });
         // });
     </script>
-<script>
-    const soiInput = document.getElementById('soi');
-    const datalist = document.getElementById('incomeSuggestions');
-
-    soiInput.addEventListener('input', function(e) {
-        // 1. Remove all non-digits to get the raw number
-        let rawValue = this.value.replace(/\D/g, '');
-        
-        // 2. Format the input field with commas
-        if (rawValue) {
-            this.value = parseInt(rawValue).toLocaleString();
-        } else {
-            this.value = '';
-        }
-
-        // 3. Handle Datalist Suggestions
-        datalist.innerHTML = '';
-        if (!rawValue) return;
-
-        // Logic for suggestions (e.g., if user types '1', suggest 10,000, 11,000, etc.)
-        const base = parseInt(rawValue) * 10000;
-        const increments = [0, 1000, 2000, 3000];
-        
-        increments.forEach(add => {
-            const option = document.createElement('option');
-            option.value = (base + add).toLocaleString();
-            datalist.appendChild(option);
-        });
-    });
-</script>
-
 <script>
 const email = document.getElementById("email");
 const confirmEmail = document.getElementById("confirm_email");

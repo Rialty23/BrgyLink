@@ -5,6 +5,51 @@ require_once('main.class.php');
 
 class ResidentClass extends BMISClass
 {
+    private function buildResidentEmailMessage(array $resident, $status, $rejectReason = '')
+    {
+        $escape = static function ($value) {
+            return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+        };
+
+        $fullName = trim(($resident['fname'] ?? '') . ' ' . ($resident['mi'] ?? '') . ' ' . ($resident['lname'] ?? ''));
+        $address = trim(($resident['houseno'] ?? '') . ' ' . ($resident['street'] ?? '') . ', '
+            . ($resident['brgy'] ?? 'EAST MODERN SITE') . ', ' . ($resident['municipal'] ?? 'BAGUIO CITY'), " ,");
+        $requestDate = !empty($resident['timestamp_date'])
+            ? date('F d, Y h:i A', strtotime($resident['timestamp_date']))
+            : date('F d, Y h:i A');
+        $controlNumber = $resident['control_no'] ?? 'Pending assignment';
+
+        $lines = [
+            '<strong>Date:</strong> ' . $escape($requestDate),
+            '<strong>Resident:</strong> ' . $escape($fullName ?: 'Not available'),
+            '<strong>Control number:</strong> ' . $escape($controlNumber),
+            '<strong>Validation status:</strong> ' . $escape($status),
+            '<strong>Registered address:</strong> ' . $escape($address ?: 'Not available'),
+        ];
+
+        if (!empty($resident['valid1']) || !empty($resident['valid2'])) {
+            $validIds = array_filter([$resident['valid1'] ?? '', $resident['valid2'] ?? '']);
+            $lines[] = '<strong>IDs submitted:</strong> ' . $escape(implode(' and ', $validIds));
+        }
+
+        if ($rejectReason !== '') {
+            $lines[] = '<strong>Reason for rejection:</strong> ' . $escape($rejectReason);
+        }
+
+        if ($status === 'APPROVED') {
+            $nextStep = 'Your information has been validated and your resident account is approved. You may now sign in using your registered email address.';
+        } elseif ($status === 'REJECTED') {
+            $nextStep = 'Please correct the issue stated above and submit a new registration with complete and valid information.';
+        } else {
+            $nextStep = 'Your registration was received and is awaiting barangay validation. You will receive another email after it has been reviewed.';
+        }
+
+        return $escape($nextStep)
+            . '<br><br>' . implode('<br>', $lines)
+            . '<br><br><strong>Where to inquire:</strong> East Modern Site Barangay Hall'
+            . '<br>Please keep your control number for verification and bring a valid ID when visiting the barangay office.';
+    }
+
     //------------------------------------ RESIDENT CRUD FUNCTIONS ----------------------------------------
 
 
@@ -614,9 +659,9 @@ class ResidentClass extends BMISClass
     {
         if (isset($_POST['add_resident'])) {
             // Retrieve form data
-            $lname = $_POST['lname'];
-            $fname = $_POST['fname'];
-            $mi = $_POST['mi'];
+            $lname = strtoupper(trim($_POST['lname']));
+            $fname = strtoupper(trim($_POST['fname']));
+            $mi = strtoupper(trim($_POST['mi']));
             $contact = $_POST['contact'];
             $email = $_POST['email'];
             $password = md5($_POST['password']);
@@ -862,9 +907,20 @@ class ResidentClass extends BMISClass
 
                 $response = $this->sendEmail([
                     'email'   => $email,
-                    'subject' => 'Registration',
-                    'title'   => 'Registration',
-                    'message' => 'You have successfully registered.'
+                    'subject' => 'Resident Registration Received - ' . $control_no,
+                    'title'   => 'Resident Registration Received',
+                    'message' => $this->buildResidentEmailMessage([
+                        'fname' => $fname,
+                        'mi' => $mi,
+                        'lname' => $lname,
+                        'houseno' => $houseno,
+                        'street' => $street,
+                        'brgy' => $brgy,
+                        'municipal' => $municipal,
+                        'control_no' => $control_no,
+                        'valid1' => $valid1,
+                        'valid2' => $valid2,
+                    ], 'PENDING VALIDATION')
                 ]);
                
                 $message = $response['success']
@@ -1725,16 +1781,16 @@ class ResidentClass extends BMISClass
 
 
             // ✅ Get resident email
-            $stmt = $connection->prepare("SELECT email FROM tbl_resident WHERE id_resident = ?");
+            $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE id_resident = ?");
             $stmt->execute([$id_resident]);
             $resident = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($resident && !empty($resident['email'])) {
                 $email = $resident['email'];
                 $response = $this->sendEmail([
                     'email'   => $email,
-                    'subject' => 'Approval of Resident',
-                    'title'   => 'Request Approved',
-                    'message' => 'Your request has been approved.'
+                    'subject' => 'Resident Registration Approved - ' . ($resident['control_no'] ?? ''),
+                    'title'   => 'Resident Registration Approved',
+                    'message' => $this->buildResidentEmailMessage($resident, 'APPROVED')
                 ]);
                 $message = $response['success']
                     ? "Request approved and email sent to {$response['email']}"
@@ -1797,16 +1853,16 @@ class ResidentClass extends BMISClass
             $stmt->execute([$reject_reason, $id_resident]);
 
             // ✅ Get resident email
-            $stmt = $connection->prepare("SELECT email FROM tbl_resident WHERE id_resident = ?");
+            $stmt = $connection->prepare("SELECT * FROM tbl_resident WHERE id_resident = ?");
             $stmt->execute([$id_resident]);
             $resident = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($resident && !empty($resident['email'])) {
                 $email = $resident['email'];
                 $response = $this->sendEmail([
                     'email'   => $email,
-                    'subject' => 'Approval of Resident',
-                    'title'   => 'Request Rejected',
-                    'message' => "Your request has been rejected.\nReason: {$reject_reason}"
+                    'subject' => 'Resident Registration Requires Attention - ' . ($resident['control_no'] ?? ''),
+                    'title'   => 'Resident Registration Rejected',
+                    'message' => $this->buildResidentEmailMessage($resident, 'REJECTED', $reject_reason)
                 ]);
                 $message = $response['success']
                     ? "Request rejected and email sent to {$response['email']}"

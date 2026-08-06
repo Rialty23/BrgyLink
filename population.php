@@ -83,6 +83,7 @@ function fill_ai_placeholders(string $template, array $aiInput): string
     $gender = $aiInput['gender'] ?? [];
     $ageGroups = $aiInput['age_groups'] ?? [];
     $agePerc = $aiInput['age_percentages'] ?? [];
+    $monthlyGrowth = $aiInput['monthly_growth'] ?? [];
 
     $replacements = [
         '{total_residents}' => (string)$total,
@@ -107,7 +108,38 @@ function fill_ai_placeholders(string $template, array $aiInput): string
         '{age_60_plus_percent}' => (string)((float)($agePerc['60+'] ?? 0)),
     ];
 
-    return strtr($template, $replacements);
+    $rendered = strtr($template, $replacements);
+    $growthObservation = trim((string)($monthlyGrowth['observation'] ?? ''));
+
+    // Monthly population growth is a required observation for every scenario.
+    if ($growthObservation !== '') {
+        $rendered = preg_replace(
+            '/Observations:\s*/i',
+            "Observations:\n- {$growthObservation}\n",
+            $rendered,
+            1
+        );
+    }
+
+    return $rendered;
+}
+
+function build_resident_program_templates(): array
+{
+    $summary = "Summary:\n- {total_residents} residents: {male_count} male ({male_percent}%) and {female_count} female ({female_percent}%).\n- The largest age group is {dominant_age_group}.";
+
+    return [
+        'resident_ai_analysis_v1' => $summary . "\n\nTrends:\n- {age_15_49_count} working-age residents ({age_15_49_percent}%) may benefit from income opportunities.\n\nObservations:\n- Livelihood support can strengthen household income and local enterprise.\n\nRecommendations:\n1. Barangay Skills and Livelihood Fair - quarterly TESDA, job-matching, and microbusiness sessions.\n2. Weekend Digital Skills Workshop - computer, online selling, and financial literacy classes.\n3. Community Product Market Day - a monthly venue for resident-made products and services.",
+        'resident_ai_analysis_v2' => $summary . "\n\nTrends:\n- Children ages 0-14 account for {age_0_14_count} residents ({age_0_14_percent}%).\n\nObservations:\n- Regular learning, nutrition, and recreation activities can support young residents.\n\nRecommendations:\n1. After-School Learning Hub - weekly reading, homework, and tutorial sessions.\n2. Batang Barangay Sports Clinic - weekend sports, chess, and traditional games.\n3. Child Nutrition Day - monthly weighing, nutrition education, and healthy meals.",
+        'resident_ai_analysis_v3' => $summary . "\n\nTrends:\n- There are {age_60_plus_count} senior residents ({age_60_plus_percent}%).\n\nObservations:\n- Seniors may require accessible health monitoring and social support.\n\nRecommendations:\n1. Senior Wellness Day - monthly blood pressure, glucose, medicine, and nutrition checks.\n2. Senior Social Club - exercise, games, gardening, and peer support.\n3. Home Visit Program - scheduled check-ins for homebound or high-risk seniors.",
+        'resident_ai_analysis_v4' => $summary . "\n\nTrends:\n- The gender difference is {gender_difference_percent}%, with {gender_dominant} residents forming the larger group.\n\nObservations:\n- Programs should remain inclusive while responding to gender-specific concerns.\n\nRecommendations:\n1. Women's Health and Livelihood Circle - health education and enterprise mentoring.\n2. Men's Wellness and Responsible Fatherhood Session - preventive health and family participation.\n3. Safe Community Forum - gender sensitivity, anti-violence, and referral awareness.",
+        'resident_ai_analysis_v5' => $summary . "\n\nTrends:\n- The 15-49 group has {age_15_49_count} residents ({age_15_49_percent}%).\n\nObservations:\n- Employment readiness can turn this group into a stronger local workforce.\n\nRecommendations:\n1. Barangay Job Readiness Camp - resumes, interviews, and application assistance.\n2. Local Employer Job Fair - connect residents with employers and government services.\n3. Youth Career Mentoring - career talks, scholarship guidance, and referrals.",
+        'resident_ai_analysis_v6' => $summary . "\n\nTrends:\n- The barangay serves several age groups that can benefit from shared activities.\n\nObservations:\n- Intergenerational programs can reduce isolation and strengthen cooperation.\n\nRecommendations:\n1. Pamilya Community Day - monthly family games, parenting talks, and shared meals.\n2. Clean and Green Weekend - zone-based cleanup, recycling, and gardening.\n3. Skills Exchange Day - adults teach crafts while youth teach digital skills.",
+        'resident_ai_analysis_v7' => $summary . "\n\nTrends:\n- {age_50_59_count} residents are ages 50-59 ({age_50_59_percent}%), and {age_60_plus_count} are seniors.\n\nObservations:\n- Preventive care before senior age may lower future health risks.\n\nRecommendations:\n1. Healthy 50+ Program - screening for blood pressure, diabetes, vision, and mobility.\n2. Community Fitness Hour - free weekly walking and low-impact exercise.\n3. Health Education Caravan - nutrition, medicine safety, and disease prevention.",
+        'resident_ai_analysis_v8' => $summary . "\n\nTrends:\n- Families across all age groups need practical emergency preparation.\n\nObservations:\n- Disaster training can improve household and neighborhood response.\n\nRecommendations:\n1. Family Disaster Workshop - go-bags, evacuation plans, and emergency contacts.\n2. Youth First Aid Brigade - age-appropriate first aid training.\n3. Quarterly Barangay Drill - earthquake, fire, flood, and evacuation exercises.",
+        'resident_ai_analysis_v9' => $summary . "\n\nTrends:\n- A population of {total_residents} needs accessible service channels and reliable information.\n\nObservations:\n- Digital literacy can help residents use public services efficiently.\n\nRecommendations:\n1. Digital Assistance Desk - help with online forms and government portals.\n2. Scam and Cyber Safety Seminar - quarterly awareness for all age groups.\n3. Barangay App Orientation - demonstrations of requests and emergency reporting.",
+        'resident_ai_analysis_v10' => $summary . "\n\nTrends:\n- The dominant age bracket is {dominant_age_group}, but every group needs representation.\n\nObservations:\n- Feedback-based planning helps programs match actual needs.\n\nRecommendations:\n1. Resident Needs Survey - a quarterly survey by zone and age group.\n2. Barangay Program Assembly - let residents rank proposed activities.\n3. Volunteer Action Network - recruit residents for health, youth, environment, and disaster teams."
+    ];
 }
 
 // Auth
@@ -140,7 +172,38 @@ if (isset($_GET['generate_ai'])) {
        COLLECT DATA
     ========================= */
 
-    $residentsData = mysqli_query($db_connection, "SELECT * FROM tbl_resident");
+    $residentsData = mysqli_query($db_connection, "SELECT age, sex FROM tbl_resident WHERE request_status='approved'");
+
+    // Population growth for the current calendar month. The baseline is the
+    // approved population recorded before this month, so the percentage shows
+    // how much the barangay's resident population grew during the month.
+    $monthlyGrowthQuery = mysqli_query(
+        $db_connection,
+        "SELECT
+            SUM(CASE WHEN timestamp_date < DATE_FORMAT(CURDATE(), '%Y-%m-01') THEN 1 ELSE 0 END) AS previous_total,
+            SUM(CASE WHEN timestamp_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+                      AND timestamp_date < DATE_ADD(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 1 MONTH)
+                     THEN 1 ELSE 0 END) AS new_this_month
+         FROM tbl_resident
+         WHERE request_status='approved'"
+    );
+    $monthlyGrowthRow = $monthlyGrowthQuery ? mysqli_fetch_assoc($monthlyGrowthQuery) : [];
+    $previousMonthTotal = (int)($monthlyGrowthRow['previous_total'] ?? 0);
+    $newResidentsThisMonth = (int)($monthlyGrowthRow['new_this_month'] ?? 0);
+    $monthlyGrowthPercent = $previousMonthTotal > 0
+        ? round(($newResidentsThisMonth / $previousMonthTotal) * 100, 2)
+        : null;
+    $currentMonthLabel = date('F Y');
+
+    if ($monthlyGrowthPercent !== null) {
+        $monthlyGrowthObservation = $newResidentsThisMonth > 0
+            ? "Resident population increased by {$monthlyGrowthPercent}% in {$currentMonthLabel} ({$newResidentsThisMonth} new approved resident" . ($newResidentsThisMonth === 1 ? '' : 's') . " from a baseline of {$previousMonthTotal})."
+            : "Resident population has no increase in {$currentMonthLabel} (0.00% growth; {$previousMonthTotal} residents at the start of the month).";
+    } else {
+        $monthlyGrowthObservation = $newResidentsThisMonth > 0
+            ? "{$newResidentsThisMonth} approved resident" . ($newResidentsThisMonth === 1 ? ' was' : 's were') . " added in {$currentMonthLabel}; a growth percentage is not available because there was no earlier resident baseline."
+            : "No approved residents have been recorded for {$currentMonthLabel}, and no earlier baseline is available for a growth percentage.";
+    }
 
     $totalResidents = 0;
     $maleCount = 0;
@@ -178,7 +241,7 @@ if (isset($_GET['generate_ai'])) {
 
     // Comparison difference
     $genderDifference = abs($malePercent - $femalePercent);
-    $genderDominant = ($malePercent > $femalePercent) ? "Male" : "Female";
+    $genderDominant = ($malePercent === $femalePercent) ? "Equal" : (($malePercent > $femalePercent) ? "Male" : "Female");
 
     // Age percentages
     $agePercentages = [];
@@ -187,7 +250,7 @@ if (isset($_GET['generate_ai'])) {
     }
 
     // Dominant age group
-    $dominantAgeGroup = array_keys($ageGroups, max($ageGroups))[0];
+    $dominantAgeGroup = $totalResidents > 0 ? array_keys($ageGroups, max($ageGroups))[0] : 'N/A';
 
     $aiInput = [
         "total_residents" => $totalResidents,
@@ -203,7 +266,14 @@ if (isset($_GET['generate_ai'])) {
 
         "age_groups" => $ageGroups,
         "age_percentages" => $agePercentages,
-        "dominant_age_group" => $dominantAgeGroup
+        "dominant_age_group" => $dominantAgeGroup,
+        "monthly_growth" => [
+            "month" => $currentMonthLabel,
+            "previous_total" => $previousMonthTotal,
+            "new_residents" => $newResidentsThisMonth,
+            "increase_percent" => $monthlyGrowthPercent,
+            "observation" => $monthlyGrowthObservation
+        ]
     ];
 
     /* =========================
@@ -213,18 +283,23 @@ if (isset($_GET['generate_ai'])) {
        - Caches final rendered response under resident_ai_analysis
     ========================= */
 
-    $scenarioKeys = [
-        'resident_ai_analysis_v1',
-        'resident_ai_analysis_v2',
-        'resident_ai_analysis_v3',
-        'resident_ai_analysis_v4',
-        'resident_ai_analysis_v5',
-        'resident_ai_analysis_v6',
-        'resident_ai_analysis_v7',
-        'resident_ai_analysis_v8',
-        'resident_ai_analysis_v9',
-        'resident_ai_analysis_v10'
-    ];
+    $programTemplates = build_resident_program_templates();
+    $scenarioKeys = array_keys($programTemplates);
+
+    // Save all reusable program responses for review/editing in phpMyAdmin.
+    $templateStatement = mysqli_prepare(
+        $db_connection,
+        "INSERT INTO ai_analytics_cache (cache_key, ai_response, request_count, max_requests, updated_at)
+         VALUES (?, ?, 0, 10, NOW())
+         ON DUPLICATE KEY UPDATE ai_response=VALUES(ai_response), max_requests=10, updated_at=NOW()"
+    );
+    if ($templateStatement) {
+        foreach ($programTemplates as $templateKey => $templateText) {
+            mysqli_stmt_bind_param($templateStatement, 'ss', $templateKey, $templateText);
+            mysqli_stmt_execute($templateStatement);
+        }
+        mysqli_stmt_close($templateStatement);
+    }
 
     $inList = "'" . implode("','", $scenarioKeys) . "'";
 
@@ -244,11 +319,9 @@ if (isset($_GET['generate_ai'])) {
             $scenarioPicked = $scenarioRow['cache_key'] ?? '';
             $aiText = fill_ai_placeholders($scenarioRow['ai_response'], $aiInput);
         } else {
-            // Fallback: use local variants if scenario rows are missing
-            $variants = build_local_ai_variants($aiInput);
-            $idx = random_int(0, 2);
-            $scenarioPicked = 'local_variant_' . ($idx + 1);
-            $aiText = $variants[$idx];
+            // Fallback if the template rows could not be written or read.
+            $scenarioPicked = $scenarioKeys[array_rand($scenarioKeys)];
+            $aiText = fill_ai_placeholders($programTemplates[$scenarioPicked], $aiInput);
         }
 
         if (empty($prevText) || $aiText !== $prevText) {

@@ -762,7 +762,7 @@ $bmis->create_bspermit();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="email">Email Address:</label>
-                                        <input name="email" type="email" class="form-control" placeholder="Enter Email Address" value="<?= $userdetails['email']; ?>" required>
+                                        <input name="email" type="email" class="form-control" placeholder="Email Address" value="<?= $userdetails['email']; ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -780,7 +780,7 @@ $bmis->create_bspermit();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="bcode">Business Code:</label>
-                                        <input name="bcode" type="text" class="form-control uppercase-input" placeholder="Enter Business Code" required>
+                                        <input name="bcode" type="text" class="form-control uppercase-input" placeholder="Business Code" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -791,7 +791,7 @@ $bmis->create_bspermit();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="bsname">Business Name:</label>
-                                        <input name="bsname" type="text" class="form-control uppercase-input" placeholder="Enter Business Name" required>
+                                        <input name="bsname" type="text" class="form-control uppercase-input" placeholder="Business Name" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -804,7 +804,7 @@ $bmis->create_bspermit();
                                 <div class="col">
                                     <div class="form-group">
                                         <label> House No: </label>
-                                        <input type="text" class="form-control uppercase-input" name="houseno" placeholder="Enter House No." value="<?= $userdetails['houseno']; ?>" required>
+                                        <input type="text" class="form-control uppercase-input" name="houseno" placeholder="House No." value="<?= $userdetails['houseno']; ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -813,24 +813,24 @@ $bmis->create_bspermit();
                                 <div class="col">
                                     <div class="form-group">
                                         <label> Street: </label>
-                                        <input type="text" class="form-control uppercase-input" name="street" placeholder="Enter Street" value="<?= $userdetails['street']; ?>" required>
+                                        <input type="text" class="form-control uppercase-input" name="street" placeholder="Street" value="<?= $userdetails['street']; ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
                                 </div>
 
                                 <!--<label> Barangay: </label>-->
-                                <input type="hidden" class="form-control" name="brgy" placeholder="Enter Barangay" value="<?= $userdetails['brgy']; ?>" required>
+                                <input type="hidden" class="form-control" name="brgy" placeholder="Barangay" value="<?= $userdetails['brgy']; ?>" required>
 
                                 <!--<label> Municipality: </label>-->
-                                <input type="hidden" class="form-control" name="municipal" placeholder="Enter Municipality" value="<?= $userdetails['municipal']; ?>" required>
+                                <input type="hidden" class="form-control" name="municipal" placeholder="Municipality" value="<?= $userdetails['municipal']; ?>" required>
                             </div>
 
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="status">Business Industry:</label>
-                                        <select class="form-control" name="bsindustry" id="status" placeholder="Enter Status" required>
+                                        <select class="form-control" name="bsindustry" id="status" placeholder="Status" required>
                                             <option value="">Choose your Business Industry</option>
                                             <option value="Computer">Computer</option>
                                             <option value="Telecommunication">Telecommunication</option>
@@ -859,7 +859,7 @@ $bmis->create_bspermit();
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="aoe" class="mtop">Area of Establishment (SqM): </label>
-                                        <input type="number" name="aoe" class="form-control" placeholder="Enter your AOE" required>
+                                        <input type="number" name="aoe" class="form-control" placeholder="Area of Establishment" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>

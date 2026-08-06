@@ -143,79 +143,75 @@ $cdate = $dt->format('Y/m/d');
           <div class="swiper-wrapper">
 
             <?php
-            // ANNOUNCEMENTS
+            // Combine announcements and activities so the entire carousel can be
+            // displayed chronologically (latest to oldest).
+            $carousel_items = [];
             $announcements = $bmis->view_announcement();
             if (!empty($announcements) && is_array($announcements)) {
               foreach ($announcements as $announcement) {
-                $id = "announcement-" . $announcement['id_announcement'];
-            ?>
-               <div class="swiper-slide cursor-pointer carousel-item"
-                  onclick="openModal(
-                                `<?= htmlspecialchars($announcement['title']); ?>`,
-                                `<?= !empty($announcement['photo']) ? $announcement['photo'] : '' ?>`,
-                                `<?= htmlspecialchars($announcement['event']); ?>`
-                            )">
-                  <div class="bg-white shadow-md rounded-lg p-6 flex flex-col h-full slide-content">
-                    <h3 class="font-bold text-lg mb-2"><?= htmlspecialchars($announcement['title']); ?></h3>
-
-                    <?php if (!empty($announcement['photo']) && file_exists($announcement['photo'])): ?>
-                      <img src="<?= $announcement['photo']; ?>" class="announcement-img mb-2 rounded w-full object-cover max-h-48">
-                    <?php endif; ?>
-
-                    <p class="text-gray-700 mb-4 truncate-lines"><?= htmlspecialchars($announcement['event']); ?></p>
-
-
-                    <div id="<?= $id ?>" class="expandable-content hidden mt-2 max-h-64 border-t pt-2">
-                      <p class="text-gray-800"><?= nl2br(htmlspecialchars($announcement['event'])); ?></p>
-                      <button onclick="toggleExpand('<?= $id ?>')" class="mt-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              <?php
+                $carousel_items[] = [
+                  'type' => 'announcement',
+                  'id' => $announcement['id_announcement'],
+                  'title' => $announcement['title'],
+                  'image' => $announcement['photo'] ?? '',
+                  'content' => $announcement['event'],
+                  'date' => $announcement['start_date'] ?? $announcement['set_date'] ?? ''
+                ];
               }
             }
 
-            // ACTIVITIES
             $rs = mysqli_query($db_connection, "SELECT id_activity, name, date, image FROM tbl_activities");
             if ($rs && mysqli_num_rows($rs) > 0) {
               while ($rw = mysqli_fetch_assoc($rs)) {
-                $id = "activity-" . $rw['id_activity'];
-              ?>
-                 <div class="swiper-slide cursor-pointer carousel-item"
-                  onclick="openModal(
-                        `<?= htmlspecialchars($rw['name']); ?>`,
-                        `<?= !empty($rw['image']) ? $rw['image'] : '' ?>`,
-                        `Date: <?= htmlspecialchars($rw['date']); ?>`
-                    )">
-                  <div class="bg-white shadow-md rounded-lg p-6 flex flex-col h-full slide-content">
-                    <h3 class="font-bold text-lg mb-2"><?= htmlspecialchars($rw['name']); ?></h3>
+                $carousel_items[] = [
+                  'type' => 'activity',
+                  'id' => $rw['id_activity'],
+                  'title' => $rw['name'],
+                  'image' => $rw['image'] ?? '',
+                  'content' => 'Date: ' . $rw['date'],
+                  'date' => $rw['date']
+                ];
+              }
+            }
 
-                    <?php if (!empty($rw['image']) && file_exists($rw['image'])): ?>
-                      <img src="<?= $rw['image']; ?>" class="announcement-img mb-2 rounded w-full object-cover max-h-48">
+            usort($carousel_items, function ($a, $b) {
+              $date_comparison = strtotime($b['date'] ?: '1970-01-01') <=> strtotime($a['date'] ?: '1970-01-01');
+              return $date_comparison !== 0 ? $date_comparison : ($b['id'] <=> $a['id']);
+            });
+
+            foreach ($carousel_items as $item) {
+              $id = $item['type'] . '-' . $item['id'];
+            ?>
+                 <div class="swiper-slide cursor-pointer carousel-item"
+                  onclick='openModal(<?= htmlspecialchars(json_encode($item['title']), ENT_QUOTES, 'UTF-8') ?>, <?= htmlspecialchars(json_encode($item['image']), ENT_QUOTES, 'UTF-8') ?>, <?= htmlspecialchars(json_encode($item['content']), ENT_QUOTES, 'UTF-8') ?>)'>
+                  <div class="bg-white shadow-md rounded-lg p-6 flex flex-col h-full slide-content">
+                    <h3 class="font-bold text-lg mb-2"><?= htmlspecialchars($item['title']); ?></h3>
+
+                    <?php if (!empty($item['image']) && file_exists($item['image'])): ?>
+                      <img src="<?= htmlspecialchars($item['image']); ?>" class="announcement-img mb-2 rounded w-full object-cover max-h-48">
                     <?php endif; ?>
 
-                    <p class="text-gray-700 mb-4">Date: <?= htmlspecialchars($rw['date']); ?></p>
+                    <p class="text-gray-700 mb-4<?= $item['type'] === 'announcement' ? ' truncate-lines' : '' ?>"><?= htmlspecialchars($item['content']); ?></p>
 
                     <div id="<?= $id ?>" class="expandable-content hidden mt-2 max-h-64 border-t pt-2">
-                      <p class="text-gray-800">Date: <?= htmlspecialchars($rw['date']); ?></p>
+                      <p class="text-gray-800"><?= nl2br(htmlspecialchars($item['content'])); ?></p>
                       <button onclick="toggleExpand('<?= $id ?>')" class="mt-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                         Close
                       </button>
                     </div>
                   </div>
                 </div>
-            <?php
-              }
-            }
-            ?>
+            <?php } ?>
 
           </div>
 
-          <div class="swiper-pagination mt-4"></div>
           <div class="swiper-button-next"></div>
           <div class="swiper-button-prev"></div>
+        </div>
+        <div class="carousel-page-counter mt-4">
+          <label for="carouselPageSelect">Page:</label>
+          <select id="carouselPageSelect" aria-label="Select carousel page"></select>
+          <span id="carouselPageTotal" aria-live="polite"></span>
         </div>
       </div>
       <!-- MODAL -->
@@ -345,6 +341,32 @@ document.addEventListener("DOMContentLoaded", function () {
           animation: scaleIn 0.2s ease;
         }
 
+        /* Make the carousel page counter easier to read. */
+        .carousel-page-counter {
+          position: static;
+          width: 100%;
+          text-align: center;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+
+        .carousel-page-counter select {
+          min-width: 4.5rem;
+          margin: 0 0.4rem;
+          padding: 0.5rem 2rem 0.5rem 0.75rem;
+          color: #1f2937;
+          background-color: #fff;
+          border: 2px solid #64748b;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          font: inherit;
+        }
+
+        .carousel-page-counter select:focus {
+          outline: 3px solid rgba(59, 130, 246, 0.3);
+          border-color: #2563eb;
+        }
+
         @media (max-width: 640px) {
           .swiper-button-next,
           .swiper-button-prev {
@@ -364,15 +386,29 @@ document.addEventListener("DOMContentLoaded", function () {
           slides.forEach(slide => slide.style.height = maxHeight + 'px');
         }
 
+        const pageSelect = document.getElementById('carouselPageSelect');
+        const pageTotal = document.getElementById('carouselPageTotal');
+
+        function buildPageDropdown(swiperInstance) {
+          const totalPages = swiperInstance.slides.length;
+          pageSelect.innerHTML = '';
+
+          for (let page = 1; page <= totalPages; page++) {
+            const option = document.createElement('option');
+            option.value = page - 1;
+            option.textContent = page;
+            pageSelect.appendChild(option);
+          }
+
+          pageTotal.textContent = 'of ' + totalPages;
+          pageSelect.value = swiperInstance.realIndex;
+        }
+
         // Swiper Initialization
         const swiper = new Swiper(".mySwiper", {
           slidesPerView: 1,
           spaceBetween: 20,
           loop: true,
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-          },
           navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev"
@@ -391,11 +427,19 @@ document.addEventListener("DOMContentLoaded", function () {
           on: {
             init: function() {
               setEqualSlideHeights();
+              buildPageDropdown(this);
+            },
+            slideChange: function() {
+              pageSelect.value = this.realIndex;
             },
             resize: function() {
               setEqualSlideHeights();
             }
           }
+        });
+
+        pageSelect.addEventListener('change', function() {
+          swiper.slideToLoop(Number(this.value));
         });
 
         // Expand/Collapse content

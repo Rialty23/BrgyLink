@@ -34,6 +34,16 @@ $residentSearchQuery = mysqli_query(
 while ($residentRow = mysqli_fetch_assoc($residentSearchQuery)) {
     $residentSearchList[] = $residentRow;
 }
+
+$savedAI = '';
+$aiCacheQuery = mysqli_query(
+    $db_connection,
+    "SELECT ai_response FROM ai_analytics_cache WHERE cache_key='resident_ai_analysis' LIMIT 1"
+);
+
+if ($aiCacheQuery && ($aiCacheRow = mysqli_fetch_assoc($aiCacheQuery))) {
+    $savedAI = $aiCacheRow['ai_response'] ?? '';
+}
 ?>
 
 <div class="container-fluid" style="background:#f5f7fb;">
@@ -43,6 +53,250 @@ while ($residentRow = mysqli_fetch_assoc($residentSearchQuery)) {
         <h1 class="fw-bold">Dashboard</h1>
         <small class="text-muted">Barangay Management Overview</small>
     </div>
+
+    <!-- ================= AI INSIGHTS ================= -->
+    <div class="ai-insights-panel mb-4">
+        <div class="ai-insights-header">
+            <div>
+                <span class="ai-eyebrow">Smart community overview</span>
+                <h5 class="ai-insights-title">AI Insights &amp; Analytics</h5>
+                <p class="ai-insights-subtitle">Data-driven highlights to support better barangay planning.</p>
+            </div>
+            <button type="button" id="generateDashboardAI" class="ai-generate-btn">
+                <span class="ai-btn-icon" aria-hidden="true">✦</span>
+                <span class="ai-btn-label">Generate AI Insights</span>
+            </button>
+        </div>
+        <div id="dashboardAiResult" class="ai-insights-grid" aria-live="polite"></div>
+        <div id="dashboardAiComparison" class="mt-3"></div>
+    </div>
+
+    <style>
+        .ai-insights-panel {
+            padding: 24px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #faf9ff 55%, #f3f8ff 100%);
+            border: 1px solid #e8e8f3;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(31, 41, 55, 0.07);
+        }
+
+        .ai-insights-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .ai-eyebrow {
+            display: block;
+            margin-bottom: 4px;
+            color: #7c3aed;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+
+        .ai-insights-title { margin: 0; color: #172033; font-weight: 700; }
+        .ai-insights-subtitle { margin: 5px 0 0; color: #6b7280; font-size: .9rem; }
+
+        .ai-generate-btn {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 16px;
+            color: #fff;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            border: 0;
+            border-radius: 11px;
+            box-shadow: 0 7px 16px rgba(109, 40, 217, .24);
+            font-weight: 600;
+            transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+        }
+
+        .ai-generate-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 21px rgba(109, 40, 217, .3); }
+        .ai-generate-btn:disabled { cursor: wait; opacity: .7; transform: none; }
+        .ai-btn-icon { font-size: 1.1rem; line-height: 1; }
+
+        .ai-insights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .ai-insight-card {
+            position: relative;
+            min-height: 170px;
+            padding: 19px 20px 18px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #edf0f5;
+            border-radius: 14px;
+            box-shadow: 0 5px 16px rgba(15, 23, 42, .055);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .ai-insight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: var(--ai-accent);
+        }
+
+        .ai-insight-card:hover { transform: translateY(-2px); box-shadow: 0 9px 23px rgba(15, 23, 42, .09); }
+        .ai-card-summary { --ai-accent: #3b82f6; --ai-soft: #eff6ff; }
+        .ai-card-trends { --ai-accent: #06b6d4; --ai-soft: #ecfeff; }
+        .ai-card-observations { --ai-accent: #f59e0b; --ai-soft: #fffbeb; }
+        .ai-card-recommendations { --ai-accent: #10b981; --ai-soft: #ecfdf5; }
+
+        .ai-card-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 13px; }
+        .ai-card-icon {
+            display: inline-flex;
+            width: 34px;
+            height: 34px;
+            align-items: center;
+            justify-content: center;
+            color: var(--ai-accent);
+            background: var(--ai-soft);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .ai-card-heading h6 { margin: 0; color: #273044; font-size: .96rem; font-weight: 700; }
+        .ai-card-list { margin: 0; padding: 0; list-style: none; color: #596174; font-size: .9rem; line-height: 1.58; }
+        .ai-card-list li { position: relative; padding-left: 16px; }
+        .ai-card-list li + li { margin-top: 6px; }
+        .ai-card-list li::before { content: ""; position: absolute; top: .63em; left: 0; width: 6px; height: 6px; background: var(--ai-accent); border-radius: 50%; }
+
+        .ai-status {
+            grid-column: 1 / -1;
+            padding: 30px 20px;
+            color: #6b7280;
+            background: rgba(255,255,255,.72);
+            border: 1px dashed #d8dbe7;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 767.98px) {
+            .ai-insights-panel { padding: 18px; }
+            .ai-insights-header { align-items: stretch; flex-direction: column; }
+            .ai-generate-btn { justify-content: center; width: 100%; }
+            .ai-insights-grid { grid-template-columns: 1fr; }
+            .ai-insight-card { min-height: 0; }
+        }
+    </style>
+
+    <script>
+        const dashboardSavedAI = <?= json_encode($savedAI, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+
+        function parseDashboardAI(text) {
+            const sectionNames = ['Summary', 'Trends', 'Observations', 'Recommendations'];
+            const sections = {};
+
+            sectionNames.forEach((name, index) => {
+                const nextName = sectionNames[index + 1];
+                const pattern = new RegExp(name + ':\\s*([\\s\\S]*?)' + (nextName ? '(?=' + nextName + ':)' : '$'), 'i');
+                const match = String(text || '').match(pattern);
+                sections[name] = match ? match[1].trim() : '';
+            });
+
+            return sections;
+        }
+
+        function renderDashboardAI(text) {
+            const output = document.getElementById('dashboardAiResult');
+            const sections = parseDashboardAI(text);
+            const cards = [
+                { name: 'Summary', className: 'summary', icon: '▥' },
+                { name: 'Trends', className: 'trends', icon: '↗' },
+                { name: 'Observations', className: 'observations', icon: '◎' },
+                { name: 'Recommendations', className: 'recommendations', icon: '✦' }
+            ];
+
+            output.replaceChildren();
+            if (!cards.some(card => sections[card.name])) {
+                const status = document.createElement('div');
+                status.className = 'ai-status';
+                status.textContent = text || 'Click “Generate AI Insights” to analyze resident data.';
+                output.appendChild(status);
+                return;
+            }
+
+            cards.forEach(card => {
+                if (!sections[card.name]) return;
+                const article = document.createElement('article');
+                article.className = 'ai-insight-card ai-card-' + card.className;
+                const heading = document.createElement('div');
+                heading.className = 'ai-card-heading';
+                const icon = document.createElement('span');
+                icon.className = 'ai-card-icon';
+                icon.setAttribute('aria-hidden', 'true');
+                icon.textContent = card.icon;
+                const title = document.createElement('h6');
+                title.textContent = card.name;
+                const list = document.createElement('ul');
+                list.className = 'ai-card-list';
+
+                const items = sections[card.name].split(/\n+/).map(line => line.replace(/^\s*(?:[-•]|\d+[.)])\s*/, '').trim()).filter(Boolean);
+                items.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = item;
+                    list.appendChild(listItem);
+                });
+
+                heading.append(icon, title);
+                article.append(heading, list);
+                output.appendChild(article);
+            });
+        }
+
+        renderDashboardAI(dashboardSavedAI);
+
+        document.getElementById('generateDashboardAI').addEventListener('click', function () {
+            const button = this;
+            const buttonLabel = button.querySelector('.ai-btn-label');
+            const output = document.getElementById('dashboardAiResult');
+            const comparison = document.getElementById('dashboardAiComparison');
+
+            button.disabled = true;
+            buttonLabel.textContent = 'Analyzing data...';
+            renderDashboardAI('Generating AI insights…');
+            comparison.innerHTML = '';
+
+            fetch('population.php?generate_ai=1', { credentials: 'same-origin' })
+                .then(response => {
+                    if (!response.ok) throw new Error('Unable to generate insights.');
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.result) throw new Error('No insight was returned.');
+                    renderDashboardAI(data.result);
+
+                    if (data.data && data.data.gender) {
+                        const gender = data.data.gender;
+                        comparison.innerHTML =
+                            '<div class="alert alert-primary mb-0 text-center"><strong>' +
+                            gender.dominant + ' population is higher by ' +
+                            gender.difference_percent + '%</strong><br>(' +
+                            gender.male_percent + '% Male vs ' +
+                            gender.female_percent + '% Female)</div>';
+                    }
+                })
+                .catch(error => {
+                    renderDashboardAI(error.message || 'Error generating insights.');
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    buttonLabel.textContent = 'Generate AI Insights';
+                });
+        });
+    </script>
 
     <style>
         .resident-search-wrapper {

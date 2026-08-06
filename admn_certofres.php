@@ -7,7 +7,7 @@ $userdetails = $bmis->get_userdata();
 $bmis->validate_admin();
 $create = $bmis->create_certofres_walkin();
 $bmis->delete_certofres();
-$view = $bmis->view_certofres();
+$view = $bmis->view_certofres(!isset($_GET['deleted']));
 $id_resident = $_GET['id_resident'] ?? null;
 $resident = $id_resident ? $residentbmis->get_single_certofres($id_resident) : false;
 
@@ -73,9 +73,7 @@ include('dashboard_sidebar_start.php');
     <br>
     <button class="btn btn-info" style="width: 95px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;" data-toggle="modal" data-target="#modalResidency"><i class="fas fa-plus icon" style="padding-left: 0; padding-top: 0; padding-bottom: 0;"></i>Add</button>
 
-
     <a href="admn_certofres.php?deleted" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
-
 
     <a href="#" id="exportExcelBtn"
         class="btn btn-success"

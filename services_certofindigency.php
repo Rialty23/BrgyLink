@@ -748,7 +748,7 @@ $bmis->create_certofindigency();
                                     <div class="form-group">
                                         <label for="fname">First Name:</label>
                                         <input name="fname" type="text" class="form-control uppercase-input"
-                                            placeholder="Enter First Name" value="<?= $userdetails['firstname'] ?>" required>
+                                            placeholder="First Name" value="<?= $userdetails['firstname'] ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -758,7 +758,7 @@ $bmis->create_certofindigency();
                                     <div class="form-group">
                                         <label for="mi" class="mtop">Middle Name: </label>
                                         <input name="mi" type="text" class="form-control uppercase-input"
-                                            placeholder="Enter Middle Name" value="<?= $userdetails['mname'] ?>">
+                                            placeholder="Middle Name" value="<?= $userdetails['mname'] ?>">
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -771,7 +771,7 @@ $bmis->create_certofindigency();
                                     <div class="form-group">
                                         <label for="lname">Last Name:</label>
                                         <input name="lname" type="text" class="form-control uppercase-input"
-                                            placeholder="Enter Last Name" value="<?= $userdetails['surname'] ?>" required>
+                                            placeholder="Last Name" value="<?= $userdetails['surname'] ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -779,7 +779,7 @@ $bmis->create_certofindigency();
 
                                 <!--<label class="mtop">Nationality: </label>-->
                                 <input type="hidden" class="form-control" name="nationality"
-                                    placeholder="Enter Nationality" value="Filipino" required>
+                                    placeholder="Nationality" value="Filipino" required>
 
                             </div>
 
@@ -788,7 +788,7 @@ $bmis->create_certofindigency();
                                     <div class="form-group">
                                         <label> House No: </label>
                                         <input type="text" class="form-control uppercase-input" name="houseno"
-                                            placeholder="Enter House No." value="<?= $userdetails['houseno'] ?>" required>
+                                            placeholder="House No." value="<?= $userdetails['houseno'] ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -798,19 +798,19 @@ $bmis->create_certofindigency();
                                     <div class="form-group">
                                         <label> Street: </label>
                                         <input type="text" class="form-control uppercase-input" name="street"
-                                            placeholder="Enter Street" value="<?= $userdetails['street'] ?>" required>
+                                            placeholder="Street" value="<?= $userdetails['street'] ?>" required>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
                                 </div>
                                 <!--<label> Barangay: </label>-->
                                 <input type="hidden" class="form-control" name="brgy"
-                                    placeholder="Enter Barangay" value="<?= $userdetails['brgy'] ?>" required>
+                                    placeholder="Barangay" value="<?= $userdetails['brgy'] ?>" required>
 
 
                                 <!--<label> Municipality: </label>-->
                                 <input type="hidden" class="form-control" name="municipal"
-                                    placeholder="Enter Municipality" value="<?= $userdetails['municipal'] ?>" required>
+                                    placeholder="Municipality" value="<?= $userdetails['municipal'] ?>" required>
 
                             </div>
 
@@ -824,8 +824,23 @@ $bmis->create_certofindigency();
                                         <input type="number" name="age" class="form-control" value="<?= $userdetails['age'] ?>" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Resident Since</label>
-                                        <input type="date" name="resident_since" class="form-control">
+                                        <div class="form-group">
+                                            <label>Length of Residency:</label>
+                                            <input type="hidden" name="resident_since" value="<?= htmlspecialchars($userdetails['resident_since'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                            <select class="form-control" name="resident_since_2" required>
+                                                <option value="">Choose length of residency</option>
+                                                <option value="Less than 6 months">Less than 6 months</option>
+                                                <option value="6 months">6 months</option>
+                                                <option value="1 year">1 year</option>
+                                                <option value="2 years">2 years</option>
+                                                <option value="3 years">3 years</option>
+                                                <option value="4 years">4 years</option>
+                                                <option value="5 years">5 years</option>
+                                                <option value="More than 5 years">More than 5 years</option>
+                                                <option value="More than 10 years">More than 10 years</option>
+                                                <option value="Since Birth">Since Birth</option>
+                                            </select>
+                                        </div>
                                     </div>
                             </div>
 

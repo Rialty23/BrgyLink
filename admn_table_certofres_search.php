@@ -13,10 +13,12 @@ if (isset($_POST['search_certofres'])) {
                 <th> First Name </th>
                 <th> Middle Name </th>
                 <th> Address </th>
+                <th> Length of Residency </th>
                 <th> Date </th>
                 <th> Purpose </th>
                 <th>Requirements </th>
                 <th> Status </th>
+                <th> Is Deleted </th>
                 <th> Rejected Reason </th>
                 <th> Actions</th>
                 <th style="width: 18%;"> Update Status</th>
@@ -38,6 +40,7 @@ if (isset($_POST['search_certofres'])) {
                     <td> <?= $view['fname']; ?> </td>
                     <td> <?= $view['mi']; ?> </td>
                     <td> <?= $view['houseno']; ?>, <?= $view['street']; ?>, <?= $view['brgy']; ?>, <?= $view['municipal']; ?></td>
+                    <td><?= !empty($view['resident_since_2']) ? htmlspecialchars($view['resident_since_2'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?></td>
                     <td> <?= $view['date']; ?> </td>
                     <td> <?= $view['purpose']; ?> </td>
                     <td>
@@ -53,14 +56,21 @@ if (isset($_POST['search_certofres'])) {
                         <?php endif; ?>
                     </td>
                     <?php include('include_statuses.php'); ?>
+                    <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                     <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                     <td style="white-space:nowrap;">
                         <form action="" method="post">
                             <a class="btn btn-warning"
-                                style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
+                                style="display:none; width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
                                 href="rescert_form.php?id_rescert=<?= $view['id_rescert']; ?>"
                                 onclick="openPopup(this.href); return false;">
                                 Generate
+                            </a>
+                            <a class="btn btn-warning"
+                                style="width: 110px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
+                                href="template/certificate_residency.php?id_rescert=<?= (int) $view['id_rescert']; ?>"
+                                onclick="openPopup(this.href); return false;">
+                                New Generate
                             </a>
                             <input type="hidden" name="id_rescert" value="<?= $view['id_rescert']; ?>">
                             <!-- <button class="btn btn-danger" type="submit" style="width: 80px; font-size: 15px; border-radius:5px;" name="delete_certofres"> Delete </button> -->
@@ -113,10 +123,12 @@ if (isset($_POST['search_certofres'])) {
                     <th> First Name </th>
                     <th> Middle Name </th>
                     <th> Address </th>
+                    <th> Length of Residency </th>
                     <th> Date </th>
                     <th> Purpose </th>
                     <th> Requirements </th>
                     <th> Status</th>
+                    <th> Is Deleted </th>
                     <th> Rejected Reason </th>
                     <th style="width: 18%;"> Actions</th>
                     <th style="width: 18%;"> Update Status</th>
@@ -132,6 +144,7 @@ if (isset($_POST['search_certofres'])) {
                             <td> <?= $view['fname']; ?> </td>
                             <td> <?= $view['mi']; ?> </td>
                             <td> <?= $view['houseno']; ?>, <?= $view['street']; ?>, <?= $view['brgy']; ?>, <?= $view['municipal']; ?></td>
+                            <td><?= !empty($view['resident_since_2']) ? htmlspecialchars($view['resident_since_2'], ENT_QUOTES, 'UTF-8') : 'N/A'; ?></td>
                             <td> <?= $view['date']; ?> </td>
                             <td> <?= $view['purpose']; ?> </td>
                            <td>
@@ -147,12 +160,19 @@ if (isset($_POST['search_certofres'])) {
                             <?php endif; ?>
                         </td>
                             <?php include('include_statuses.php'); ?>
+                            <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                             <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                             <td style="white-space:nowrap;">
                                 <form action="" method="post">
-                                    <a class="btn btn-secondary"
-                                        style="width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
+                                    <a class="btn btn-warning"
+                                        style="display:none; width: 80px; font-size: 15px; border-radius:5px; margin-bottom: 2px;"
                                         href="rescert_form.php?id_rescert=<?= $view['id_rescert']; ?>"
+                                        onclick="openPopup(this.href); return false;">
+                                        Generate
+                                    </a>
+                                    <a class="btn btn-secondary"
+                                       style="width: 95px; font-size: 14px; border-radius:5px; margin-bottom: 2px;"
+                                        href="template/certificate_residency.php?id_rescert=<?= (int) $view['id_rescert']; ?>"
                                         onclick="openPopup(this.href); return false;">
                                         Generate
                                     </a>
