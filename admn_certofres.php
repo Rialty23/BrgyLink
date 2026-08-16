@@ -7,7 +7,8 @@ $userdetails = $bmis->get_userdata();
 $bmis->validate_admin();
 $create = $bmis->create_certofres_walkin();
 $bmis->delete_certofres();
-$view = $bmis->view_certofres(!isset($_GET['deleted']));
+$showArchived = isset($_GET['archived']);
+$view = $bmis->view_certofres($showArchived);
 $id_resident = $_GET['id_resident'] ?? null;
 $resident = $id_resident ? $residentbmis->get_single_certofres($id_resident) : false;
 
@@ -48,7 +49,7 @@ include('dashboard_sidebar_start.php');
 
     <div class="row">
         <div class="col text-center">
-            <h1> Certificate of Residency Requests</h1>
+            <h1><?= $showArchived ? 'Archived Certificate of Residency Requests' : 'Certificate of Residency Requests'; ?></h1>
         </div>
     </div>
 
@@ -65,7 +66,7 @@ include('dashboard_sidebar_start.php');
                 <button class="btn btn-success" name="search_certofres" style="width: 70px; font-size: 15px; border-radius:5px; margin-left:42%; background-color: #2563EB; color: white;">
                     Search
                 </button>
-                <a href="admn_certofres.php" class="btn btn-info" style="width: 70px; font-size: 15px; border-radius:5px;">Reload</a>
+                <a href="admn_certofres.php<?= $showArchived ? '?archived=1' : ''; ?>" class="btn btn-info" style="width: 70px; font-size: 15px; border-radius:5px;">Reload</a>
             </form>
         </div>
     </div>
@@ -73,7 +74,11 @@ include('dashboard_sidebar_start.php');
     <br>
     <button class="btn btn-info" style="width: 95px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;" data-toggle="modal" data-target="#modalResidency"><i class="fas fa-plus icon" style="padding-left: 0; padding-top: 0; padding-bottom: 0;"></i>Add</button>
 
-    <a href="admn_certofres.php?deleted" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
+    <?php if ($showArchived): ?>
+        <a href="admn_certofres.php" class="btn btn-info" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Active Files</a>
+    <?php else: ?>
+        <a href="admn_certofres.php?archived=1" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
+    <?php endif; ?>
 
     <a href="#" id="exportExcelBtn"
         class="btn btn-success"

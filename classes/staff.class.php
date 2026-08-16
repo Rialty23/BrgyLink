@@ -261,7 +261,7 @@ class StaffClass extends BMISClass
             $stmt = $connection->prepare("INSERT INTO tbl_officials (`name`,`position`,`termstart`,`termend`) VALUES (?, ?, ?, ?)");
 
             $stmt->Execute([$name, $position, $termstart, $termend]);
-            $message2 = "New Official Adedd";
+            $message2 = "New Official Added";
 
             echo "<script type='text/javascript'>alert('$message2');</script>";
             header('refresh:0');

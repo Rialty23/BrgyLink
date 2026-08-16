@@ -10,7 +10,8 @@ $bmis->validate_admin();
 $bmis->create_blotter_walkin();
 
 // Get data
-$view = $residentbmis->view_blotter();
+$showArchived = isset($_GET['archived']);
+$view = $residentbmis->view_blotter($showArchived);
 $id_blotter = isset($_GET['id_blotter']) ? $_GET['id_blotter'] : 0;
 
 if ($id_blotter > 0) {
@@ -123,7 +124,7 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
 
    <div class="row">
       <div class="col text-center">
-         <h1>Peace and Order Report Data</h1>
+         <h1><?= $showArchived ? 'Archived Peace and Order Reports' : 'Peace and Order Report Data'; ?></h1>
       </div>
    </div>
 
@@ -177,7 +178,11 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
       </div>
    </div>
 
-   <a href="admn_blotterreport.php?deleted" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
+   <?php if ($showArchived): ?>
+      <a href="admn_blotterreport.php" class="btn btn-info" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Active Files</a>
+   <?php else: ?>
+      <a href="admn_blotterreport.php?archived=1" class="btn btn-warning" style="color: white; width: 120px; height: 40px; font-size: 14px; border-radius:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">Archived Files</a>
+   <?php endif; ?>
 
    <button
       type="button"
@@ -213,6 +218,7 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
                <th style="width: 12%;"> View Details </th>
                <th style="width: 10%;"> Status </th>
                <th style="width: 20%;"> Update Status </th>
+               <th> Archive Action</th>
             </tr>
          </thead>
 
@@ -279,11 +285,20 @@ $topCase = !empty($caseCount) ? key($caseCount) : 'No Data';
                            <option value="RESOLVED" <?= $data['status'] == 'RESOLVED' ? 'selected' : '' ?>>RESOLVED</option>
                            <option value="CLOSED" <?= $data['status'] == 'CLOSED' ? 'selected' : '' ?>>CLOSED</option>
                            <option value="CANCELLED" <?= $data['status'] == 'CANCELLED' ? 'selected' : '' ?>>CANCELLED</option>
-                           <option value="DELETED" <?= $data['status'] == 'DELETED' ? 'selected' : '' ?>>DELETED</option>
 
                         </select>
 
                      </form>
+                  </td>
+                  <td>
+                     <?php if ($showArchived): ?>
+                        <span class="badge badge-secondary">Archived</span>
+                     <?php else: ?>
+                        <form method="POST" action="update_status.php" onsubmit="return confirm('Archive this blotter report?');">
+                           <input type="hidden" name="id_blotter" value="<?= (int) $data['id_blotter']; ?>">
+                           <button class="btn btn-warning btn-sm" type="submit" name="archive_blotter">Archive</button>
+                        </form>
+                     <?php endif; ?>
                   </td>
                </tr>
 

@@ -3,6 +3,7 @@
 require 'classes/conn.php';
 if (isset($_POST['search_clearance'])) {
     $keyword = $_POST['keyword'];
+    $showArchived = isset($_GET['archived']);
 ?>
     <?php
     // include('dashboard_sidebar_start.php');
@@ -20,18 +21,21 @@ if (isset($_POST['search_clearance'])) {
                 <th> Status </th>
                 <th> Age </th>
                 <th style="width: 8.5%;"> Status</th>
-                <th> Is Deleted </th>
                 <th> Rejected Reason </th>
                 <th style="width: 20%;"> Actions</th>
                 <th style="width: 20%;"> Update Status </th>
+                <th> Archive Action</th>
 
             </tr>
         </thead>
         <tbody>
             <?php
-            $stmnt = $conn->prepare("SELECT * FROM `tbl_clearance` WHERE `lname` LIKE '%$keyword%' or  `mi` LIKE '%$keyword%' or  
-                    `fname` LIKE '%$keyword%'  ORDER BY id_clearance DESC  ");
-            $stmnt->execute();
+            $searchTerm = '%' . $keyword . '%';
+            $stmnt = $conn->prepare("SELECT * FROM `tbl_clearance`
+                WHERE COALESCE(`is_archived`, 0) = ?
+                AND (`lname` LIKE ? OR `mi` LIKE ? OR `fname` LIKE ?)
+                ORDER BY id_clearance DESC");
+            $stmnt->execute([$showArchived ? 1 : 0, $searchTerm, $searchTerm, $searchTerm]);
 
             while ($view = $stmnt->fetch()) {
             ?>
@@ -45,7 +49,6 @@ if (isset($_POST['search_clearance'])) {
                     <td> <?= $view['status']; ?> </td>
                     <td> <?= $view['age']; ?> </td>
                     <?php include('include_statuses2.php'); ?>
-                          <td><?= strtoupper(trim($view['status2'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                           <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                           <td>
                         <form action="" method="post">
@@ -85,11 +88,19 @@ if (isset($_POST['search_clearance'])) {
 
                                 <option value="CLAIMED" <?= $view['status2'] == 'CLAIMED' ? 'selected' : '' ?>>CLAIMED</option>
 
-                                <option value="DELETED" <?= $view['status2'] == 'DELETED' ? 'selected' : '' ?>>DELETED</option>
-
                             </select>
 
                         </form>
+                    </td>
+                    <td>
+                        <?php if ($showArchived): ?>
+                            <span class="badge badge-secondary">Archived</span>
+                        <?php else: ?>
+                            <form method="POST" action="update_status.php" onsubmit="return confirm('Archive this barangay clearance request?');">
+                                <input type="hidden" name="id_clearance" value="<?= (int) $view['id_clearance']; ?>">
+                                <button class="btn btn-warning btn-sm" type="submit" name="archive_clearance">Archive</button>
+                            </form>
+                        <?php endif; ?>
                     </td>
 
                 </tr>
@@ -118,10 +129,10 @@ if (isset($_POST['search_clearance'])) {
                     <th> Marital Status </th>
                     <th style="width: 8.5%;"> Age </th>
                     <th style="width: 8.5%;"> Status</th>
-                    <th> Is Deleted </th>
                     <th> Rejected Reason </th>
                     <th style="width: 20%;"> Actions</th>
                     <th style="width: 20%;"> Update Status </th>
+                    <th> Archive Action</th>
 
                 </tr>
             </thead>
@@ -140,7 +151,6 @@ if (isset($_POST['search_clearance'])) {
                             <td> <?= $view['status']; ?> </td>
                             <td> <?= $view['age']; ?> </td>
                             <?php include('include_statuses2.php'); ?>
-                                     <td><?= strtoupper(trim($view['status2'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                                      <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                                      <td>
                                 <form action="" method="post">
@@ -180,11 +190,19 @@ if (isset($_POST['search_clearance'])) {
 
                                         <option value="CLAIMED" <?= $view['status2'] == 'CLAIMED' ? 'selected' : '' ?>>CLAIMED</option>
 
-                                        <option value="DELETED" <?= $view['status2'] == 'DELETED' ? 'selected' : '' ?>>DELETED</option>
-
                                     </select>
 
                                 </form>
+                            </td>
+                            <td>
+                                <?php if (!empty($view['is_archived'])): ?>
+                                    <span class="badge badge-secondary">Archived</span>
+                                <?php else: ?>
+                                    <form method="POST" action="update_status.php" onsubmit="return confirm('Archive this barangay clearance request?');">
+                                        <input type="hidden" name="id_clearance" value="<?= (int) $view['id_clearance']; ?>">
+                                        <button class="btn btn-warning btn-sm" type="submit" name="archive_clearance">Archive</button>
+                                    </form>
+                                <?php endif; ?>
                             </td>
 
                         </tr>

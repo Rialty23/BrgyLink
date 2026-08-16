@@ -161,6 +161,21 @@ function buildStatusEmail($table, $idColumn, $id, $serviceName, $status, $reject
     ];
 }
 
+if (isset($_POST['archive_rescert']) && isset($_POST['id_rescert'])) {
+    $id = (int) $_POST['id_rescert'];
+    $stmt = mysqli_prepare($db_connection, "UPDATE tbl_rescert SET is_archived = 1 WHERE id_rescert = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        // Archiving is internal and must not send an email.
+        header("Location: admn_certofres.php");
+        exit();
+    }
+
+    echo "Error archiving certificate request.";
+    exit();
+}
+
 if (isset($_POST['status']) && isset($_POST['id_rescert'])) {
 
     $status = $_POST['status'];
@@ -196,6 +211,21 @@ if (isset($_POST['status']) && isset($_POST['id_rescert'])) {
     } else {
         echo "Error updating status.";
     }
+}
+
+if (isset($_POST['archive_bspermit']) && isset($_POST['id_bspermit'])) {
+    $id = (int) $_POST['id_bspermit'];
+    $stmt = mysqli_prepare($db_connection, "UPDATE tbl_bspermit SET is_archived = 1 WHERE id_bspermit = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        // Archiving is internal and must not send an email.
+        header("Location: admn_bspermit.php");
+        exit();
+    }
+
+    echo "Error archiving business permit request.";
+    exit();
 }
 
 if (isset($_POST['status']) && isset($_POST['id_bspermit'])) {
@@ -234,6 +264,21 @@ if (isset($_POST['status']) && isset($_POST['id_bspermit'])) {
         echo "Error updating status.";
     }
 }
+if (isset($_POST['archive_clearance']) && isset($_POST['id_clearance'])) {
+    $id = (int) $_POST['id_clearance'];
+    $stmt = mysqli_prepare($db_connection, "UPDATE tbl_clearance SET is_archived = 1 WHERE id_clearance = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        // Archiving is internal and must not send an email.
+        header("Location: admn_brgyclearance.php");
+        exit();
+    }
+
+    echo "Error archiving barangay clearance request.";
+    exit();
+}
+
 if (isset($_POST['status']) && isset($_POST['id_clearance'])) {
 
     $status = $_POST['status'];
@@ -270,6 +315,21 @@ if (isset($_POST['status']) && isset($_POST['id_clearance'])) {
         echo "Error updating status.";
     }
 }
+if (isset($_POST['archive_indigency']) && isset($_POST['id_indigency'])) {
+    $id = (int) $_POST['id_indigency'];
+    $stmt = mysqli_prepare($db_connection, "UPDATE tbl_indigency SET is_archived = 1 WHERE id_indigency = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        // Archiving is internal and must not send an email.
+        header("Location: admn_certofindigency.php");
+        exit();
+    }
+
+    echo "Error archiving certificate of indigency request.";
+    exit();
+}
+
 if (isset($_POST['status']) && isset($_POST['id_indigency'])) {
 
     $status = $_POST['status'];
@@ -305,6 +365,21 @@ if (isset($_POST['status']) && isset($_POST['id_indigency'])) {
         echo "Error updating status.";
     }
 }
+if (isset($_POST['archive_blotter']) && isset($_POST['id_blotter'])) {
+    $id = (int) $_POST['id_blotter'];
+    $stmt = mysqli_prepare($db_connection, "UPDATE tbl_blotter SET is_archived = 1 WHERE id_blotter = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        // Archiving is internal and must not send an email, and must not touch the real status.
+        header("Location: admn_blotterreport.php");
+        exit();
+    }
+
+    echo "Error archiving blotter report.";
+    exit();
+}
+
 if (isset($_POST['status']) && isset($_POST['id_blotter'])) {
 
     $status = $_POST['status'];

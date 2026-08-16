@@ -74,6 +74,13 @@
                     <span> Barangay Officials</span></a>
             </li>
 
+            <!-- Barangay Staff CRUD -->
+            <!-- <li id="staff" class="nav-item">
+                <a class="nav-link" href="admn_staff.php">
+                    <i class="fas fa-user-tie"></i>
+                    <span> Barangay Staffs</span></a>
+
+            </li> -->
 
             <!-- Resident CRUD -->
             <li id="resident" class="nav-item">
@@ -144,18 +151,18 @@
                     <span>Blotter Report</span></a>
             </li>
 
-            
-          <!----  <li  <li class="nav-item">
+            <!-- Complain Blotter Report 
+            <li class="nav-item">
                 <a class="nav-link" href="population.php">
                     <i class="fas fa-users"></i>
                     <span>Population Trends</span></a>
-            </li>
+            </li>-->
 
-          <!----  <li id="transaction_logs" class="nav-item">
+            <li id="transaction_logs" class="nav-item">
                 <a class="nav-link" href="admn_transaction_logs.php">
                     <i class="fas fa-receipt"></i>
                     <span>Transaction Logs</span></a>
-            </li>-->
+            </li>
 
 
             <div class="sidebar-heading">
@@ -175,7 +182,16 @@
                     <span> Barangay Info</span></a>
             </li>
             <br><br>
- 
+            <!-- Announcement Management -->
+            <!--<li class="nav-item">
+                <a class="nav-link" href="position_modal.php">
+                    <i class="fas fa-star"></i>
+                    <span> Position</span></a>
+            </li>-->
+
+            <!-- Certificate of Residency -->
+
+
         </ul>
         <!-- End of Sidebar -->
 

@@ -4,6 +4,7 @@ require 'classes/conn.php';
 $bmis->delete_certofres();
 if (isset($_POST['search_certofres'])) {
     $keyword = $_POST['keyword'];
+    $showArchived = isset($_GET['archived']);
 ?>
     <table class="table table-hover text-center table-bordered table-responsive">
         <thead class="alert-info">
@@ -18,19 +19,21 @@ if (isset($_POST['search_certofres'])) {
                 <th> Purpose </th>
                 <th>Requirements </th>
                 <th> Status </th>
-                <th> Is Deleted </th>
                 <th> Rejected Reason </th>
                 <th> Actions</th>
                 <th style="width: 18%;"> Update Status</th>
+                <th> Archive Action</th>
             </tr>
         </thead>
 
         <tbody>
             <?php
-            $stmnt = $conn->prepare("SELECT * FROM `tbl_rescert` WHERE `lname` LIKE '%$keyword%' or  `mi` LIKE '%$keyword%' or  `fname` 
-            LIKE '%$keyword%' or  `houseno` LIKE '%$keyword%'
-            or `street` LIKE '%$keyword%' or `brgy` LIKE '%$keyword%' or `municipal` LIKE '%$keyword%' or `date` LIKE '%$keyword%' or `purpose` LIKE '%$keyword%' ORDER BY id_rescert DESC ");
-            $stmnt->execute();
+            $searchTerm = '%' . $keyword . '%';
+            $stmnt = $conn->prepare("SELECT * FROM `tbl_rescert`
+                WHERE COALESCE(`is_archived`, 0) = ? AND (`lname` LIKE ? OR `mi` LIKE ? OR `fname` LIKE ?
+                OR `houseno` LIKE ? OR `street` LIKE ? OR `brgy` LIKE ? OR `municipal` LIKE ?
+                OR `date` LIKE ? OR `purpose` LIKE ?) ORDER BY id_rescert DESC");
+            $stmnt->execute(array_merge([$showArchived ? 1 : 0], array_fill(0, 9, $searchTerm)));
 
             while ($view = $stmnt->fetch()) {
             ?>
@@ -56,7 +59,6 @@ if (isset($_POST['search_certofres'])) {
                         <?php endif; ?>
                     </td>
                     <?php include('include_statuses.php'); ?>
-                    <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                     <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                     <td style="white-space:nowrap;">
                         <form action="" method="post">
@@ -96,11 +98,19 @@ if (isset($_POST['search_certofres'])) {
 
                                 <option value="CLAIMED" <?= $view['status'] == 'CLAIMED' ? 'selected' : '' ?>>CLAIMED</option>
 
-                                <option value="DELETED" <?= $view['status'] == 'DELETED' ? 'selected' : '' ?>>DELETED</option>
-
                             </select>
 
                         </form>
+                    </td>
+                    <td>
+                        <?php if ($showArchived): ?>
+                            <span class="badge badge-secondary">Archived</span>
+                        <?php else: ?>
+                            <form method="POST" action="update_status.php" onsubmit="return confirm('Archive this certificate request?');">
+                                <input type="hidden" name="id_rescert" value="<?= (int) $view['id_rescert']; ?>">
+                                <button class="btn btn-warning btn-sm" type="submit" name="archive_rescert">Archive</button>
+                            </form>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php
@@ -128,10 +138,10 @@ if (isset($_POST['search_certofres'])) {
                     <th> Purpose </th>
                     <th> Requirements </th>
                     <th> Status</th>
-                    <th> Is Deleted </th>
                     <th> Rejected Reason </th>
                     <th style="width: 18%;"> Actions</th>
                     <th style="width: 18%;"> Update Status</th>
+                    <th> Archive Action</th>
                 </tr>
             </thead>
 
@@ -160,7 +170,6 @@ if (isset($_POST['search_certofres'])) {
                             <?php endif; ?>
                         </td>
                             <?php include('include_statuses.php'); ?>
-                            <td><?= strtoupper(trim($view['status'] ?? '')) === 'DELETED' ? 'Yes' : 'No'; ?></td>
                             <td><?= !empty($view['rejected_reason']) ? htmlspecialchars($view['rejected_reason']) : 'N/A'; ?></td>
                             <td style="white-space:nowrap;">
                                 <form action="" method="post">
@@ -201,11 +210,19 @@ if (isset($_POST['search_certofres'])) {
 
                                         <option value="CLAIMED" <?= $view['status'] == 'CLAIMED' ? 'selected' : '' ?>>CLAIMED</option>
 
-                                        <option value="DELETED" <?= $view['status'] == 'DELETED' ? 'selected' : '' ?>>DELETED</option>
-
                                     </select>
 
                                 </form>
+                            </td>
+                            <td>
+                                <?php if (!empty($view['is_archived'])): ?>
+                                    <span class="badge badge-secondary">Archived</span>
+                                <?php else: ?>
+                                    <form method="POST" action="update_status.php" onsubmit="return confirm('Archive this certificate request?');">
+                                        <input type="hidden" name="id_rescert" value="<?= (int) $view['id_rescert']; ?>">
+                                        <button class="btn btn-warning btn-sm" type="submit" name="archive_rescert">Archive</button>
+                                    </form>
+                                <?php endif; ?>
                             </td>
 
                         </tr>

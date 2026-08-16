@@ -163,7 +163,8 @@ include_once './dbcon.php';
                             'title' => $announcement['title'],
                             'image' => $announcement['photo'] ?? '',
                             'content' => $announcement['event'],
-                            'date' => $announcement['start_date'] ?? $announcement['set_date'] ?? ''
+                            'date' => $announcement['set_date'] ?? '',
+                            'published_date' => $announcement['set_date'] ?? ''
                         ];
                     }
                 }
@@ -177,7 +178,8 @@ include_once './dbcon.php';
                             'title' => $rw['name'],
                             'image' => $rw['image'] ?? '',
                             'content' => 'Date: ' . $rw['date'],
-                            'date' => $rw['date']
+                            'date' => $rw['date'],
+                            'published_date' => $rw['date']
                         ];
                     }
                 }
@@ -189,11 +191,16 @@ include_once './dbcon.php';
 
                 foreach ($carousel_items as $item) {
                     $id = $item['type'] . '-' . $item['id'];
+                    $published_timestamp = strtotime($item['published_date'] ?? '');
+                    $published_date = $published_timestamp ? date('F j, Y', $published_timestamp) : 'Not available';
                 ?>
                         <div class="swiper-slide cursor-pointer carousel-item"
                             onclick='openModal(<?= htmlspecialchars(json_encode($item['title']), ENT_QUOTES, 'UTF-8') ?>, <?= htmlspecialchars(json_encode($item['image']), ENT_QUOTES, 'UTF-8') ?>, <?= htmlspecialchars(json_encode($item['content']), ENT_QUOTES, 'UTF-8') ?>)'>
                             <div class="bg-white shadow-md rounded-lg p-6 flex flex-col h-full slide-content">
                                 <h3 class="font-bold text-lg mb-2"><?= htmlspecialchars($item['title']); ?></h3>
+                                <p class="text-sm text-gray-500 mb-3">
+                                    Published: <?= htmlspecialchars($published_date); ?>
+                                </p>
 
                                 <?php if (!empty($item['image']) && file_exists($item['image'])): ?>
                                     <img src="<?= htmlspecialchars($item['image']); ?>" class="announcement-img mb-2 rounded w-full object-cover max-h-48">

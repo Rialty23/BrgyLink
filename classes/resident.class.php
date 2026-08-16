@@ -11,6 +11,7 @@ class ResidentClass extends BMISClass
             return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
         };
 
+        $status = strtoupper(trim($status));
         $fullName = trim(($resident['fname'] ?? '') . ' ' . ($resident['mi'] ?? '') . ' ' . ($resident['lname'] ?? ''));
         $address = trim(($resident['houseno'] ?? '') . ' ' . ($resident['street'] ?? '') . ', '
             . ($resident['brgy'] ?? 'EAST MODERN SITE') . ', ' . ($resident['municipal'] ?? 'BAGUIO CITY'), " ,");
@@ -20,10 +21,10 @@ class ResidentClass extends BMISClass
         $controlNumber = $resident['control_no'] ?? 'Pending assignment';
 
         $lines = [
-            '<strong>Date:</strong> ' . $escape($requestDate),
+            '<strong>Date of update:</strong> ' . $escape(date('F d, Y h:i A')),
+            '<strong>Date registered:</strong> ' . $escape($requestDate),
             '<strong>Resident:</strong> ' . $escape($fullName ?: 'Not available'),
             '<strong>Control number:</strong> ' . $escape($controlNumber),
-            '<strong>Validation status:</strong> ' . $escape($status),
             '<strong>Registered address:</strong> ' . $escape($address ?: 'Not available'),
         ];
 
@@ -37,15 +38,26 @@ class ResidentClass extends BMISClass
         }
 
         if ($status === 'APPROVED') {
-            $nextStep = 'Your information has been validated and your resident account is approved. You may now sign in using your registered email address.';
+            $intro = 'We are pleased to inform you that your resident registration has been approved. Your information has been validated, and you may now sign in using your registered email address.';
         } elseif ($status === 'REJECTED') {
-            $nextStep = 'Please correct the issue stated above and submit a new registration with complete and valid information.';
+            $intro = 'We regret to inform you that, after careful review, your resident registration has been rejected. Please review the reason provided below. You may correct the noted issue and submit a new registration with complete and valid information.';
         } else {
-            $nextStep = 'Your registration was received and is awaiting barangay validation. You will receive another email after it has been reviewed.';
+            $intro = 'Your resident registration has been received and is undergoing barangay verification. We will notify you by email as soon as the review is complete.';
         }
 
-        return $escape($nextStep)
-            . '<br><br>' . implode('<br>', $lines)
+        $statusColors = [
+            'APPROVED' => ['#166534', '#dcfce7'],
+            'REJECTED' => ['#991b1b', '#fee2e2'],
+            'PENDING VALIDATION' => ['#92400e', '#fef3c7'],
+        ];
+        [$statusColor, $statusBackground] = $statusColors[$status] ?? ['#1e40af', '#dbeafe'];
+
+        return 'Dear ' . $escape($fullName ?: 'Resident') . ',<br><br>'
+            . $escape($intro)
+            . '<div style="margin:20px 0;padding:14px;text-align:center;border-radius:6px;'
+            . 'color:' . $statusColor . ';background:' . $statusBackground . ';font-size:18px;font-weight:bold;">'
+            . 'STATUS: ' . $escape($status) . '</div>'
+            . implode('<br>', $lines)
             . '<br><br><strong>Where to inquire:</strong> East Modern Site Barangay Hall'
             . '<br>Please keep your control number for verification and bring a valid ID when visiting the barangay office.';
     }
